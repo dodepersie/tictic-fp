@@ -46,15 +46,30 @@ class MerchantController extends Controller
      */
     public function edit(Merchant $merchant)
     {
-        //
+        $this->authorize('admin');
+
+        $title =  'Now Editing: ' . $merchant->user->name;
+        $selected_merchant = $merchant->user;
+
+        return view('dashboard.merchant.edit', [
+            'merchant' => $merchant,
+            'selected_merchant' => $selected_merchant,
+            'title' => $title,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMerchantRequest $request, Merchant $merchant)
+    public function update(UpdateMerchantRequest $request, Merchant $merchant, User $user)
     {
-        //
+        $this->authorize('admin');
+        
+        // Update merchant attributes
+        $merchant->user->update($request->validated());
+
+        // Redirect or return a response
+        return redirect()->route('dashboard.merchant_all')->with('success', 'Merchant updated successfully!');
     }
 
     /**

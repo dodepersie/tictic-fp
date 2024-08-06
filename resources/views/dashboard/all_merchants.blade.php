@@ -151,14 +151,14 @@
                                             <td class="align-middle"
                                                 style="display:flex; justify-content: center; align-items:center; height: 100px;">
                                                 @if ($merchant->merchant_status == 'Approved')
-                                                    <form action="{{ route('merchant.edit', $merchant->user_id) }}"
-                                                        method="POST" style="margin-right: 5px;">
+                                                    <a href="{{ route('merchant.edit', $merchant->id) }}"
+                                                        style="margin-right: 5px;">
                                                         @csrf
                                                         <button type="submit" class="btn btn-success btn-xs">
                                                             <i data-feather="edit" style="width: 20px; height: 20px;"
                                                                 aria-hidden="true"></i>
                                                         </button>
-                                                    </form>
+                                                    </a>
                                                     <form action="{{ route('merchant.destroy', $merchant->user_id) }}"
                                                         method="POST">
                                                         @method('delete')

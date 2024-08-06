@@ -3,7 +3,7 @@
 @section('container')
     <!-- Call To Action -->
     <section class="bg-gray-50">
-        <div class="p-8 pt-28 md:p-12 lg:px-16 lg:pb-24 lg:pt-32">
+        <div class="p-8 pt-28 md:p-12 lg:px-16 lg:pb-24 md:pt-32">
             <div class="mx-auto max-w-2xl text-center">
                 <h2 class="text-2xl text-gray-900 md:text-3xl leading-loose">
                     Hey you, <span class="font-bold">Which concert you want to see?</span>

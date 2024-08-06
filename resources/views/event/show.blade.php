@@ -92,9 +92,9 @@
                         <div>
                             <label for="DeliveryStandard"
                                 class="flex cursor-pointer items-center justify-between gap-4 rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-blue-500 has-[:checked]:ring-1 has-[:checked]:ring-blue-500">
-                                <p class="text-gray-700">Standard</p>
+                                <p class="text-gray-700">VVIP</p>
 
-                                <p class="text-gray-900">Free</p>
+                                <p class="text-gray-900">Rp xxxx</p>
 
                                 <input type="radio" name="DeliveryOption" value="DeliveryStandard" id="DeliveryStandard"
                                     class="sr-only" checked />
@@ -104,9 +104,9 @@
                         <div>
                             <label for="DeliveryPriority"
                                 class="flex cursor-pointer items-center justify-between gap-4 rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-blue-500 has-[:checked]:ring-1 has-[:checked]:ring-blue-500">
-                                <p class="text-gray-700">Next Day</p>
+                                <p class="text-gray-700">VIP</p>
 
-                                <p class="text-gray-900">£9.99</p>
+                                <p class="text-gray-900">Rp xxx</p>
 
                                 <input type="radio" name="DeliveryOption" value="DeliveryPriority" id="DeliveryPriority"
                                     class="sr-only" />
@@ -118,19 +118,29 @@
                     <div x-data="{ productQuantity: 1 }">
                         <label for="Quantity" class="sr-only"> Quantity </label>
 
-                        <div class="flex items-center rounded border border-gray-200">
-                            <button type="button" x-on:click="productQuantity--" :disabled="productQuantity === 0"
-                                class="size-10 leading-10 text-gray-600 transition hover:opacity-75">
-                                &minus;
-                            </button>
+                        <div class="max-w-xl mt-5">
+                            <div class="flex justify-end">
+                                <button
+                                    class="group relative inline-block text-sm font-medium bg-white focus:outline-none focus:ring active:text-red-500"
+                                    type="button" x-on:click="productQuantity--" :disabled="productQuantity === 0">
+                                    <span class="absolute inset-0 border border-current"></span>
+                                    <span
+                                        class="text-white block border border-current bg-red-600 disabled:bg-red-600/50 px-4 py-2.5 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1">
+                                        &minus;
+                                    </span></button>
 
-                            <input type="number" id="Quantity" x-model="productQuantity"
-                                class="h-10 w-16 border-transparent text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
+                                <input type="number" id="Quantity" x-model="productQuantity"
+                                    class="border-transparent h-10 w-16 text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
 
-                            <button type="button" x-on:click="productQuantity++"
-                                class="size-10 leading-10 text-gray-600 transition hover:opacity-75">
-                                &plus;
-                            </button>
+                                <button
+                                    class="group relative inline-block text-sm font-medium bg-white focus:outline-none focus:ring active:text-blue-500"
+                                    type="button" x-on:click="productQuantity++">
+                                    <span class="absolute inset-0 border border-current"></span>
+                                    <span
+                                        class="text-white block border border-current bg-blue-600 px-4 py-2 sm:py-2.5 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1">
+                                        &plus;
+                                    </span></button>
+                            </div>
                         </div>
                     </div>
                 </div>
