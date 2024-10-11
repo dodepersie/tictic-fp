@@ -7,23 +7,29 @@
     <title>{{ ucfirst($title) ?? config('app.name') }} - TicTic.ID</title>
     @vite('resources/css/app.css')
     <!-- AlphineJS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Feather Icon -->
     <script src="https://unpkg.com/feather-icons"></script>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Jost:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
 </head>
 
 <body>
     <x-navbar></x-navbar>
 
-    <div>
-        @yield('container')
+    <div class="container max-w-7xl mx-auto p-5 pt-24 lg:px-8 lg:pb-10 md:pt-36 space-y-3">
+        <div>
+            @yield('container')
+        </div>
     </div>
 
     <x-footer></x-footer>
+
     <button x-data="{ showButton: false }" @click="window.scrollTo({top: 0, behavior: 'smooth'})"
         @scroll.window="showButton = (window.scrollY > 0)" x-show="showButton"
         x-transition:enter="transition ease-out duration-300"

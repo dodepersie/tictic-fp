@@ -1,160 +1,147 @@
 @extends('layouts.main')
 
 @section('container')
-    <section class="container mx-auto p-8 pt-24 md:p-12 lg:px-8 lg:pb-24 lg:pt-24 space-y-3">
-        <div class="lg:grid grid-cols-3 gap-10 space-y-10 lg:space-y-0">
-            <div class="col-span-2 space-y-4">
-                <h2 class="font-quicksand text-4xl text-gray-900 md:text-3xl leading-relaxed tracking-tight">
+    <section>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <!-- Content -->
+            <div class="space-y-4 lg:col-span-2">
+                <h2 class="font-afacadflux text-3xl sm:text-4xl text-gray-900 font-bold leading-relaxed tracking-tight">
                     {{ ucfirst($product->event_title) }}</span>
                 </h2>
 
-                <div class="text-sm leading-loose">
-                    <div class="flex items-center gap-1">
-                        <i data-feather="star" class="size-4 text-yellow-400"></i>
-                        <span>5.0 | 99999999999 reviews | Event Date:
-                            {{ date('d F Y', strtotime($product->event_start_date)) }}</span>
+                <div class="text-md leading-loose">
+                    <div class="lg:flex justify-start items-center gap-1.5">
+                        <!-- Star -->
+                        <div class="flex lg:justify-center gap-0.5 text-green-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                        </div>
+                        <!-- Reviews Count -->
+                        <div>99999 Reviews</div>
+                        <!-- Event Date -->
+                        <div>Event Date: {{ date('d F Y', strtotime($product->event_start_date)) }}</div>
                     </div>
                 </div>
 
                 <div class="space-y-2">
-                    <h2 class="text-lg font-semibold">Description</h2>
+                    <img src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="{{ ucfirst($product->event_title) }}" class="h-auto object-contain rounded-xl shadow" />
+                </div>
+
+                <div class="space-y-2">
+                    <h2 class="text-lg font-semibold">Event Description</h2>
                     <p class="leading-loose tracking-wide">
                         {{ $product->event_detail }}
                     </p>
                 </div>
 
+                <!-- About Merchant -->
                 <div class="space-y-3">
                     <h2 class="text-lg font-semibold">About (nama merchant)</h2>
 
-                    <article class="rounded-xl bg-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8">
-                        <div class="flex items-start sm:gap-8">
-                            <div class="hidden sm:grid sm:size-20 sm:shrink-0 sm:place-content-center sm:rounded-full sm:border-2 sm:border-indigo-500"
-                                aria-hidden="true">
-                                <div class="flex items-center gap-1">
-                                    <span class="h-8 w-0.5 rounded-full bg-indigo-500"></span>
-                                    <span class="h-6 w-0.5 rounded-full bg-indigo-500"></span>
-                                    <span class="h-4 w-0.5 rounded-full bg-indigo-500"></span>
-                                    <span class="h-6 w-0.5 rounded-full bg-indigo-500"></span>
-                                    <span class="h-8 w-0.5 rounded-full bg-indigo-500"></span>
-                                </div>
-                            </div>
+                    <div class="flex items-end gap-4 border border-gray-200 p-3 shadow rounded-xl">
+                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=2680&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt="" class="size-20 rounded-lg object-cover" />
 
-                            <div>
-                                <strong
-                                    class="rounded border border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white">
-                                    Episode #101
-                                </strong>
+                        <div>
+                            <h3 class="text-lg/tight font-medium text-gray-900">Title goes here</h3>
 
-                                <h3 class="mt-4 text-lg font-medium sm:text-xl">
-                                    <a href="#" class="hover:underline"> Some Interesting Podcast Title </a>
-                                </h3>
-
-                                <p class="mt-1 text-sm text-gray-700">
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam nulla amet
-                                    voluptatum sit
-                                    rerum, atque, quo culpa ut necessitatibus eius suscipit eum accusamus, aperiam
-                                    voluptas
-                                    exercitationem facere aliquid fuga. Sint.
-                                </p>
-
-                                <div class="mt-4 sm:flex sm:items-center sm:gap-2">
-                                    <div class="flex items-center gap-1 text-gray-500">
-                                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                        </svg>
-
-                                        <p class="text-xs font-medium">48:32 minutes</p>
-                                    </div>
-
-                                    <span class="hidden sm:block" aria-hidden="true">&middot;</span>
-
-                                    <p class="mt-2 text-xs font-medium text-gray-500 sm:mt-0">
-                                        Featuring <a href="#" class="underline hover:text-gray-700">Barry</a>,
-                                        <a href="#" class="underline hover:text-gray-700">Sandra</a> and
-                                        <a href="#" class="underline hover:text-gray-700">August</a>
-                                    </p>
-                                </div>
-                            </div>
+                            <p class="mt-0.5 text-gray-700">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates voluptas distinctio
+                                nesciunt quas non animi.
+                            </p>
                         </div>
-                    </article>
+                    </div>
                 </div>
             </div>
 
-            <aside class="sticky top-[75px] col-span-1">
-                <div class="space-y-2 mb-2 mt-6 border-b border-gray-200 pb-5">
-                    <h2 class="font-bold">Order Information</h2>
+            <!-- Aside -->
+            <aside class="sticky top-16">
+                <div class="space-y-2 mb-2 pb-5">
+                    <h2 class="font-bold text-xl">Order Information</h2>
                     <!-- Ticket Type -->
                     <fieldset class="space-y-4">
-                        <legend class="sr-only">Delivery</legend>
+                        <legend class="sr-only">Ticket Type</legend>
 
                         <div>
-                            <label for="DeliveryStandard"
+                            <label for="TicketVVIP"
                                 class="flex cursor-pointer items-center justify-between gap-4 rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-blue-500 has-[:checked]:ring-1 has-[:checked]:ring-blue-500">
                                 <p class="text-gray-700">VVIP</p>
 
                                 <p class="text-gray-900">Rp xxxx</p>
 
-                                <input type="radio" name="DeliveryOption" value="DeliveryStandard" id="DeliveryStandard"
-                                    class="sr-only" checked />
+                                <input type="radio" name="TicketOption" value="TicketVVIP" id="TicketVVIP" class="sr-only"
+                                    checked />
                             </label>
                         </div>
 
                         <div>
-                            <label for="DeliveryPriority"
+                            <label for="TicketVIP"
                                 class="flex cursor-pointer items-center justify-between gap-4 rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-blue-500 has-[:checked]:ring-1 has-[:checked]:ring-blue-500">
                                 <p class="text-gray-700">VIP</p>
 
                                 <p class="text-gray-900">Rp xxx</p>
 
-                                <input type="radio" name="DeliveryOption" value="DeliveryPriority" id="DeliveryPriority"
+                                <input type="radio" name="TicketOption" value="TicketVIP" id="TicketVIP"
                                     class="sr-only" />
                             </label>
                         </div>
                     </fieldset>
 
                     <!-- Quantity -->
-                    <div x-data="{ productQuantity: 1 }">
-                        <label for="Quantity" class="sr-only"> Quantity </label>
+                    <div x-data="{ productQuantity: 1, productPrice: {{ $product->event_price }} }">
+                        <div class="flex justify-between items-center">
+                            <!-- This price will change based on "PRICE x QUANTITY" -->
+                            <h2 class="text-2xl">
+                                Rp <span x-text="(productPrice * productQuantity).toLocaleString('id-ID')"></span>
+                            </h2>
 
-                        <div class="max-w-xl mt-5">
-                            <div class="flex justify-end">
-                                <button
-                                    class="group relative inline-block text-sm font-medium bg-white focus:outline-none focus:ring active:text-red-500"
-                                    type="button" x-on:click="productQuantity--" :disabled="productQuantity === 0">
-                                    <span class="absolute inset-0 border border-current"></span>
-                                    <span
-                                        class="text-white block border border-current bg-red-600 disabled:bg-red-600/50 px-4 py-2.5 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1">
-                                        &minus;
-                                    </span></button>
+                            <label for="Quantity" class="sr-only">Quantity</label>
+                            <div class="flex items-center rounded border border-gray-200">
+                                <button type="button" x-on:click="productQuantity--" :disabled="productQuantity === 1"
+                                    class="size-10 leading-10 text-gray-600 transition hover:opacity-75">
+                                    &minus;
+                                </button>
 
-                                <input type="number" id="Quantity" x-model="productQuantity"
-                                    class="border-transparent h-10 w-16 text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
+                                <input type="number" id="Quantity" x-model="productQuantity" min="1"
+                                    class="h-10 w-16 border-transparent text-center sm:text-sm" />
 
-                                <button
-                                    class="group relative inline-block text-sm font-medium bg-white focus:outline-none focus:ring active:text-blue-500"
-                                    type="button" x-on:click="productQuantity++">
-                                    <span class="absolute inset-0 border border-current"></span>
-                                    <span
-                                        class="text-white block border border-current bg-blue-600 px-4 py-2 sm:py-2.5 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1">
-                                        &plus;
-                                    </span></button>
+                                <button type="button" x-on:click="productQuantity++"
+                                    class="size-10 leading-10 text-gray-600 transition hover:opacity-75">
+                                    &plus;
+                                </button>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="flex justify-between items-center mt-3">
-                    <h2 class="text-2xl">Rp {{ number_format($product->event_price) }}</h2>
-                    <button
-                        class="group relative inline-block text-sm font-medium bg-white focus:outline-none focus:ring active:text-blue-500">
-                        <span class="absolute inset-0 border border-current"></span>
-                        <span
-                            class="text-white block border border-current bg-blue-600 px-4 py-2 sm:py-2.5 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1">
-                            Pay with Midtrans
-                        </span></button>
-                </div>
+                        <div class="flex justify-end items-center pt-3 mt-3 border-t border-gray-200">
+                            <button
+                                class="group relative inline-block text-sm font-medium bg-white focus:outline-none focus:ring active:text-blue-500">
+                                <span class="absolute inset-0 border border-current"></span>
+                                <span
+                                    class="text-white block border border-current bg-blue-600 px-4 py-2 sm:py-2.5 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1">
+                                    Pay with Midtrans
+                                </span>
+                            </button>
+                        </div>
+                    </div>
             </aside>
         </div>
     </section>

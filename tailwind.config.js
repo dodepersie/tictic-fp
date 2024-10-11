@@ -7,8 +7,8 @@ module.exports = {
     ],
     theme: {
         fontFamily: {
-            sans: ["Poppins", "sans-serif"],
-            quicksand: ["Quicksand", "sans-serif"],
+            sans: ["Jost", "sans-serif"],
+            afacadflux: ["Afacad Flux", "sans-serif"],
         },
         extend: {},
     },
