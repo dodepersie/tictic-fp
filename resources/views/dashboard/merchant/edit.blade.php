@@ -10,40 +10,46 @@
                         <h6>Editing: {{ $selected_merchant->name }}</h6>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
-                        <div class="px-4 py-4">
-                            <form method="POST" action="{{ route('merchant.update', $merchant->id) }}"
-                                class="space-y-6 bg-white p-6 rounded-lg shadow-md">
+                        <div class="px-4 py-2">
+                            <form role="form" method="POST" action="{{ route('merchant.update', $merchant->id) }}"
+                                class="space-y-6">
                                 @csrf
                                 @method('PUT')
 
-                                <div class="mb-4">
-                                    <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                                    <input type="text" name="name" id="name"
-                                        value="{{ $selected_merchant->name }}"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="name" class="form-control-label">Name</label>
+                                            <input class="form-control" type="text" name="name"
+                                                value="{{ $selected_merchant->name }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="email" class="form-control-label">Email address</label>
+                                            <input class="form-control" type="email" name="email"
+                                                value="{{ $selected_merchant->email }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="phone_number" class="form-control-label">Phone Number</label>
+                                            <input class="form-control" type="text" name="phone_number"
+                                                value="{{ $selected_merchant->phone_number }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="company_description" class="form-control-label">Company
+                                                Description</label>
+                                            <textarea class="form-control" name="company_description" rows="4">{{ $selected_merchant->company_description }}</textarea>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="mb-4">
-                                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                                    <input type="email" name="email" id="email"
-                                        value="{{ $selected_merchant->email }}"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="phone_number" class="block text-sm font-medium text-gray-700">Phone
-                                        Number</label>
-                                    <input type="text" name="phone_number" id="phone_number"
-                                        value="{{ $selected_merchant->phone_number }}"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                                </div>
-
                                 <div class="text-right">
-                                    <button type="submit"
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md shadow-sm transition-colors duration-200">Save</button>
+                                    <button type="submit" class="btn btn-primary btn-sm ms-auto">Save</button>
                                 </div>
                             </form>
-
                         </div>
                     </div>
                 </div>

@@ -2,7 +2,7 @@
 
 @section('container')
     <!-- Product List -->
-    <section>
+    <section id="product-list">
         <div>
             <header>
                 <h2 class="text-xl font-bold text-gray-900 sm:text-2xl">Special Concert Ticket Price! 😍</h2>
@@ -21,20 +21,21 @@
             </ul>
 
             <div class="flex justify-center items-center mt-10">
-                <a class="group relative inline-block text-sm font-medium text-indigo-600 focus:outline-none focus:ring active:text-indigo-500 w-full text-center"
+                <a class="group relative block text-md font-bold text-black before:absolute before:inset-0 before:rounded-md before:border-2 before:border-dashed before:border-slate-900 w-full text-center"
                     href="{{ route('event.index') }}">
-                    <span
-                        class="absolute inset-0 translate-x-0 translate-y-0 bg-indigo-600 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5"></span>
+                    <div
+                        class="h-full rounded-md border-2 border-slate-900 bg-white transition group-hover:-translate-y-2 group-hover:-translate-x-2">
 
-                    <span class="relative block border border-current bg-white px-8 py-3"> Check Another Ticket
-                    </span>
+                        <span class="relative block px-8 py-3"> Check Another Ticket
+                        </span>
+                    </div>
                 </a>
             </div>
         </div>
     </section>
 
     <!-- Profit -->
-    <section>
+    <section id="profit">
         <div class="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
                 <div class="relative h-64 overflow-hidden rounded-lg sm:h-80 lg:order-last lg:h-full">
@@ -57,9 +58,9 @@
     </section>
 
     <!-- Testimonials -->
-    <section class="bg-white">
-        <div class="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
-            <h2 class="text-center text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+    <section id="testimonials">
+        <div class="mx-auto max-w-screen-xl p-4 sm:px-6 lg:px-8">
+            <h2 class="text-center text-4xl font-bold tracking-tight text-gray-900">
                 Read trusted reviews from our customers
             </h2>
 

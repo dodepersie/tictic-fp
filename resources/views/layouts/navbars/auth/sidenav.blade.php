@@ -50,6 +50,21 @@
                     </a>
                 </li>
             @endcan
+
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Profile Management</h6>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ Route::currentRouteName() == 'profile.index' ? 'active' : '' }}"
+                    href="{{ route('profile.index') }}">
+                    <div class="icon icon-shape border-radius-md text-center me-1 d-flex align-items-center justify-content-center"
+                        style="width: 36px;height: 36px;">
+                        <i data-feather="user"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Edit profile</span>
+                </a>
+            </li>
         </ul>
     </div>
 </aside>

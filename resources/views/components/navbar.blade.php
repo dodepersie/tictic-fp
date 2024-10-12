@@ -2,24 +2,26 @@
 
     <!-- Top menu -->
     <div class="hidden md:block bg-gray-900">
-        <div class="mx-auto max-w-screen-xl p-3 text-white">
+        <div class="mx-auto max-w-screen-2xl p-3 text-white">
             <div class="flex justify-end items-center">
                 <div class="relative md:flex md:items-center md:gap-4" x-data="{ showDropdown: false }">
                     <!-- For LG screens -->
                     <nav aria-label="Global" class="hidden md:block">
-                        <ul class="flex items-center gap-4 text-sm">
+                        <ul class="flex items-center gap-1 text-sm">
                             <li>
-                                <a class="font-bold" href="/about">
+                                <a class="font-bold hover:bg-white hover:text-black p-3" href="{{ route('about') }}">
                                     About </a>
                             </li>
 
                             <li>
-                                <a class="font-bold" href="{{ route('event.index') }}"> Tickets </a>
+                                <a class="font-bold hover:bg-white hover:text-black p-3"
+                                    href="{{ route('event.index') }}"> Tickets </a>
                             </li>
 
                             @guest
                                 <li>
-                                    <a class="font-bold" href="{{ route('register_merchant') }}">
+                                    <a class="font-bold hover:bg-white hover:text-black p-3"
+                                        href="{{ route('register_merchant') }}">
                                         Become TicTic
                                         Partner </a>
                                 </li>
@@ -27,96 +29,12 @@
                         </ul>
                     </nav>
 
-                    {{-- <div class="flex items-center gap-2">
-                        <div class="sm:flex sm:gap-3">
-                            @guest
-                                <a class="group relative inline-block text-sm font-medium bg-white focus:outline-none focus:ring active:text-blue-500"
-                                    href="{{ route('login') }}">
-                                    <span class="absolute inset-0 border border-current"></span>
-                                    <span
-                                        class="text-white block border border-current bg-blue-600 px-4 py-2 sm:py-2.5 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1">
-                                        Log in
-                                    </span>
-                                </a>
-
-                                <div class="hidden sm:flex">
-                                    <a class="group relative inline-block text-sm font-medium text-blue-600 focus:outline-none focus:ring active:text-blue-500"
-                                        href="{{ route('register') }}">
-                                        <span class="absolute inset-0 border border-current"></span>
-                                        <span
-                                            class="block border border-current bg-white px-5 py-2.5 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1">
-                                            Register Now!
-                                        </span>
-                                    </a>
-                                </div>
-                            @endguest
-
-                            @auth
-                                <div x-data="{ isActive: false }" class="relative">
-                                    <div class="inline-flex items-center overflow-hidden rounded-md bg-transparent">
-                                        <button x-on:click="isActive = !isActive" class="h-full p-2" x-transition>
-                                            <span class="sr-only">User Logo</span>
-                                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-                                                alt="Profile icon" class="w-8 h-8 rounded-full" />
-                                        </button>
-                                    </div>
-
-                                    <div class="absolute end-0 z-10 mt-2 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg"
-                                        role="menu" x-cloak x-transition x-show="isActive"
-                                        x-on:click.away="isActive = false" x-on:keydown.escape.window="isActive = false">
-                                        <div class="p-2">
-                                            <a href="{{ route('dashboard.index') }}"
-                                                class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                                                role="menuitem">
-                                                Dashboard
-                                            </a>
-
-                                            <a href="#"
-                                                class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                                                role="menuitem">
-                                                Edit Profile
-                                            </a>
-                                        </div>
-
-                                        <div class="p-2">
-                                            <form method="POST" action="{{ route('logout') }}">
-                                                @csrf
-                                                <button type="submit"
-                                                    class="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
-                                                    role="menuitem">
-                                                    <svg class="w-4 h-4" aria-hidden="true"
-                                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        fill="none" viewBox="0 0 24 24">
-                                                        <path stroke="currentColor" stroke-linecap="round"
-                                                            stroke-linejoin="round" stroke-width="2"
-                                                            d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2" />
-                                                    </svg>
-                                                    Log Out
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endauth
-                        </div>
-
-                        <div class="block md:hidden">
-                            <button class="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75"
-                                @click="showDropdown = !showDropdown">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div> --}}
-
                     <!-- For small screens -->
                     <div class="absolute end-0 z-10 mt-2 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg"
                         role="menu" x-cloak x-transition x-show="showDropdown" x-on:click.away="showDropdown = false"
                         x-on:keydown.escape.window="showDropdown = false">
                         <div class="p-2">
-                            <a href="/"
+                            <a href="{{ route('about') }}"
                                 class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                                 role="menuitem">
                                 About
@@ -149,9 +67,10 @@
     </div>
 
     <!-- Bottom menu -->
-    <nav class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+    <nav class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
         <div class="container mx-auto px-2 sm:px-0">
             <div class="flex h-20 items-center justify-between sm:gap-20">
+                <!-- TicTic Logo -->
                 <div class="md:flex md:items-center md:w-1/6">
                     <a class="block text-black text-2xl font-bold" href="{{ route('home') }}">
                         <span class="sr-only">Home</span>
@@ -159,6 +78,7 @@
                     </a>
                 </div>
 
+                <!-- Seach Bar -->
                 <div class="justify-center md:flex md:w-full md:items-center">
                     <form action="#" class="w-full">
                         <div>
@@ -180,6 +100,7 @@
                     </form>
                 </div>
 
+                <!-- Menu -->
                 <div class="relative md:flex md:justify-end md:items-center md:w-1/6" x-data="{ showDropdown: false }">
                     <div class="flex justifty-center items-center gap-2">
                         <div class="hidden md:flex md:gap-3">
@@ -233,7 +154,7 @@
                                                 Dashboard
                                             </a>
 
-                                            <a href="#"
+                                            <a href="{{ route('profile.index') }}"
                                                 class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                                                 role="menuitem">
                                                 Edit Profile
@@ -281,7 +202,7 @@
                         <div>
                             <div class="divide-y divide-gray-200">
                                 <div class="p-2">
-                                    <a href="/"
+                                    <a href="{{ route('about') }}"
                                         class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                                         role="menuitem">
                                         About
@@ -326,7 +247,7 @@
                                                     Dashboard
                                                 </a>
 
-                                                <a href="#"
+                                                <a href="{{ route('profile.index') }}"
                                                     class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                                                     role="menuitem">
                                                     Edit Profile

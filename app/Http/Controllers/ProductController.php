@@ -12,7 +12,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(12);
+        $products = Product::paginate(6);
 
         return view('event.index', [
             'title' => 'Events Listing',

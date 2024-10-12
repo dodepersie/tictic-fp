@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\UserProfileController;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -43,6 +44,11 @@ Route::post('/register/merchant', [RegisterController::class, 'store_merchant'])
 
 // Product / Event Route
 Route::resource('/event', ProductController::class);
+
+// About
+Route::get('/about', function () {
+    return view('about', ['title' => 'About Us']);
+})->name('about');
 
 Route::get('/forgot-password', function () {
     return view('auth.forgot-password', [
@@ -124,4 +130,9 @@ Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () 
     Route::post('merchant/{merchant}/approve', [RegisterController::class, 'approve_merchant'])->name('merchant.approve');
     Route::post('merchant/{merchant}/reject', [RegisterController::class, 'reject_merchant'])->name('merchant.reject');
     Route::resource('merchant', MerchantController::class);
+    
+    // User Profile Management
+    Route::resource('profile', UserProfileController::class);
+    Route::delete('/profile/{id}/remove-picture', [UserProfileController::class, 'removeProfilePicture'])->name('profile.remove_picture');
+    Route::post('/profile/{id}/change-pwd', [UserProfileController::class, 'changePassword'])->name('profile.change_password');
 });

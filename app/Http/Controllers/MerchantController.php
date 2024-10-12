@@ -61,7 +61,7 @@ class MerchantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMerchantRequest $request, Merchant $merchant, User $user)
+    public function update(UpdateMerchantRequest $request, Merchant $merchant)
     {
         $this->authorize('admin');
         
