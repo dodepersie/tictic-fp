@@ -73,8 +73,13 @@
                 <!-- TicTic Logo -->
                 <div class="md:flex md:items-center md:w-1/6">
                     <a class="block text-black text-2xl font-bold" href="{{ route('home') }}">
-                        <span class="sr-only">Home</span>
-                        TicTic
+                        <div class="flex items-center">
+                            <img src="{{ asset('/img/TicTic Logo.png') }}" class="h-14 w-16" alt="TicTic Logo" />
+                            <div class="hidden sm:block">
+                                <span class="sr-only">Home</span>
+                                TicTic
+                            </div>
+                        </div>
                     </a>
                 </div>
 

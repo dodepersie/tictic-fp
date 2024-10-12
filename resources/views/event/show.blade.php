@@ -5,62 +5,66 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
             <!-- Content -->
             <div class="space-y-4 lg:col-span-2">
-                <h2 class="font-afacadflux text-3xl sm:text-4xl text-gray-900 font-bold leading-relaxed tracking-tight">
-                    {{ ucfirst($product->event_title) }}</span>
-                </h2>
+                <!-- Header -->
+                <div class="space-y-2">
+                    <h2 class="font-afacadflux text-3xl sm:text-4xl text-gray-900 font-bold leading-relaxed tracking-tight">
+                        {{ ucfirst($product->event_title) }}</span>
+                    </h2>
 
-                <div class="text-md leading-loose">
-                    <div class="lg:flex justify-start items-center gap-1.5">
-                        <!-- Star -->
-                        <div class="flex lg:justify-center gap-0.5 text-green-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
+                    <div class="text-md leading-loose">
+                        <div class="lg:flex justify-start items-center gap-1.5">
+                            <!-- Star -->
+                            <div class="flex lg:justify-center gap-0.5 text-green-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                            </div>
+                            <!-- Reviews Count -->
+                            <div>99999 Reviews</div>
                         </div>
-                        <!-- Reviews Count -->
-                        <div>99999 Reviews</div>
                         <!-- Event Date -->
-                        <div>Event Date: {{ date('d F Y', strtotime($product->event_start_date)) }}</div>
+                        <div>Event Date: <span
+                                class="font-bold">{{ date('d F Y', strtotime($product->event_start_date)) }}</span></div>
+                        <!-- Event Location -->
+                        <div>Event Location: <span class="font-bold">{{ $product->event_location }}</span></div>
                     </div>
                 </div>
 
                 <div class="space-y-2">
-                    <img src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    <img src="{{ $product->event_image ? '/storage/event_images/' . $product->event_image : 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop ?>' }}"
                         alt="{{ ucfirst($product->event_title) }}" class="h-auto object-contain rounded-xl shadow" />
                 </div>
 
                 <div class="space-y-2">
-                    <span class="flex items-center">
-                        <span class="pr-3 text-xl font-semibold">Event Description</span>
-                        <span class="h-px flex-1 bg-black"></span>
-                    </span>
+                    <span class="text-xl font-semibold">Event Description</span>
                     <p class="text-justify leading-loose">
                         {{ $product->event_detail }}
                     </p>
                 </div>
 
                 <div class="space-y-2">
-                    <span class="flex items-center">
-                        <span class="h-px flex-1 bg-black"></span>
-                        <span class="pl-3 text-xl font-semibold">Reviews</span>
-                    </span>
+                    <span class="text-xl font-semibold">Reviews</span>
 
                     <div>
                         Kotak review
@@ -73,19 +77,15 @@
                 <div class="space-y-4">
                     <!-- About Merchant -->
                     <div class="space-y-3">
-                        <h2 class="font-bold text-xl">About NAMA MERCHANT</h2>
+                        <h2 class="font-bold text-xl">About {{ $product->merchant->user->name }}</h2>
 
                         <div class="flex items-center gap-4">
-                            <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=2680&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                alt="Merchant Name" class="size-20 rounded-lg object-cover" />
+                            <img src="{{ $product->merchant->user->profile_picture ? asset('/storage/user_profile/' . $product->merchant->user->profile_picture) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu9zuWJ0xU19Mgk0dNFnl2KIc8E9Ch0zhfCg&s' }}"
+                                alt="{{ $product->merchant->user->name }}" class="size-20 rounded-lg object-cover" />
 
                             <div>
-                                <h3 class="text-lg/tight font-medium text-gray-900">Title goes here</h3>
-
                                 <p class="mt-0.5 text-gray-700">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates voluptas
-                                    distinctio
-                                    nesciunt quas non animi.
+                                    {{ $product->merchant->user->company_description ? $product->merchant->user->company_description : 'This merchant not set company description.. 😅' }}
                                 </p>
                             </div>
                         </div>

@@ -19,15 +19,17 @@ return new class extends Migration
             $table->text('event_detail');
             $table->string('event_price');
             $table->string('event_location');
-            $table->string('event_location_langitude');
-            $table->string('event_location_latitude');
+            $table->decimal('event_location_longitude', 10, 7); // Longitude dalam format desimal
+            $table->decimal('event_location_latitude', 10, 7); // Latitude dalam format desimal
             $table->date('event_start_date');
             $table->string('event_image')->nullable();
             $table->timestamps();
     
+            // Definisi foreign key yang menghubungkan ke tabel merchants
             $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade');
         });
     }
+    
 
     /**
      * Reverse the migrations.

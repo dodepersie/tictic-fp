@@ -1,21 +1,22 @@
 <?php
 
-use App\Http\Controllers\Auth\SocialiteController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\MerchantController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\UserProfileController;
 use App\Models\User;
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Password;
+use App\Http\Controllers\LoginController;
+use Illuminate\Auth\Events\PasswordReset;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\MerchantController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\MerchantEventController;
+use App\Http\Controllers\Auth\SocialiteController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -130,6 +131,10 @@ Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () 
     Route::post('merchant/{merchant}/approve', [RegisterController::class, 'approve_merchant'])->name('merchant.approve');
     Route::post('merchant/{merchant}/reject', [RegisterController::class, 'reject_merchant'])->name('merchant.reject');
     Route::resource('merchant', MerchantController::class);
+    
+    // Merchant Event
+    Route::resource('events', MerchantEventController::class)->names('merchant_events');
+    Route::get('/checkSlug', [MerchantEventController::class, 'checkSlug']);
     
     // User Profile Management
     Route::resource('profile', UserProfileController::class);

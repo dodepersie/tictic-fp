@@ -44,7 +44,7 @@
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <input type="hidden" value="{{ auth()->user()->id }}" name="id" />
+
                         <div class="card-header pb-0">
                             <div class="d-flex align-items-center">
                                 <p class="mb-0">Edit Profile</p>

@@ -12,7 +12,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(6);
+        $products = Product::latest()->paginate(6);
 
         return view('event.index', [
             'title' => 'Events Listing',
@@ -25,7 +25,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -41,17 +41,15 @@ class ProductController extends Controller
      */
     public function show($slug)
     {
-        $products = Product::latest();
-        $product = Product::where('slug', $slug)->first();
+        $product = Product::where('slug', $slug)->firstOrFail();
 
-        if (! $product) {
+        if (!$product) {
             abort(404);
         }
 
         return view('event.show', [
             'title' => $product->event_title,
             'product' => $product,
-            'products' => $products,
         ]);
     }
 

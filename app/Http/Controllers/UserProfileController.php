@@ -67,7 +67,7 @@ class UserProfileController extends Controller
     public function update(UpdateProfileRequest $request)
     {
         // ID Check
-        $userId = $request->input('id');
+        $userId = auth()->user()->id;
         $user = User::findOrFail($userId);
 
         // Check data validation
