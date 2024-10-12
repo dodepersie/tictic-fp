@@ -3,7 +3,7 @@
 @section('container')
     <section>
         <header>
-            <h2 class="text-xl font-bold text-gray-900 sm:text-3xl">All Tickets on TicTic 😍🎉</h2>
+            <h2 class="text-xl font-bold text-gray-900 sm:text-3xl"> {{ $title }} 😍🎉</h2>
         </header>
 
         <div class="md:grid grid-cols-5 mt-4 gap-4">
@@ -107,13 +107,19 @@
             </div>
 
             <div class="col-span-4">
-                <ul class="my-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    @foreach ($products as $product)
-                        <x-home-ticket href="/event/{{ $product->slug }}">
-                            @slot('product', $product)
-                        </x-home-ticket>
-                    @endforeach
-                </ul>
+                @if ($products->count())
+                    <ul class="my-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        @foreach ($products as $product)
+                            <x-home-ticket href="{{ route('event.show', $product->slug) }}">
+                                @slot('product', $product)
+                            </x-home-ticket>
+                        @endforeach
+                    </ul>
+                @else
+                    <div class="text-md">
+                        No events available..
+                    </div>
+                @endif
             </div>
         </div>
 

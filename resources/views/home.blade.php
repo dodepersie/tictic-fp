@@ -14,7 +14,7 @@
 
             <ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 @foreach ($products as $product)
-                    <x-home-ticket href="/event/{{ $product->slug }}">
+                    <x-home-ticket href="{{ route('event.show', $product->slug) }}">
                         @slot('product', $product)
                     </x-home-ticket>
                 @endforeach

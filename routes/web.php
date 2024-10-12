@@ -44,7 +44,7 @@ Route::get('/register/merchant', [RegisterController::class, 'index_merchant'])-
 Route::post('/register/merchant', [RegisterController::class, 'store_merchant'])->name('egister_merchant')->middleware('guest');
 
 // Product / Event Route
-Route::resource('/event', ProductController::class);
+Route::resource('/events', ProductController::class)->names('event');
 
 // About
 Route::get('/about', function () {

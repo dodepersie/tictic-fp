@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Merchant;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -12,11 +13,20 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::latest()->paginate(6);
+        $title = '';
+
+        if (request('merchant')) {
+            $merchant = Merchant::where('id', request('merchant'))->firstOrFail();
+            $title = ' by ' . $merchant->user->name;
+        }        
+
+        if ($location = request('location')) {
+            $title = ' at '. $location;
+        }      
 
         return view('event.index', [
-            'title' => 'Events Listing',
-            'products' => $products,
+            'title' => "Events". $title,
+            'products' => Product::latest()->filter(request(['search', 'merchant', 'location']))->paginate(6),
         ]);
     }
 
