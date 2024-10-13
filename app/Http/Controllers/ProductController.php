@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Merchant;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -54,12 +55,13 @@ class ProductController extends Controller
     public function show($slug)
     {
         $product = Product::where('slug', $slug)->firstOrFail();
-
+    
         return view('event.show', [
             'title' => $product->event_title,
             'product' => $product,
         ]);
     }
+    
 
     /**
      * Show the form for editing the specified resource.

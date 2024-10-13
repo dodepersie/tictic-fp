@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\LoginController;
 use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Middleware\CheckMerchantStatus;
@@ -46,6 +47,12 @@ Route::post('/register/merchant', [RegisterController::class, 'store_merchant'])
 
 // Product / Event Route
 Route::resource('/events', ProductController::class)->names('event');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/checkout/{transaction}', [CheckoutController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout', [CheckoutController::class, 'proccess'])->name('checkout-proccess');
+    Route::get('/checkout/success/{transaction}', [CheckoutController::class, 'success'])->name('checkout-success');
+});
 
 // About
 Route::get('/about', function () {

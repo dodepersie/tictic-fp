@@ -167,14 +167,20 @@
                                 </div>
 
                                 <div class="flex justify-end items-center pt-3 mt-3 border-t border-gray-200">
-                                    <button
-                                        class="group relative inline-block text-sm font-medium bg-white focus:outline-none focus:ring active:text-blue-500">
-                                        <span class="absolute inset-0 border border-current"></span>
-                                        <span
-                                            class="text-white block border border-current bg-blue-600 px-4 py-2 sm:py-2.5 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1">
-                                            Pay with Midtrans
-                                        </span>
-                                    </button>
+                                    <form action="{{ route('checkout-proccess') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $product->id }}">
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <input type="hidden" name="price" value="{{ $product->event_price }}">
+                                        <button
+                                            class="group relative inline-block text-sm font-medium bg-white focus:outline-none focus:ring active:text-blue-500">
+                                            <span class="absolute inset-0 border border-current"></span>
+                                            <span
+                                                class="text-white block border border-current bg-blue-600 px-4 py-2 sm:py-2.5 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1">
+                                                Pay with Midtrans
+                                            </span>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

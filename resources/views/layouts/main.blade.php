@@ -48,6 +48,8 @@
 
     <!-- Swal2 -->
     @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@11'])
+
+    @stack('script')
 </body>
 
 </html>
