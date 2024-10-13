@@ -10,13 +10,13 @@
 
 
             <button
-                class="group relative inline-block text-sm font-medium bg-white focus:outline-none focus:ring active:text-blue-500"
+                class="group relative block text-md font-bold text-white before:absolute before:inset-0 before:rounded-md before:border-2 before:border-dashed before:border-slate-900 text-center"
                 id="pay-button">
-                <span class="absolute inset-0 border border-current"></span>
-                <span
-                    class="text-white block border border-current bg-blue-600 px-4 py-2 sm:py-2.5 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1">
-                    Pay now!
-                </span>
+                <div
+                    class="h-full rounded-md border-2 border-slate-900 bg-slate-900 transition group-hover:-translate-y-2 group-hover:-translate-x-2">
+
+                    <span class="relative block px-4 py-1"> Pay now with Midtrans </span>
+                </div>
             </button>
         </div>
     </div>

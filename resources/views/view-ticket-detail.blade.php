@@ -3,7 +3,7 @@
 @section('container')
     <section>
         <div class="flex flex-col justify-center items-center">
-            <div class="container mx-auto max-w-2xl space-y-5">
+            <div class="container mx-auto max-w-2xl space-y-5 py-10 lg:pt-20">
                 <header>
                     <h2 class="text-center text-2xl font-bold text-gray-900 sm:text-3xl">View Ticket Details</h2>
                 </header>

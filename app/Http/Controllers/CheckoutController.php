@@ -11,6 +11,18 @@ class CheckoutController extends Controller
         return redirect()->route('home');
     }
 
+    public function generateUniqueId($length = 8)
+    {
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $uniqueId = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $uniqueId .= $characters[random_int(0, strlen($characters) - 1)];
+        }
+
+        return $uniqueId;
+    }
+
     public function proccess(Request $request) {
 
         $data = $request->all();
@@ -27,23 +39,25 @@ class CheckoutController extends Controller
         \Midtrans\Config::$isSanitized = true;
         \Midtrans\Config::$is3ds = true;
 
+        $uniqueId = $this->generateUniqueId();
+
         $params = array(
             'transaction_details' => array(
-                'order_id' => uniqid(),
+                'order_id' => $uniqueId,
                 'gross_amount' => $data['price'],
             ),
             'customer_details' => array(
                 'first_name' => auth()->user()->name,
                 'email'      => auth()->user()->email,
+                'phone'      => auth()->user()->phone_number,
             ),
         );
 
-        // Mendapatkan Snap Token dari Midtrans
         $snapToken = \Midtrans\Snap::getSnapToken($params);
         $transaction->snap_token = $snapToken;
+        $transaction->unique_id = $uniqueId;
         $transaction->save();
 
-        // Redirect ke halaman sukses
         return redirect()->route('checkout', $transaction->id);
     }
 

@@ -91,21 +91,14 @@
                             </div>
                         </div>
 
-                        <a class="group flex items-center justify-between gap-4 rounded-lg border border-indigo-600 bg-indigo-600 px-3 py-2 transition-colors hover:bg-transparent focus:outline-none focus:ring"
+                        <a class="group relative block text-md font-bold text-black before:absolute before:inset-0 before:rounded-md before:border-2 before:border-dashed before:border-slate-900 text-center"
                             href="/events?merchant={{ $product->merchant->id }}">
-                            <span
-                                class="font-medium text-white transition-colors group-hover:text-indigo-600 group-active:text-indigo-500">
-                                Look more from {{ $product->merchant->user->name }}
-                            </span>
+                            <div
+                                class="h-full rounded-md border-2 border-slate-900 bg-white transition group-hover:-translate-y-2 group-hover:-translate-x-2">
 
-                            <span
-                                class="shrink-0 rounded-full border border-current bg-white p-2 text-indigo-600 group-active:text-indigo-500">
-                                <svg class="size-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                </svg>
-                            </span>
+                                <span class="relative block px-4 py-1"> More from {{ $product->merchant->user->name }}
+                                </span>
+                            </div>
                         </a>
                     </div>
 
@@ -175,12 +168,12 @@
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         <input type="hidden" name="price" value="{{ $product->event_price }}">
                                         <button
-                                            class="group relative inline-block text-sm font-medium bg-white focus:outline-none focus:ring active:text-blue-500">
-                                            <span class="absolute inset-0 border border-current"></span>
-                                            <span
-                                                class="text-white block border border-current bg-blue-600 px-4 py-2 sm:py-2.5 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1">
-                                                Pay with Midtrans
-                                            </span>
+                                            class="group relative block text-md font-bold text-white before:absolute before:inset-0 before:rounded-md before:border-2 before:border-dashed before:border-slate-900 text-center">
+                                            <div
+                                                class="h-full rounded-md border-2 border-slate-900 bg-slate-900 transition group-hover:-translate-y-2 group-hover:-translate-x-2">
+
+                                                <span class="relative block px-4 py-1"> Process to Checkout Page </span>
+                                            </div>
                                         </button>
                                     </form>
                                 </div>

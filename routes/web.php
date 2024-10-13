@@ -34,8 +34,10 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/view-ticket-detail', [TransactionController::class, 'index'])->name('view-ticket-detail');
-Route::post('/view-ticket-detail', [TransactionController::class, 'viewTicketDetail'])->name('view-ticket-detail');
+Route::middleware(['auth', OnlyCustomerRole::class])->group(function () {
+    Route::get('/view-ticket-detail', [TransactionController::class, 'index'])->name('view-ticket-detail');
+    Route::post('/view-ticket-detail', [TransactionController::class, 'viewTicketDetail'])->name('view-ticket-detail');
+});
 
 // Auth Route
 Route::get('/login', [LoginController::class, 'index'])

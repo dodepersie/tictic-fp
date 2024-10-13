@@ -25,24 +25,24 @@ class Transaction extends Model
     const STATUS_CANCELED = 'Canceled';
 
     // Method untuk menggenerate unique_id
-    public function generateUniqueId($length = 8)
-    {
-        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        $uniqueId = '';
+    // public function generateUniqueId($length = 8)
+    // {
+    //     $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    //     $uniqueId = '';
 
-        for ($i = 0; $i < $length; $i++) {
-            $uniqueId .= $characters[random_int(0, strlen($characters) - 1)];
-        }
+    //     for ($i = 0; $i < $length; $i++) {
+    //         $uniqueId .= $characters[random_int(0, strlen($characters) - 1)];
+    //     }
 
-        return $uniqueId;
-    }
+    //     return $uniqueId;
+    // }
 
     public function markAsSuccess()
     {
         $this->status = 'Success';
-        if (is_null($this->unique_id)) {
-            $this->unique_id = $this->generateUniqueId();
-        }
+        // if (is_null($this->unique_id)) {
+        //     $this->unique_id = $this->generateUniqueId();
+        // }
         $this->save();
     }
 
