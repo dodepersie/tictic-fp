@@ -77,8 +77,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="event_detail" class="form-control-label">Event Detail (soon change
-                                                text editor)</label>
+                                            <label for="event_detail" class="form-control-label">Event Detail</label>
                                             <textarea class="form-control" name="event_detail" id="event_detail" rows="4" value="{{ old('event_detail') }}"
                                                 required></textarea>
                                         </div>

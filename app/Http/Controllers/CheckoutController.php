@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {
+    public function index() {
+        return redirect()->route('home');
+    }
+
     public function proccess(Request $request) {
 
         $data = $request->all();
@@ -46,6 +50,10 @@ class CheckoutController extends Controller
     }
 
     public function checkout(Transaction $transaction) {
+        if (auth()->user()->id != $transaction->user_id) {
+            abort(403, 'Unauthorized access.');
+        }
+
         $products = config('product');
         $product = collect($products)->firstWhere('id', $transaction->product_id);
         $title = 'Checkout: ' . $transaction->product->event_title;
@@ -54,6 +62,10 @@ class CheckoutController extends Controller
     }
 
     public function success(Transaction $transaction) {
+        if (auth()->user()->id != $transaction->user_id) {
+            abort(403, 'Unauthorized access.');
+    }
+
         $title = "Checkout Success: " . $transaction->product->event_title;
         $transaction->status = 'Success';
         $transaction->save();

@@ -3,7 +3,7 @@
 @section('container')
     <div class="comtainer mx-auto max-w-2xl">
         <div class="border border-dashed border-gray-300 p-3 flex flex-col items-center gap-2">
-            <span class="text-lg">
+            <span class="text-lg text-center">
                 You will make payment to <span class="font-bold">{{ $transaction->product->event_title }}</span> of
                 <span class="font-bold">Rp {{ number_format($transaction->price, 0, ',', '.') }}</span>
             </span>

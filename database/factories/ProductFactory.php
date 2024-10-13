@@ -24,7 +24,7 @@ class ProductFactory extends Factory
             'event_price' => fake()->randomNumber(5, true),
             'event_start_date' => fake()->dateTimeThisYear(),
             'event_location' => 'Denpasar',
-            'event_location_langitude' => '1',
+            'event_location_longitude' => '1',
             'event_location_latitude' => '1',
         ];
     }

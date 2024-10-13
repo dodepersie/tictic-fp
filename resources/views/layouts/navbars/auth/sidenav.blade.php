@@ -21,6 +21,7 @@
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
+
             @can('admin')
                 <li class="nav-item mt-3">
                     <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">User Management</h6>
@@ -65,6 +66,23 @@
                             <i data-feather="list"></i>
                         </div>
                         <span class="nav-link-text ms-1">View your events</span>
+                    </a>
+                </li>
+            @endcan
+
+            @can('customer')
+                <li class="nav-item mt-3">
+                    <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Transactions</h6>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ Str::startsWith(Route::currentRouteName(), 'dashboard_transactions.index') ? 'active' : '' }}"
+                        href="{{ route('dashboard_transactions.index') }}">
+                        <div class="icon icon-shape border-radius-md text-center me-1 d-flex align-items-center justify-content-center"
+                            style="width: 36px;height: 36px;">
+                            <i data-feather="list"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">All Transactions</span>
                     </a>
                 </li>
             @endcan

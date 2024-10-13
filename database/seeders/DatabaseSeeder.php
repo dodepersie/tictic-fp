@@ -65,6 +65,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'c@tictic.id',
         ]);
 
-        // Product::factory(50)->create();
+        User::factory()->create([
+            'name' => 'Dode Mahadi 2',
+            'email' => 'd@tictic.id',
+        ]);
+
+        Product::factory(1)->create();
     }
 }

@@ -18,6 +18,25 @@ class Transaction extends Model
     protected $guarded = [
         'id',
     ];
+    
+    const STATUS_PENDING = 'Pending';
+    const STATUS_SUCCESS = 'Success';
+    const STATUS_CANCELED = 'Canceled';
+
+    public function isPending()
+    {
+        return $this->status === self::STATUS_PENDING;
+    }
+
+    public function isSuccess()
+    {
+        return $this->status === self::STATUS_SUCCESS;
+    }
+
+    public function isCanceled()
+    {
+        return $this->status === self::STATUS_CANCELED;
+    }
 
     public function product(): BelongsTo
     {

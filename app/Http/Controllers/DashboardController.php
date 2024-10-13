@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Merchant;
-use App\Models\Product;
 use App\Models\User;
+use App\Models\Product;
+use App\Models\Merchant;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Gate;
 
 class DashboardController extends Controller
@@ -49,5 +50,12 @@ class DashboardController extends Controller
         } else {
             abort(403);
         }
+    }
+
+    public function all_transaction(Transaction $transaction){
+        $title = 'All Transactions';
+        $transactions = Transaction::where('user_id', '=', auth()->user()->id)->get();
+
+        return view('dashboard.transactions.index', compact('title', 'transactions'));
     }
 }

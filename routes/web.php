@@ -18,6 +18,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\MerchantEventController;
 use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Middleware\OnlyCustomerRole;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -48,10 +49,12 @@ Route::post('/register/merchant', [RegisterController::class, 'store_merchant'])
 // Product / Event Route
 Route::resource('/events', ProductController::class)->names('event');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', OnlyCustomerRole::class])->group(function () {
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout-index');
     Route::get('/checkout/{transaction}', [CheckoutController::class, 'checkout'])->name('checkout');
     Route::post('/checkout', [CheckoutController::class, 'proccess'])->name('checkout-proccess');
-    Route::get('/checkout/success/{transaction}', [CheckoutController::class, 'success'])->name('checkout-success');
+    Route::get('/checkout/success/{transaction}', [CheckoutController::class, 'success'])->name('checkout-success')->middleware('transaction.status');
+    Route::get('/dashboard/transactions', [DashboardController::class, 'all_transaction'])->name('dashboard_transactions.index');
 });
 
 // About
