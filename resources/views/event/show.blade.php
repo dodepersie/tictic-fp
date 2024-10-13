@@ -58,7 +58,7 @@
                 <div class="space-y-2">
                     <span class="text-xl font-semibold">Event Description</span>
                     <p class="text-justify leading-loose">
-                        {{ $product->event_detail }}
+                        {!! $product->event_detail !!}
                     </p>
                 </div>
 

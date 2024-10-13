@@ -14,21 +14,23 @@ class ProductController extends Controller
     public function index()
     {
         $title = '';
-
-        if (request('merchant')) {
-            $merchant = Merchant::where('id', request('merchant'))->firstOrFail();
-            $title = ' by ' . $merchant->user->name;
-        }        
-
+    
+        // Check if the request is for a merchant
+        if ($merchantId = request('merchant')) {
+            $merchant = Merchant::where('id', $merchantId)->firstOrFail();
+            $title .= ' by ' . $merchant->user->name;
+        } 
+    
+        // Check if the request is for a location
         if ($location = request('location')) {
-            $title = ' at '. $location;
+            $title .= ' at ' . $location;
         }      
-
+    
         return view('event.index', [
-            'title' => "Events". $title,
+            'title' => "Events" . $title,
             'products' => Product::latest()->filter(request(['search', 'merchant', 'location']))->paginate(6),
         ]);
-    }
+    }    
 
     /**
      * Show the form for creating a new resource.
@@ -52,10 +54,6 @@ class ProductController extends Controller
     public function show($slug)
     {
         $product = Product::where('slug', $slug)->firstOrFail();
-
-        if (!$product) {
-            abort(404);
-        }
 
         return view('event.show', [
             'title' => $product->event_title,

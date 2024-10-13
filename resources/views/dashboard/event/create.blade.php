@@ -42,8 +42,12 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="event_price" class="form-control-label">Event Price</label>
-                                            Rp <input class="form-control" type="text" name="event_price"
-                                                id="event_price" value="{{ old('event_price') }}" required />
+
+                                            <div class="input-group">
+                                                <span class="input-group-text" id="inputGroupPrepend">Rp</span>
+                                                <input class="form-control" type="text" name="event_price"
+                                                    id="event_price" value="{{ old('event_price') }}" required />
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -106,7 +110,23 @@
     </div>
 @endsection
 
+@push('editor')
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+@endpush
+
 @push('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0];
+            document.getElementById('event_start_date').setAttribute('min', formattedDate);
+        });
+    </script>
+
     <script>
         const title = document.querySelector('#event_title');
         const slug = document.querySelector('#slug');
@@ -130,5 +150,24 @@
                 imgPreview.style.height = '10rem';
             }
         }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#event_detail').summernote({
+                height: 150,
+                minHeight: null,
+                maxHeight: null,
+                focus: true,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link']],
+                    ['view', ['codeview']]
+                ]
+            });
+        });
     </script>
 @endpush
