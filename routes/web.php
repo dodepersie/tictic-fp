@@ -53,7 +53,7 @@ Route::middleware(['auth', OnlyCustomerRole::class])->group(function () {
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout-index');
     Route::get('/checkout/{transaction}', [CheckoutController::class, 'checkout'])->name('checkout');
     Route::post('/checkout', [CheckoutController::class, 'proccess'])->name('checkout-proccess');
-    Route::get('/checkout/success/{transaction}', [CheckoutController::class, 'success'])->name('checkout-success')->middleware('transaction.status');
+    Route::get('/checkout/success/{transaction}', [CheckoutController::class, 'success'])->name('checkout-success');
     Route::get('/dashboard/transactions', [DashboardController::class, 'all_transaction'])->name('dashboard_transactions.index');
 });
 

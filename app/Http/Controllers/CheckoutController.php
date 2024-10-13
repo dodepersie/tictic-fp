@@ -22,13 +22,11 @@ class CheckoutController extends Controller
             'status' => 'Pending',
         ]);
 
-        // Konfigurasi Midtrans
         \Midtrans\Config::$serverKey = config('midtrans.serverKey');
         \Midtrans\Config::$isProduction = false;
         \Midtrans\Config::$isSanitized = true;
         \Midtrans\Config::$is3ds = true;
 
-        // Parameter untuk Midtrans Snap
         $params = array(
             'transaction_details' => array(
                 'order_id' => uniqid(),
@@ -54,6 +52,10 @@ class CheckoutController extends Controller
             abort(403, 'Unauthorized access.');
         }
 
+        if ($transaction->status === Transaction::STATUS_SUCCESS) {
+            return redirect()->route('checkout-success', ['transaction' => $transaction->id]);
+        }
+
         $products = config('product');
         $product = collect($products)->firstWhere('id', $transaction->product_id);
         $title = 'Checkout: ' . $transaction->product->event_title;
@@ -64,10 +66,11 @@ class CheckoutController extends Controller
     public function success(Transaction $transaction) {
         if (auth()->user()->id != $transaction->user_id) {
             abort(403, 'Unauthorized access.');
-    }
+        }
 
         $title = "Checkout Success: " . $transaction->product->event_title;
         $transaction->status = 'Success';
+        $transaction->markAsSuccess();
         $transaction->save();
 
         return view('checkout.success', compact('title', 'transaction'));

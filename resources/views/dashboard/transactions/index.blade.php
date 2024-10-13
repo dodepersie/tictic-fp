@@ -53,7 +53,7 @@
                                             <td class="align-middle text-center text-sm">
                                                 @if ($transaction->status == 'Success')
                                                     <span
-                                                        class="badge bg-secondary text-xs font-weight-bold">{{ $transaction->status }}</span>
+                                                        class="badge bg-success text-xs font-weight-bold">{{ $transaction->status }}</span>
                                                 @elseif($transaction->status == 'Pending')
                                                     <span
                                                         class="badge bg-warning text-xs font-weight-bold">{{ $transaction->status }}</span>
@@ -66,9 +66,15 @@
                                                 @if ($transaction->status == 'Pending')
                                                     <a href="{{ route('checkout', $transaction->id) }}" target="_blank"
                                                         class="badge bg-primary text-bg-primary text-xs font-weight-bold">Pay
-                                                        Now!</a>
+                                                        Now</a>
                                                 @elseif ($transaction->status == 'Success')
-                                                    Review Event
+                                                    <div class="d-flex align-items-center justify-content-center gap-2">
+                                                        <a href="{{ route('checkout', $transaction->id) }}" target="_blank"
+                                                            class="badge bg-primary text-bg-primary text-xs font-weight-bold">View
+                                                            Ticket</a>
+                                                        <a href="{{ route('checkout', $transaction->id) }}" target="_blank"
+                                                            class="badge bg-secondary text-bg-secondary text-xs font-weight-bold">Review</a>
+                                                    </div>
                                                 @else
                                                     -
                                                 @endif
