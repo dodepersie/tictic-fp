@@ -21,9 +21,9 @@
 <body class="{{ $class ?? '' }}">
 
     @auth
-        @if (!in_array(request()->route()->getName(), ['profile', 'profile-static']))
+        @if (!in_array(request()->route()->getName(), ['profile-static', 'profile']))
             <div class="min-height-300 bg-secondary position-absolute w-100"></div>
-        @elseif (in_array(request()->route()->getName(), ['profile-static', 'profile']))
+        @elseif (in_array(request()->route()->getName(), ['profile.index', 'profile-static']))
             <div class="position-absolute w-100 min-height-300 top-0"
                 style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/profile-layout-header.jpg'); background-position-y: 50%;">
                 <span class="mask bg-secondary opacity-6"></span>

@@ -33,7 +33,7 @@
                                             <td>
                                                 <div class="d-flex px-2 py-1">
                                                     <div>
-                                                        <img src="{{ $pending_merchant->user->profile_picture ?? asset('assets/img/noprofile.webp') }}"
+                                                        <img src="{{ asset('assets/img/noprofile.webp') }}"
                                                             class="avatar avatar-sm me-3"
                                                             alt="{{ $pending_merchant->user->name }}">
                                                     </div>
@@ -124,7 +124,7 @@
                                             <td>
                                                 <div class="d-flex px-2 py-1">
                                                     <div>
-                                                        <img src="{{ $merchant->user->profile_picture ? asset('/storage/user_profile/' . $merchant->user->profile_picture) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu9zuWJ0xU19Mgk0dNFnl2KIc8E9Ch0zhfCg&s' }}"
+                                                        <img src="{{ $merchant->user->profile_picture ? asset('/storage/user_profile/' . $merchant->user->profile_picture) : asset('assets/img/noprofile.webp') }}"
                                                             class="avatar avatar-sm me-3"
                                                             alt="{{ $merchant->user->name }}">
                                                     </div>

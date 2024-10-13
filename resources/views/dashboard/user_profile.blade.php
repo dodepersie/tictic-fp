@@ -7,7 +7,7 @@
             <div class="row gx-4">
                 <div class="col-auto">
                     <div class="avatar avatar-xl position-relative">
-                        <img src="{{ $user->profile_picture ? asset('/storage/user_profile/' . $user->profile_picture) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu9zuWJ0xU19Mgk0dNFnl2KIc8E9Ch0zhfCg&s' }}"
+                        <img src="{{ $user->profile_picture ? asset('/storage/user_profile/' . $user->profile_picture) : asset('/assets/img/noprofile.webp') }}"
                             alt="{{ $user->name }}" class="w-100 border-radius-lg shadow-sm">
                     </div>
                 </div>

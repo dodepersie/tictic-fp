@@ -11,6 +11,12 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $merchant = auth()->user()->merchant;
+
+        if ($merchant && in_array($merchant->merchant_status, ['Pending', 'Rejected'])) {
+            abort(403);
+        }
+
         $total_event_tickets = Product::count();
         $total_merchants = User::where('role', '=', 'Merchant')->count();
         $total_users = User::count();

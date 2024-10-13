@@ -1,15 +1,15 @@
-@extends('layouts.error', ['title' => '404 Not Found!'])
+@extends('layouts.error', ['title' => '403 Forbidden!'])
 
 @section('container')
     <div
         class="space-y-5 w-full bg-white dark:bg-gray-800 p-4 flex flex-col justify-center items-center mx-auto min-h-screen">
-        <img src="https://img.freepik.com/premium-vector/error-concept-young-man-stands-digital-website-page-fence-cone-no-connection_118813-20028.jpg?size=626&ext=jpg&ga=GA1.1.281003244.1728765358&semt=ais_hybrid"
-            alt="404 Not Found" />
-        <h1 class="text-5xl font-extrabold dark:text-white">404!</h1>
+        <img src="https://digiconceptng.com/storage/2022/02/403-forbidden-error.jpg" alt="403 Forbidden" />
+        <h1 class="text-5xl font-extrabold dark:text-white">403!</h1>
         </h1>
 
-        <p class="text-center text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 lg:text-left mb-5">Sorry we
-            couldn't find the page you've been looking for.. 😅</p>
+        <p class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 lg:text-left mb-5">
+            Sorry, your access is forbidden. {{ $exception->getMessage() }} Please contact the administrator! 😅
+        </p>
 
         <button onclick="window.history.back()"
             class="inline-flex justify-center items-center px-3.5 py-2 my-5 text-base font-medium text-center text-gray-50 bg-blue-700 dark:bg-slate-900 dark:hover:bg-slate-900/50 rounded-lg hover:bg-blue-600/90">

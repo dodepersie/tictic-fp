@@ -12,6 +12,7 @@ use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Middleware\CheckMerchantStatus;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\MerchantEventController;
@@ -123,7 +124,7 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'Link verifikasi terkirim!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () {
+Route::prefix('dashboard')->middleware(['auth', 'verified', CheckMerchantStatus::class])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
     // Merchant

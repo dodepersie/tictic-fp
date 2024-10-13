@@ -16,10 +16,11 @@ class CheckMerchantStatus
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user = Auth::user();
+        $merchant = auth()->user()->merchant;
 
-        if ($user->merchant && $user->merchant->merchant_status == 'Rejected') {
-            return redirect()->route('merchant.rejected_page');
+        // Check if the user is a merchant and their status is 'Pending' or 'Rejected'
+        if ($merchant && in_array($merchant->merchant_status, ['Pending', 'Rejected'])) {
+            abort(403, 'Your merchant status is ' . $merchant->merchant_status . '.');
         }
 
         return $next($request);
