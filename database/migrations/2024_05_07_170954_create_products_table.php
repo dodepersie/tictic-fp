@@ -19,9 +19,10 @@ return new class extends Migration
             $table->text('event_detail');
             $table->integer('event_price');
             $table->string('event_location');
-            $table->decimal('event_location_longitude', 10, 7); // Longitude dalam format desimal
-            $table->decimal('event_location_latitude', 10, 7); // Latitude dalam format desimal
+            $table->decimal('event_location_longitude', 10, 7);
+            $table->decimal('event_location_latitude', 10, 7);
             $table->date('event_start_date');
+            $table->time('event_start_time');
             $table->string('event_image')->nullable();
             $table->timestamps();
     

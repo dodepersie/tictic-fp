@@ -40,7 +40,8 @@
                                             <td class="align-middle text-center text-sm">{{ $loop->iteration }}</td>
                                             <td class="align-middle text-center text-sm">
                                                 <span
-                                                    class="text-secondary text-xs font-weight-bold">{{ $transaction->product->event_title }}</span>
+                                                    class="text-secondary text-xs font-weight-bold">{{ $transaction->product->event_title }}
+                                                    ({{ $transaction->unique_id }})</span>
                                             </td>
                                             <td class="align-middle text-center text-sm">
                                                 <span class="text-secondary text-xs font-weight-bold">UNDER

@@ -12,10 +12,12 @@
                     </h2>
 
                     <div class="text-md leading-loose">
-                        <!-- Event Date and Location -->
+                        <!-- Event Date Time and Location -->
                         <div>
                             Event Date: <span
                                 class="font-bold">{{ date('d F Y', strtotime($product->event_start_date)) }}</span> —
+                            Event Start Time: <span
+                                class="font-bold">{{ date('H:i', strtotime($product->event_start_time)) }}</span> —
                             Event Location: <a href="/events?location={{ $product->event_location }}" class="underline"
                                 title="More event at {{ $product->event_location }}"><span
                                     class="font-bold">{{ $product->event_location }}</span></a>

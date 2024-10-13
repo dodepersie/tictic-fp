@@ -18,6 +18,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\MerchantEventController;
 use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Middleware\OnlyCustomerRole;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
@@ -33,6 +34,8 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/view-ticket-detail', [TransactionController::class, 'index'])->name('view-ticket-detail');
+Route::post('/view-ticket-detail', [TransactionController::class, 'viewTicketDetail'])->name('view-ticket-detail');
 
 // Auth Route
 Route::get('/login', [LoginController::class, 'index'])

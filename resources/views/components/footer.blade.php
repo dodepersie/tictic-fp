@@ -15,10 +15,6 @@
                     </a>
                 </div>
 
-                {{-- <p class="mt-4 max-w-xs text-gray-500">
-                    A
-                </p> --}}
-
                 <ul class="mt-8 flex gap-6">
                     <li>
                         <a href="#" rel="noreferrer" target="_blank"
@@ -92,7 +88,8 @@
 
                     <ul class="mt-6 space-y-4 text-sm">
                         <li>
-                            <a href="#" class="text-gray-700 transition hover:opacity-75"> 1on1 Coaching </a>
+                            <a href="{{ route('view-ticket-detail') }}"
+                                class="text-gray-700 transition hover:opacity-75"> View Ticket Detail </a>
                         </li>
 
                         <li>

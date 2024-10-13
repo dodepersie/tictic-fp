@@ -2,11 +2,11 @@
 
 @section('container')
     <section>
-        <header>
-            <h2 class="text-center text-2xl font-bold text-gray-900 sm:text-3xl">Meet TicTic.ID Team 😍🎉</h2>
-        </header>
-
         <div class="container mx-auto max-w-2xl">
+            <header>
+                <h2 class="text-center text-2xl font-bold text-gray-900 sm:text-3xl">Meet TicTic.ID Team 😍🎉</h2>
+            </header>
+
             <div class="text-lg mt-3 text-justify leading-relaxed">
                 The development background of the TicTic platform began with the challenges faced in managing concert
                 events, which drove us to develop an innovative ticket management system. From conventional ticket sales to
