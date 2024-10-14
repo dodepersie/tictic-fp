@@ -43,9 +43,9 @@ class Product extends Model
 
     public function scopeFilter($query, array $filters)
     {
-        $query->when($filters['search'] ?? false, function($query, $search) {
-            return $query->where('event_title', 'like', '%' . $search . '%')
-                    ->orWhere('event_detail', 'like', '%' . $search . '%');
+        $query->when($filters['search'] ?? false, function ($query, $search) {
+            return $query->where('event_title', 'like', '%'.$search.'%')
+                ->orWhere('event_detail', 'like', '%'.$search.'%');
         });
 
         $query->when($filters['category'] ?? false, function ($query, $category) {
@@ -54,10 +54,8 @@ class Product extends Model
             });
         });
 
-        $query->when($filters['merchant'] ?? false, fn ($query, $merchant) => 
-            $query->whereHas('merchant', fn ($query) => 
-                $query->where('id', $merchant)
-            )
+        $query->when($filters['merchant'] ?? false, fn ($query, $merchant) => $query->whereHas('merchant', fn ($query) => $query->where('id', $merchant)
+        )
         );
 
         $query->when($filters['location'] ?? false, function ($query, $location) {

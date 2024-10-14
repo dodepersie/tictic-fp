@@ -40,7 +40,7 @@ class RegisterRequest extends FormRequest
                     ->mixedCase()
                     ->numbers()
                     ->symbols(),
-                new RegistrationRule(),
+                new RegistrationRule,
             ],
             'dob' => [
                 'required',

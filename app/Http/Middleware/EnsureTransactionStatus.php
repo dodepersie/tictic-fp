@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use App\Models\Transaction;
+use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,7 +16,7 @@ class EnsureTransactionStatus
      */
     public function handle(Request $request, Closure $next): Response
     {
-         $transaction = $request->route('transaction');
+        $transaction = $request->route('transaction');
 
         if ($transaction->status == Transaction::STATUS_PENDING || $transaction->status == Transaction::STATUS_CANCELED) {
             abort(403, 'You can\'t access this page directly!');

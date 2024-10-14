@@ -1,30 +1,30 @@
 <?php
 
-use App\Models\User;
-use App\Models\Category;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\OnlyAdminRole;
-use App\Http\Controllers\HomeController;
-use Illuminate\Support\Facades\Password;
-use App\Http\Controllers\LoginController;
-use App\Http\Middleware\OnlyCustomerRole;
-use Illuminate\Auth\Events\PasswordReset;
-use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\MerchantController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Middleware\CheckMerchantStatus;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MerchantController;
+use App\Http\Controllers\MerchantEventController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\MerchantEventController;
-use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Middleware\CheckMerchantStatus;
+use App\Http\Middleware\OnlyAdminRole;
+use App\Http\Middleware\OnlyCustomerRole;
+use App\Models\Category;
+use App\Models\User;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,7 +75,7 @@ Route::middleware(['auth', OnlyCustomerRole::class])->group(function () {
     Route::post('/dashboard/transactions/{transaction}/review', [ReviewController::class, 'store_review'])->name('dashboard_transactions.review.store');
 });
 
-Route::prefix('dashboard')->middleware(['auth', OnlyAdminRole::class])->group(function() {
+Route::prefix('dashboard')->middleware(['auth', OnlyAdminRole::class])->group(function () {
     Route::resource('/categories', CategoryController::class)->names('dashboard_categories');
 });
 
@@ -164,11 +164,11 @@ Route::prefix('dashboard')->middleware(['auth', 'verified', CheckMerchantStatus:
     Route::post('merchant/{merchant}/approve', [RegisterController::class, 'approve_merchant'])->name('merchant.approve');
     Route::post('merchant/{merchant}/reject', [RegisterController::class, 'reject_merchant'])->name('merchant.reject');
     Route::resource('merchant', MerchantController::class);
-    
+
     // Merchant Event
     Route::resource('events', MerchantEventController::class)->names('merchant_events');
     Route::get('/checkSlug', [MerchantEventController::class, 'checkSlug']);
-    
+
     // User Profile Management
     Route::resource('profile', UserProfileController::class);
     Route::delete('/profile/{id}/remove-picture', [UserProfileController::class, 'removeProfilePicture'])->name('profile.remove_picture');

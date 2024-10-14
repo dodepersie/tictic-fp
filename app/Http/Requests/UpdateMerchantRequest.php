@@ -33,7 +33,7 @@ class UpdateMerchantRequest extends FormRequest
                 'nullable',
                 'string',
                 'max:20',
-                'regex:/^[0-9+\(\)#\.\s\/ext-]*$/'
+                'regex:/^[0-9+\(\)#\.\s\/ext-]*$/',
             ],
             'company_description' => 'nullable|string|max:255',
         ];

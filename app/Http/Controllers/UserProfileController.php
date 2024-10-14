@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\UpdateProfileRequest;
-use App\Http\Requests\ChangePasswordRequest;
 use Intervention\Image\Encoders\WebpEncoder;
 use Intervention\Image\Laravel\Facades\Image;
 
@@ -25,7 +25,7 @@ class UserProfileController extends Controller
         return view('dashboard.user_profile', [
             'title' => 'User Profile',
             'user' => $user,
-            'merchant' => $merchant
+            'merchant' => $merchant,
         ]);
     }
 
@@ -77,18 +77,18 @@ class UserProfileController extends Controller
             // Load the image
             $file = $request->file('profile_picture');
             $image = Image::read($file);
-            
+
             // Make the image fit and convert to WEBP format
             $image->coverDown(900, 900);
             $image->encode(new WebpEncoder(quality: 90));
-            $file_name = now()->timestamp . '.webp';
+            $file_name = now()->timestamp.'.webp';
 
             // Save the resized image to storage
-            Storage::put('public/user_profile/' . $file_name, (string) $image->encode());
+            Storage::put('public/user_profile/'.$file_name, (string) $image->encode());
 
             // Delete old profile picture
             if ($user->profile_picture) {
-                $path = public_path('storage/user_profile/'. $user->profile_picture);
+                $path = public_path('storage/user_profile/'.$user->profile_picture);
                 if (file_exists($path)) {
                     unlink($path);
                 }
@@ -100,7 +100,7 @@ class UserProfileController extends Controller
 
         // Update database
         $request->user()->update($validatedData);
-    
+
         // Redirect or return response
         return redirect()->route('profile.index')->with('success', 'Profile updated successfully!');
     }
@@ -112,7 +112,7 @@ class UserProfileController extends Controller
 
         // Delete avatar file
         if ($user->profile_picture) {
-            $path = public_path('storage/user_profile/'. $user->profile_picture);
+            $path = public_path('storage/user_profile/'.$user->profile_picture);
             if (file_exists($path)) {
                 unlink($path);
             }
@@ -130,7 +130,7 @@ class UserProfileController extends Controller
     {
         $validatedData = $request->validated();
 
-        if (!Hash::check($validatedData['current_password'], $request->user()->password)) {
+        if (! Hash::check($validatedData['current_password'], $request->user()->password)) {
             return back()->withErrors(['error' => 'The current password is incorrect.']);
         }
 

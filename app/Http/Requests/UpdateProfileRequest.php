@@ -35,7 +35,7 @@ class UpdateProfileRequest extends FormRequest
                 'nullable',
                 'string',
                 'max:20',
-                'regex:/^[0-9+\(\)#\.\s\/ext-]*$/'
+                'regex:/^[0-9+\(\)#\.\s\/ext-]*$/',
             ],
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'company_description' => 'nullable|string|max:255',

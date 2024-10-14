@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         return redirect()->route('home');
     }
 
@@ -23,7 +24,8 @@ class CheckoutController extends Controller
         return $uniqueId;
     }
 
-    public function proccess(Request $request) {
+    public function proccess(Request $request)
+    {
 
         $data = $request->all();
 
@@ -41,17 +43,17 @@ class CheckoutController extends Controller
 
         $uniqueId = $this->generateUniqueId();
 
-        $params = array(
-            'transaction_details' => array(
+        $params = [
+            'transaction_details' => [
                 'order_id' => $uniqueId,
                 'gross_amount' => $data['price'],
-            ),
-            'customer_details' => array(
+            ],
+            'customer_details' => [
                 'first_name' => auth()->user()->name,
-                'email'      => auth()->user()->email,
-                'phone'      => auth()->user()->phone_number,
-            ),
-        );
+                'email' => auth()->user()->email,
+                'phone' => auth()->user()->phone_number,
+            ],
+        ];
 
         $snapToken = \Midtrans\Snap::getSnapToken($params);
         $transaction->snap_token = $snapToken;
@@ -61,7 +63,8 @@ class CheckoutController extends Controller
         return redirect()->route('checkout', $transaction->id);
     }
 
-    public function checkout(Transaction $transaction) {
+    public function checkout(Transaction $transaction)
+    {
         if (auth()->user()->id != $transaction->user_id) {
             abort(403, 'Unauthorized access.');
         }
@@ -72,17 +75,18 @@ class CheckoutController extends Controller
 
         $products = config('product');
         $product = collect($products)->firstWhere('id', $transaction->product_id);
-        $title = 'Checkout: ' . $transaction->product->event_title;
+        $title = 'Checkout: '.$transaction->product->event_title;
 
         return view('checkout.index', compact('title', 'transaction', 'product'));
     }
 
-    public function success(Transaction $transaction) {
+    public function success(Transaction $transaction)
+    {
         if (auth()->user()->id != $transaction->user_id) {
             abort(403, 'Unauthorized access.');
         }
 
-        $title = "Checkout Success: " . $transaction->product->event_title;
+        $title = 'Checkout Success: '.$transaction->product->event_title;
         $transaction->status = 'Success';
         $transaction->markAsSuccess();
         $transaction->save();

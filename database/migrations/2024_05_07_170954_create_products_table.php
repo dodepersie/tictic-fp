@@ -26,12 +26,11 @@ return new class extends Migration
             $table->time('event_start_time');
             $table->string('event_image')->nullable();
             $table->timestamps();
-    
+
             // $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade');
         });
     }
-    
 
     /**
      * Reverse the migrations.

@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Product;
 use App\Models\Merchant;
-use App\Models\Transaction;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 
 class DashboardController extends Controller

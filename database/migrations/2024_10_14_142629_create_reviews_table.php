@@ -16,12 +16,11 @@ return new class extends Migration
             $table->foreignId('transaction_id')->constrained('transactions')->onDelete('cascade');
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->integer('rating'); 
+            $table->integer('rating');
             $table->text('comment');
             $table->timestamps();
         });
     }
-    
 
     /**
      * Reverse the migrations.

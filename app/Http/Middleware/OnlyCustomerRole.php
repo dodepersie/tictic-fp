@@ -15,8 +15,8 @@ class OnlyCustomerRole
      */
     public function handle(Request $request, Closure $next): Response
     {
-         // Check if the authenticated user has the role 'Customer'
-         if (auth()->check() && auth()->user()->role === 'Customer') {
+        // Check if the authenticated user has the role 'Customer'
+        if (auth()->check() && auth()->user()->role === 'Customer') {
             return $next($request); // Allow access if the role is Customer
         }
 

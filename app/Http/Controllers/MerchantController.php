@@ -48,7 +48,7 @@ class MerchantController extends Controller
     {
         $this->authorize('admin');
 
-        $title =  'Now Editing: ' . $merchant->user->name;
+        $title = 'Now Editing: '.$merchant->user->name;
         $selected_merchant = $merchant->user;
 
         return view('dashboard.merchant.edit', [
@@ -64,7 +64,7 @@ class MerchantController extends Controller
     public function update(UpdateMerchantRequest $request, Merchant $merchant)
     {
         $this->authorize('admin');
-        
+
         // Update merchant attributes
         $merchant->user->update($request->validated());
 

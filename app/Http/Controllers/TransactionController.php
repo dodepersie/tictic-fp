@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Transaction;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
+use App\Models\Transaction;
+use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
@@ -14,30 +14,33 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $title = "View Ticket Detail";
+        $title = 'View Ticket Detail';
+
         return view('view-ticket-detail', compact('title'));
     }
 
-    public function all_transactions(Transaction $transaction){
+    public function all_transactions(Transaction $transaction)
+    {
         $title = 'All Transactions';
         $transactions = Transaction::where('user_id', '=', auth()->user()->id)->get();
 
         return view('dashboard.transactions.index', compact('title', 'transactions'));
     }
 
-    public function viewTicketDetail(Request $request) {
+    public function viewTicketDetail(Request $request)
+    {
         $request->validate([
             'unique_id' => 'required|string|max:8',
         ]);
-    
+
         $uniqueId = $request->unique_id;
-    
+
         $transaction = Transaction::where('unique_id', $uniqueId)->first();
-    
-        if (!$transaction) {
+
+        if (! $transaction) {
             return redirect()->back()->withErrors(['unique_id' => 'Ticket not found.']);
         }
-    
+
         return redirect()->back()->with('transaction', $transaction);
     }
 

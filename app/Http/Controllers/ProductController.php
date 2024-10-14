@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Review;
-use App\Models\Product;
 use App\Models\Merchant;
-use App\Models\Transaction;
+use App\Models\Product;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -16,36 +15,33 @@ class ProductController extends Controller
     public function index()
     {
         $title = '';
-    
+
         // Check if the request is for a merchant
         if ($merchantId = request('merchant')) {
             $merchant = Merchant::where('id', $merchantId)->firstOrFail();
-            $title .= ' by ' . ucfirst($merchant->user->name);
-        } 
-    
+            $title .= ' by '.ucfirst($merchant->user->name);
+        }
+
         // Check if the request is for a location
         if ($location = request('location')) {
-            $title .= ' at ' . ucfirst($location);
-        }      
+            $title .= ' at '.ucfirst($location);
+        }
 
         // Check if the request is for a category
         if ($category = request('category')) {
-            $title .= ' at ' . ucfirst($category);
-        }      
-    
+            $title .= ' at '.ucfirst($category);
+        }
+
         return view('event.index', [
-            'title' => "Events" . $title,
+            'title' => 'Events'.$title,
             'products' => Product::latest()->filter(request(['search', 'merchant', 'location', 'category']))->paginate(6),
         ]);
-    }    
+    }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
@@ -64,7 +60,7 @@ class ProductController extends Controller
         $reviews = Review::where('product_id', $product->id)->latest()->get();
         $averageRating = $product->reviews()->avg('rating');
         $reviewsCount = $reviews->count();
-    
+
         return view('event.show', [
             'title' => $product->event_title,
             'product' => $product,
@@ -73,7 +69,6 @@ class ProductController extends Controller
             'reviewsCount' => $reviewsCount,
         ]);
     }
-    
 
     /**
      * Show the form for editing the specified resource.

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -14,8 +14,9 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::orderBy('name', 'asc')->get();
-        
-        $title = "Category Management";
+
+        $title = 'Category Management';
+
         return view('dashboard.categories.index', compact('title', 'categories'));
     }
 
@@ -24,7 +25,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $title = "Create Category";
+        $title = 'Create Category';
 
         return view('dashboard.categories.create', compact('title'));
     }
