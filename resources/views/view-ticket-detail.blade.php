@@ -82,7 +82,7 @@
                                     </span>
                                 @endif
                             </div>
-                            <div><strong>Ticket Price:</strong> Rp
+                            <div><strong>Ticket Price:</strong> IDR
                                 {{ number_format(session('transaction')->price, 0, ',', '.') }}
                             </div>
                             <div><strong>Event Start Date:</strong>

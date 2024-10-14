@@ -167,7 +167,7 @@
                                 <div class="flex justify-between items-center">
                                     <!-- This price will change based on "PRICE x QUANTITY" -->
                                     <h2 class="text-2xl">
-                                        Rp <span x-text="(productPrice * productQuantity).toLocaleString('id-ID')"></span>
+                                        IDR <span x-text="(productPrice * productQuantity).toLocaleString('id-ID')"></span>
                                     </h2>
 
                                     <label for="Quantity" class="sr-only">Quantity</label>

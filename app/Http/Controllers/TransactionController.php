@@ -41,6 +41,10 @@ class TransactionController extends Controller
             return redirect()->back()->withErrors(['unique_id' => 'Ticket not found.']);
         }
 
+        if (auth()->user()->id !== $transaction->user_id) {
+            return redirect()->back()->withErrors('Only the user associated with this Unique ID can view the ticket.');
+        }
+
         return redirect()->back()->with('transaction', $transaction);
     }
 
