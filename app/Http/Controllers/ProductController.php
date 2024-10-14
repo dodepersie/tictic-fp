@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Review;
 use App\Models\Product;
 use App\Models\Merchant;
 use App\Models\Transaction;
@@ -55,10 +56,16 @@ class ProductController extends Controller
     public function show($slug)
     {
         $product = Product::where('slug', $slug)->firstOrFail();
+        $reviews = Review::where('product_id', $product->id)->latest()->get();
+        $averageRating = $product->reviews()->avg('rating');
+        $reviewsCount = $reviews->count();
     
         return view('event.show', [
             'title' => $product->event_title,
             'product' => $product,
+            'reviews' => $reviews,
+            'averageRating' => $averageRating,
+            'reviewsCount' => $reviewsCount,
         ]);
     }
     

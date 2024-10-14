@@ -6,7 +6,7 @@
                 <div class="md:flex md:items-center md:w-1/6">
                     <a class="block text-black text-2xl font-bold" href="{{ route('home') }}">
                         <div class="flex items-center">
-                            <img src="{{ asset('/img/TicTic Logo.png') }}" class="h-14 w-16" alt="TicTic Logo" />
+                            <img src="{{ asset('/assets/img/TicTic Logo.png') }}" class="h-14 w-16" alt="TicTic Logo" />
                             <div>
                                 <span class="sr-only">Home</span>
                                 TicTic

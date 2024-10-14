@@ -26,7 +26,7 @@ class UpdateMerchantRequest extends FormRequest
             'email' => [
                 'required',
                 'string',
-                'email:rfc,dns',
+                'email:rfc',
                 'max:255',
             ],
             'phone_number' => [

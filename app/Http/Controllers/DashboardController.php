@@ -51,11 +51,4 @@ class DashboardController extends Controller
             abort(403);
         }
     }
-
-    public function all_transaction(Transaction $transaction){
-        $title = 'All Transactions';
-        $transactions = Transaction::where('user_id', '=', auth()->user()->id)->get();
-
-        return view('dashboard.transactions.index', compact('title', 'transactions'));
-    }
 }

@@ -18,6 +18,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\MerchantEventController;
 use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Middleware\OnlyCustomerRole;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -59,7 +60,9 @@ Route::middleware(['auth', OnlyCustomerRole::class])->group(function () {
     Route::get('/checkout/{transaction}', [CheckoutController::class, 'checkout'])->name('checkout');
     Route::post('/checkout', [CheckoutController::class, 'proccess'])->name('checkout-proccess');
     Route::get('/checkout/success/{transaction}', [CheckoutController::class, 'success'])->name('checkout-success');
-    Route::get('/dashboard/transactions', [DashboardController::class, 'all_transaction'])->name('dashboard_transactions.index');
+    Route::get('/dashboard/transactions', [TransactionController::class, 'all_transactions'])->name('dashboard_transactions.index');
+    Route::get('/dashboard/transactions/{transaction}/review', [ReviewController::class, 'review_transaction'])->name('dashboard_transactions.index.review');
+    Route::post('/dashboard/transactions/{transaction}/review', [ReviewController::class, 'store_review'])->name('dashboard_transactions.review.store');
 });
 
 // About

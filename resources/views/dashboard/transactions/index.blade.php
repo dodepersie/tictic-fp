@@ -41,7 +41,8 @@
                                             <td class="align-middle text-center text-sm">
                                                 <span
                                                     class="text-secondary text-xs font-weight-bold">{{ $transaction->product->event_title }}
-                                                    ({{ $transaction->unique_id }})</span>
+                                                    ({{ $transaction->unique_id }})
+                                                </span>
                                             </td>
                                             <td class="align-middle text-center text-sm">
                                                 <span class="text-secondary text-xs font-weight-bold">UNDER
@@ -70,10 +71,16 @@
                                                         Now</a>
                                                 @elseif ($transaction->status == 'Success')
                                                     <div class="d-flex align-items-center justify-content-center gap-2">
-                                                        <a href="{{ route('checkout', $transaction->id) }}" target="_blank"
-                                                            class="badge bg-primary text-bg-primary text-xs font-weight-bold">View
-                                                            Ticket</a>
-                                                        <a href="{{ route('checkout', $transaction->id) }}" target="_blank"
+                                                        {{-- <form action="{{ route('view-ticket-detail') }}" method="POST">
+                                                            <!--Bug -->
+                                                            @csrf
+                                                            <input type="hidden" name="unique_id"
+                                                                value="{{ $transaction->unique_id }}" />
+                                                            <button type="submit"
+                                                                class="badge bg-primary text-bg-primary text-xs font-weight-bold">View
+                                                                Ticket</button>
+                                                        </form> --}}
+                                                        <a href="{{ route('dashboard_transactions.index.review', $transaction->id) }}"
                                                             class="badge bg-secondary text-bg-secondary text-xs font-weight-bold">Review</a>
                                                     </div>
                                                 @else

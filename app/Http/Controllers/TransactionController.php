@@ -18,6 +18,13 @@ class TransactionController extends Controller
         return view('view-ticket-detail', compact('title'));
     }
 
+    public function all_transactions(Transaction $transaction){
+        $title = 'All Transactions';
+        $transactions = Transaction::where('user_id', '=', auth()->user()->id)->get();
+
+        return view('dashboard.transactions.index', compact('title', 'transactions'));
+    }
+
     public function viewTicketDetail(Request $request) {
         $request->validate([
             'unique_id' => 'required|string|max:8',

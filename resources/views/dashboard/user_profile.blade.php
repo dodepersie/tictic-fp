@@ -2,7 +2,7 @@
 
 @section('content')
     @include('layouts.navbars.auth.topnav', ['title' => 'Your Profile'])
-    <div class="card shadow-lg mx-4 card-profile-bottom">
+    <div class="card shadow-lg mx-4">
         <div class="card-body p-3">
             <div class="row gx-4">
                 <div class="col-auto">
@@ -33,9 +33,7 @@
             </div>
         </div>
     </div>
-    {{-- <div id="alert">
-        @include('components.alert')
-    </div> --}}
+
     <div class="container-fluid py-3">
         <div class="row">
             <div class="col-md-12">
@@ -45,8 +43,8 @@
                         @csrf
                         @method('PUT')
 
-                        <div class="card-header pb-0">
-                            <div class="d-flex align-items-center">
+                        <div class="px-4 pt-4">
+                            <div class="d-flex justify-content-between align-items-center">
                                 <p class="mb-0">Edit Profile</p>
                                 <button type="submit" class="btn btn-primary btn-sm ms-auto">Save</button>
                             </div>
