@@ -4,9 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Merchant;
-use App\Models\Product;
 use App\Models\User;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Merchant;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -70,6 +71,16 @@ class DatabaseSeeder extends Seeder
             'email' => 'd@tictic.id',
         ]);
 
-        Product::factory(1)->create();
+        Product::factory(5)->create();
+
+        Category::factory()->create([
+            'name' => 'Concert',
+            'slug' => 'concert',
+        ]);
+
+        Category::factory()->create([
+            'name' => 'Sport',
+            'slug' => 'sport',
+        ]);
     }
 }

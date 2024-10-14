@@ -27,6 +27,7 @@ class CreateEventRequest extends FormRequest
             'event_detail' => 'required|string',
             'event_price' => 'required|integer|min:0',
             'event_start_date' => 'required|date|after_or_equal:today',
+            'event_start_time' => 'required|date_format:H:i',
             'event_location' => 'required|string|max:255',
             'event_location_latitude' => 'required|numeric|between:-90,90',
             'event_location_longitude' => 'required|numeric|between:-180,180',

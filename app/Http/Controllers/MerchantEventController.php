@@ -20,7 +20,7 @@ class MerchantEventController extends Controller
     {
         // Get event by Merchant ID
         $userId = auth()->user()->merchant->id;
-        $events =  Product::where('merchant_id', $userId)->get();
+        $events =  Product::where('merchant_id', $userId)->latest()->get();
 
         return view('dashboard.event.index', [
             'title' => 'Merchant Events',

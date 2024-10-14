@@ -6,50 +6,62 @@
             <!-- Content -->
             <div class="space-y-4 lg:col-span-2">
                 <!-- Header -->
-                <div class="space-y-2">
+                <div class="space-y-4">
                     <h2 class="font-afacadflux text-3xl sm:text-4xl text-gray-900 font-bold leading-relaxed tracking-tight">
                         {{ ucfirst($product->event_title) }}</span>
                     </h2>
 
-                    <div class="text-md leading-loose">
+                    <div class="text-sm leading-loose">
                         <!-- Event Date Time and Location -->
-                        <div>
-                            Event Date: <span
-                                class="font-bold">{{ date('d F Y', strtotime($product->event_start_date)) }}</span> —
-                            Event Start Time: <span
-                                class="font-bold">{{ date('H:i', strtotime($product->event_start_time)) }}</span> —
-                            Event Location: <a href="/events?location={{ $product->event_location }}" class="underline"
-                                title="More event at {{ $product->event_location }}"><span
-                                    class="font-bold">{{ $product->event_location }}</span></a>
+                        <div class="flex flex-col lg:flex-row items-start lg:items-center gap-2">
+                            <div class="flex items-center gap-2">
+                                <i data-feather="calendar"></i> <span
+                                    class="font-semibold">{{ date('d F Y', strtotime($product->event_start_date)) }}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i data-feather="clock"></i> <span
+                                    class="font-semibold">{{ date('H:i', strtotime($product->event_start_time)) }}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i data-feather="map-pin"></i> <a href="/events?location={{ $product->event_location }}"
+                                    class="underline" title="More event at {{ $product->event_location }}"><span
+                                        class="font-semibold">{{ $product->event_location }}</span></a>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i data-feather="tag"></i><span class="font-semibold "><a
+                                        href="/events?category={{ $product->category->name }}" class="underline"><span
+                                            class="font-semibold">{{ $product->category->name }}</span></a></span>
+                            </div>
+                            <!-- Star Rating Display -->
+                            <div class="flex items-center gap-0.5">
+                                <div class="flex text-green-500">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= $averageRating)
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20"
+                                                fill="currentColor">
+                                                <path
+                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                            </svg>
+                                        @else
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20"
+                                                fill="currentColor" opacity="0.3">
+                                                <path
+                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                            </svg>
+                                        @endif
+                                    @endfor
+                                </div>
+                                <!-- Display Reviews Count -->
+                                <div>{{ $reviewsCount }} {{ Str::plural('Review', $reviewsCount) }}</div>
+                            </div>
                         </div>
-                    </div>
-                    <!-- Star Rating Display -->
-                    <div class="flex items-center gap-0.5">
-                        <div class="flex text-green-500">
-                            @for ($i = 1; $i <= 5; $i++)
-                                @if ($i <= $averageRating)
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20"
-                                        fill="currentColor">
-                                        <path
-                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                    </svg>
-                                @else
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20"
-                                        fill="currentColor" opacity="0.3">
-                                        <path
-                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                    </svg>
-                                @endif
-                            @endfor
-                        </div>
-                        <!-- Display Reviews Count -->
-                        <div>{{ $reviewsCount }} {{ Str::plural('Review', $reviewsCount) }}</div>
                     </div>
                 </div>
 
                 <div class="space-y-2">
                     <img src="{{ $product->event_image ? '/storage/event_images/' . $product->event_image : 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop ?>' }}"
-                        alt="{{ ucfirst($product->event_title) }}" class="h-auto object-contain rounded-xl shadow" />
+                        alt="{{ ucfirst($product->event_title) }}" class="h-auto object-contain rounded-xl shadow"
+                        id="event_image" />
                 </div>
 
                 <div class="space-y-2">
@@ -200,3 +212,13 @@
         </div>
     </section>
 @endsection
+
+@push('script')
+    <script>
+        tippy('#event_image', {
+            content: "{{ $product->event_title }}",
+            followCursor: true,
+            arrow: false,
+        });
+    </script>
+@endpush

@@ -1,26 +1,29 @@
 <?php
 
 use App\Models\User;
+use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\OnlyAdminRole;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\LoginController;
+use App\Http\Middleware\OnlyCustomerRole;
 use Illuminate\Auth\Events\PasswordReset;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Middleware\CheckMerchantStatus;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\MerchantEventController;
 use App\Http\Controllers\Auth\SocialiteController;
-use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Middleware\OnlyCustomerRole;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -35,6 +38,13 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/categories', function () {
+    return view('categories', [
+        'title' => 'Category',
+        'categories' => Category::all(),
+    ]);
+})->name('categories');
+
 Route::middleware(['auth', OnlyCustomerRole::class])->group(function () {
     Route::get('/view-ticket-detail', [TransactionController::class, 'index'])->name('view-ticket-detail');
     Route::post('/view-ticket-detail', [TransactionController::class, 'viewTicketDetail'])->name('view-ticket-detail');
@@ -63,6 +73,10 @@ Route::middleware(['auth', OnlyCustomerRole::class])->group(function () {
     Route::get('/dashboard/transactions', [TransactionController::class, 'all_transactions'])->name('dashboard_transactions.index');
     Route::get('/dashboard/transactions/{transaction}/review', [ReviewController::class, 'review_transaction'])->name('dashboard_transactions.index.review');
     Route::post('/dashboard/transactions/{transaction}/review', [ReviewController::class, 'store_review'])->name('dashboard_transactions.review.store');
+});
+
+Route::prefix('dashboard')->middleware(['auth', OnlyAdminRole::class])->group(function() {
+    Route::resource('/categories', CategoryController::class)->names('dashboard_categories');
 });
 
 // About

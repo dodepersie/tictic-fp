@@ -26,6 +26,11 @@ class Product extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
@@ -43,11 +48,11 @@ class Product extends Model
                     ->orWhere('event_detail', 'like', '%' . $search . '%');
         });
 
-        // $query->when($filters['category'] ?? false, function ($query, $category) {
-        //     return $query->whereHas('category', function ($query) use ($category) {
-        //         $query->where('slug', $category);
-        //     });
-        // });
+        $query->when($filters['category'] ?? false, function ($query, $category) {
+            return $query->whereHas('category', function ($query) use ($category) {
+                $query->where('slug', $category);
+            });
+        });
 
         $query->when($filters['merchant'] ?? false, fn ($query, $merchant) => 
             $query->whereHas('merchant', fn ($query) => 

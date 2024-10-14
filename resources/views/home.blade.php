@@ -5,10 +5,10 @@
     <section id="product-list">
         <div>
             <header>
-                <h2 class="text-xl font-bold text-gray-900 sm:text-2xl">Special Concert Ticket Price! 😍</h2>
+                <h2 class="text-xl font-bold text-gray-900 sm:text-2xl">Special Events Ticket Price! 😍</h2>
 
                 <p class="mt-4 max-w-md text-gray-500">
-                    Enjoy good concert with special price only on TicTic!
+                    Enjoy good event with special price only on TicTic!
                 </p>
             </header>
 
@@ -26,7 +26,7 @@
                     <div
                         class="h-full rounded-md border-2 border-slate-900 bg-white transition group-hover:-translate-y-2 group-hover:-translate-x-2">
 
-                        <span class="relative block px-8 py-3"> Check Another Ticket
+                        <span class="relative block px-8 py-3"> Check Another Events
                         </span>
                     </div>
                 </a>
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="lg:py-24">
-                    <h2 class="text-3xl font-bold sm:text-4xl">Order Concert Ticket Easily!</h2>
+                    <h2 class="text-3xl font-bold sm:text-4xl">Order Event Ticket Easily!</h2>
 
                     <p class="mt-4 text-gray-600 leading-relaxed">
                         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut qui hic atque tenetur quis

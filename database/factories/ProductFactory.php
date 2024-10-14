@@ -18,6 +18,7 @@ class ProductFactory extends Factory
     {
         return [
             'merchant_id' => fake()->numberBetween(1, 2),
+            'category_id' => fake()->numberBetween(1, 2),
             'event_title' => fake()->words(3, true),
             'slug' => fake()->slug(),
             'event_detail' => fake()->paragraphs(20, true),

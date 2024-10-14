@@ -22,6 +22,13 @@
                                 </a>
                             </li>
 
+                            <li>
+                                <a class="font-bold hover:bg-white hover:text-black p-3 {{ Request::is('categories*') ? 'bg-white text-black' : '' }}"
+                                    href="{{ route('categories') }}">
+                                    Categories
+                                </a>
+                            </li>
+
                             @guest
                                 <li>
                                     <a class="font-bold hover:bg-white hover:text-black p-3"
@@ -233,6 +240,12 @@
                                 class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                                 role="menuitem">
                                 Ticket
+                            </a>
+
+                            <a href="{{ route('categories') }}"
+                                class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                                role="menuitem">
+                                Categories
                             </a>
                         </div>
 

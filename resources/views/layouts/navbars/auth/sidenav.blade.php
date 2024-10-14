@@ -43,6 +43,17 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link {{ Str::startsWith(Route::currentRouteName(), 'dashboard_categories') ? 'active' : '' }}"
+                        href="{{ route('dashboard_categories.index') }}">
+                        <div class="icon icon-shape border-radius-md text-center me-1 d-flex align-items-center justify-content-center"
+                            style="width: 36px;height: 36px;">
+                            <i data-feather="tag"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Categories</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link" href="/">
                         <div class="icon icon-shape border-radius-md text-center me-1 d-flex align-items-center justify-content-center"
                             style="width: 36px;height: 36px;">

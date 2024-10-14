@@ -78,7 +78,6 @@ class RegisterController extends Controller
 
     public function approve_merchant(Merchant $merchant)
     {
-
         $merchant->merchant_status = 'Approved';
         $merchant->save();
 

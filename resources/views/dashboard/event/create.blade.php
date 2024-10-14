@@ -41,6 +41,16 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label for="event_start_time" class="form-control-label">Event Time</label>
+
+                                            <div class="input-group">
+                                                <input class="form-control" type="time" name="event_start_time"
+                                                    id="event_start_time" value="{{ old('event_start_time') }}" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
                                             <label for="event_price" class="form-control-label">Event Price</label>
 
                                             <div class="input-group">
@@ -88,8 +98,8 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="event_image" class="form-control-label">Event Image</label>
-                                            <input class="form-control" type="file" name="event_image" id="event_image"
-                                                onChange="previewImage()">
+                                            <input class="form-control" type="file" name="event_image"
+                                                id="event_image" onChange="previewImage()">
                                             <div class="small font-italic text-muted mt-2">JPG, PNG and WEBP format, size
                                                 can't more than 2 MB
                                             </div>

@@ -20,17 +20,22 @@ class ProductController extends Controller
         // Check if the request is for a merchant
         if ($merchantId = request('merchant')) {
             $merchant = Merchant::where('id', $merchantId)->firstOrFail();
-            $title .= ' by ' . $merchant->user->name;
+            $title .= ' by ' . ucfirst($merchant->user->name);
         } 
     
         // Check if the request is for a location
         if ($location = request('location')) {
-            $title .= ' at ' . $location;
+            $title .= ' at ' . ucfirst($location);
+        }      
+
+        // Check if the request is for a category
+        if ($category = request('category')) {
+            $title .= ' at ' . ucfirst($category);
         }      
     
         return view('event.index', [
             'title' => "Events" . $title,
-            'products' => Product::latest()->filter(request(['search', 'merchant', 'location']))->paginate(6),
+            'products' => Product::latest()->filter(request(['search', 'merchant', 'location', 'category']))->paginate(6),
         ]);
     }    
 

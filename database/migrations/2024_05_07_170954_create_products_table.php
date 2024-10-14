@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('merchant_id');
+            $table->foreignId('category_id');
             $table->string('event_title');
             $table->string('slug')->unique();
             $table->text('event_detail');
@@ -26,7 +27,7 @@ return new class extends Migration
             $table->string('event_image')->nullable();
             $table->timestamps();
     
-            // Definisi foreign key yang menghubungkan ke tabel merchants
+            // $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade');
         });
     }
