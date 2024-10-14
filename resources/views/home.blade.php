@@ -100,7 +100,7 @@
                                 </svg>
                             </div>
 
-                            <p class="mt-0.5 text-lg font-medium text-gray-900">Paul Starr</p>
+                            <p class="mt-0.5 text-lg font-medium text-gray-900">Patrick Starr</p>
                         </div>
                     </div>
 
