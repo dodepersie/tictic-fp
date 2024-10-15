@@ -5,7 +5,7 @@
             <div
                 class="h-full rounded-md border-2 border-slate-900 bg-white transition group-hover:-translate-y-2 group-hover:-translate-x-2">
                 <div class="p-4 sm:p-6">
-                    <div x-data class="mt-5">
+                    <div class="mt-5">
                         <span aria-hidden="true" role="img" class="text-3xl sm:text-4xl">
                             <img src="{{ $product->event_image ? asset('storage/event_images/' . $product->event_image) : 'https://picsum.photos/id/' . rand(1, 100) . '/200/300' }}"
                                 alt="{{ $product->event_title }}"

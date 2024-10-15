@@ -15,7 +15,6 @@
                                 enctype="multipart/form-data">
                                 @csrf
                                 @method('POST')
-
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -52,7 +51,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="event_category" class="form-control-label">Event Category</label>
-                                            <select id="event_category" class="form-select w-100" name="category_id"
+                                            <select id="event_category" class="form-select" name="category_id"
                                                 style="padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #ccc; background-color: #fff;"
                                                 data-placeholder="Select event category..">
                                                 <option></option>
@@ -68,6 +67,33 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
+                                        <div class="ticket-types">
+                                            <div class="ticket-type">
+                                                <div class="form-group">
+                                                    <label for="ticket_types" class="form-control-label">Available Ticket
+                                                        Types</label>
+                                                    <select name="ticket_types[]" class="form-control" id="ticket_types"
+                                                        data-placeholder="Select ticket types.." required>
+                                                        <option></option>
+                                                        <option value="VVIP">VVIP</option>
+                                                        <option value="VIP">VIP</option>
+                                                        <option value="Regular">Regular</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ticket_price">Ticket Price</label>
+                                                    <input type="number" name="ticket_prices[]" class="form-control"
+                                                        id="formatPrice" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ticket_quantity">Ticket Quantity</label>
+                                                    <input type="number" name="ticket_quantities[]" class="form-control"
+                                                        min="1" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="event_location" class="form-control-label">Event Location</label>
                                             <input class="form-control" type="text" name="event_location"
@@ -79,8 +105,8 @@
                                             <label for="event_location_longitude" class="form-control-label">Event Location
                                                 Longitude</label>
                                             <input class="form-control" type="text" name="event_location_longitude"
-                                                id="event_location_longitude" value="{{ old('event_location_longitude') }}"
-                                                required>
+                                                id="event_location_longitude"
+                                                value="{{ old('event_location_longitude') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -95,8 +121,8 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="event_detail" class="form-control-label">Event Detail</label>
-                                            <textarea class="form-control" name="event_detail" id="event_detail" rows="4" value="{{ old('event_detail') }}"
-                                                required></textarea>
+                                            <textarea class="form-control" name="event_detail" id="event_detail" rows="4"
+                                                value="{{ old('event_detail') }}" required></textarea>
                                         </div>
                                     </div>
                                     <div class="col-auto">
@@ -113,6 +139,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="text-right">
                                     <button type="submit" class="btn btn-primary btn-sm ms-auto">Save</button>
                                 </div>
@@ -127,9 +154,7 @@
 @endsection
 
 @push('editor')
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
 @endpush
@@ -168,13 +193,40 @@
         }
     </script>
 
+    {{-- <script>
+        $(document).ready(function() {
+            $('#add-ticket').click(function() {
+                $('#ticket-types').append(`
+                <div class="ticket-type">
+                    <div class="form-group">
+                        <label for="ticket_type">Jenis Tiket</label>
+                        <select name="ticket_types[]" class="form-control" required>
+                            <option value="" disabled selected>Pilih jenis tiket</option>
+                            <option value="VVIP">VVIP</option>
+                            <option value="VIP">VIP</option>
+                            <option value="Reguler">Reguler</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ticket_price">Harga</label>
+                        <input type="number" name="ticket_prices[]" class="form-control" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ticket_quantity">Kuantitas</label>
+                        <input type="number" name="ticket_quantities[]" class="form-control" min="1" required>
+                    </div>
+                </div>
+            `);
+            });
+        });
+    </script> --}}
+
     <script>
         $(document).ready(function() {
             $('#event_detail').summernote({
                 height: 150,
                 minHeight: null,
                 maxHeight: null,
-                focus: true,
                 toolbar: [
                     ['style', ['style']],
                     ['font', ['bold', 'underline', 'clear']],
@@ -191,6 +243,17 @@
                 placeholder: 'Select event category..',
                 theme: 'bootstrap-5',
                 allowClear: true,
+                width: '100%',
+                placeholder: $(this).data('placeholder'),
+            });
+        });
+
+        $(document).ready(function() {
+            $('#ticket_types').select2({
+                placeholder: 'Select ticket types..',
+                theme: 'bootstrap-5',
+                allowClear: true,
+                width: '100%',
                 placeholder: $(this).data('placeholder'),
             });
         });

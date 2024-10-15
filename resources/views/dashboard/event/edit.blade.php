@@ -180,7 +180,6 @@
                 height: 150,
                 minHeight: null,
                 maxHeight: null,
-                focus: true,
                 toolbar: [
                     ['style', ['style']],
                     ['font', ['bold', 'underline', 'clear']],
@@ -197,6 +196,7 @@
                 placeholder: 'Select event category..',
                 theme: 'bootstrap-5',
                 allowClear: true,
+                width: '100%',
                 placeholder: $(this).data('placeholder'),
             });
         });

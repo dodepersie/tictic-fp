@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('event_detail');
             $table->string('event_location');
-            $table->string('event_price');
+            $table->integer('event_price');
             $table->decimal('event_location_longitude', 10, 7);
             $table->decimal('event_location_latitude', 10, 7);
             $table->date('event_start_date');
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('event_image')->nullable();
             $table->timestamps();
 
-            // $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade');
         });
     }

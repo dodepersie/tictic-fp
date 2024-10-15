@@ -104,6 +104,9 @@
                         @if (request('location'))
                             <input type="hidden" name="location" value="{{ request('location') }}" />
                         @endif
+                        @if (request('category'))
+                            <input type="hidden" name="category" value="{{ request('category') }}" />
+                        @endif
                         <div class="relative">
                             <input type="text" name="search"
                                 class="w-full h-10 rounded-lg border-gray-200 px-4 pr-12 text-sm"

@@ -59,44 +59,153 @@
                 </div>
 
                 <div class="space-y-2">
-                    <img src="{{ $product->event_image ? '/storage/event_images/' . $product->event_image : 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop ?>' }}"
+                    <img src="{{ $product->event_image ? '/storage/event_images/' . $product->event_image : 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop' }}"
                         alt="{{ ucfirst($product->event_title) }}" class="h-auto object-contain rounded-xl shadow"
                         id="event_image" />
                 </div>
 
-                <div class="space-y-2">
-                    <span class="text-xl font-semibold">Event Description</span>
-                    <p class="text-justify leading-loose">
-                        {!! $product->event_detail !!}
-                    </p>
-                </div>
+                <!-- Another Tab Try -->
+                <div x-data="{ openTab: 1 }">
+                    <!-- Tabs Navigation -->
+                    <div id="Tab"
+                        class="flex flex-col md:flex-row md:items-center md:gap-4 border-b lg:border-gray-200">
+                        <!-- Event Description -->
+                        <button @click="openTab = 1"
+                            :class="{
+                                'text-sky-600 md:border-b lg:border-sky-500 px-1 pb-4 hover:text-gray-500 hover:border-gray-500': openTab ===
+                                    1,
+                                'text-gray-500 border-b border-transparent md:hover:border-gray-500 px-1 pb-4': openTab !==
+                                    1
+                            }"
+                            class="flex items-center gap-2"><svg class="w-4 h-4" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path fill-rule="evenodd"
+                                    d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm9.408-5.5a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2h-.01ZM10 10a1 1 0 1 0 0 2h1v3h-1a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-1v-4a1 1 0 0 0-1-1h-2Z"
+                                    clip-rule="evenodd" />
+                            </svg>Event
+                            Description</button>
+                        <!-- Event Map -->
+                        <button @click="openTab = 2"
+                            :class="{
+                                'text-sky-600 md:border-b border-sky-500 px-1 pb-4 hover:text-gray-500 md:hover:border-gray-500': openTab ===
+                                    2,
+                                'text-gray-500 border-b border-transparent md:hover:border-gray-500 px-1 pb-4': openTab !==
+                                    2
+                            }"
+                            class="flex items-center gap-2"><svg class="w-4 h-4" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path fill-rule="evenodd"
+                                    d="M11.906 1.994a8.002 8.002 0 0 1 8.09 8.421 7.996 7.996 0 0 1-1.297 3.957.996.996 0 0 1-.133.204l-.108.129c-.178.243-.37.477-.573.699l-5.112 6.224a1 1 0 0 1-1.545 0L5.982 15.26l-.002-.002a18.146 18.146 0 0 1-.309-.38l-.133-.163a.999.999 0 0 1-.13-.202 7.995 7.995 0 0 1 6.498-12.518ZM15 9.997a3 3 0 1 1-5.999 0 3 3 0 0 1 5.999 0Z"
+                                    clip-rule="evenodd" />
+                            </svg>Event
+                            Map</button>
+                        <!-- Reviews -->
+                        <button @click="openTab = 3"
+                            :class="{
+                                'text-sky-600 md:border-b border-sky-500 px-1 pb-4 hover:text-gray-500 md:hover:border-gray-500': openTab ===
+                                    3,
+                                'text-gray-500 border-b border-transparent md:hover:border-gray-500 px-1 pb-4': openTab !==
+                                    3
+                            }"
+                            class="flex items-center gap-2">
+                            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd"
+                                    d="M4 3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h1v2a1 1 0 0 0 1.707.707L9.414 13H15a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4Z"
+                                    clip-rule="evenodd" />
+                                <path fill-rule="evenodd"
+                                    d="M8.023 17.215c.033-.03.066-.062.098-.094L10.243 15H15a3 3 0 0 0 3-3V8h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-1v2a1 1 0 0 1-1.707.707L14.586 18H9a1 1 0 0 1-.977-.785Z"
+                                    clip-rule="evenodd" />
+                            </svg>{{ $reviewsCount }} {{ Str::plural('Review', $reviewsCount) }}</button>
+                        <!-- Related Events -->
+                        <button @click="openTab = 4"
+                            :class="{
+                                'text-sky-600 md:border-b border-sky-500 px-1 pb-4 hover:text-gray-500 md:hover:border-gray-500': openTab ===
+                                    4,
+                                'text-gray-500 border-b border-transparent md:hover:border-gray-500 px-1 pb-4': openTab !==
+                                    4
+                            }"
+                            class="flex items-center gap-2"><svg class="w-4 h-4" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z" />
+                            </svg>Related
+                            Events</button>
+                    </div>
 
-                <!-- Reviews Section -->
-                <div class="space-y-2">
-                    <h2 class="text-xl">{{ $reviewsCount }} {{ Str::plural('Review', $reviewsCount) }} on <span
-                            class="font-semibold">{{ $product->event_title }}</span></h2>
+                    <!-- Tab Content -->
+                    <div class="mt-4">
+                        <div x-show="openTab === 1">
+                            <h2 class="text-xl font-semibold">Event Description</h2>
+                            <div class="mt-2 text-justify leading-loose">{!! $product->event_detail !!}</div>
+                        </div>
+                        <div x-show="openTab === 2">
+                            <div>Google Maps apakah bisa?</div>
+                        </div>
+                        <div x-show="openTab === 3">
+                            <div class="space-y-2">
+                                @forelse($reviews as $review)
+                                    <div class="space-y-3">
+                                        <div class="p-4 rounded-lg border-2 border-dashed border-slate-900 mb-4">
+                                            <div class="flex justify-between items-center mb-2">
+                                                <div>
+                                                    <strong class="text-lg">{{ $review->user->name }}</strong>
+                                                    <span class="text-gray-500 text-sm">on
+                                                        {{ $review->created_at->format('d F Y - H:i:s') }}</span>
+                                                </div>
+                                                <div>
+                                                    <span
+                                                        class="text-yellow-500">{{ str_repeat('★', $review->rating) }}</span><span
+                                                        class="text-gray-500">{{ str_repeat('☆', 5 - $review->rating) }}</span>
+                                                </div>
+                                            </div>
 
-                    @forelse($reviews as $review)
-                        <div class="space-y-3">
-                            <div class="p-4 rounded-lg border-2 border-dashed border-slate-900 mb-4">
-                                <div class="flex justify-between items-center mb-2">
-                                    <div>
-                                        <strong class="text-lg">{{ $review->user->name }}</strong>
-                                        <span class="text-gray-500 text-sm">on
-                                            {{ $review->created_at->format('d F Y - H:i:s') }}</span>
+                                            <p class="text-gray-700">{{ $review->comment }}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span class="text-yellow-500">{{ str_repeat('★', $review->rating) }}</span><span
-                                            class="text-gray-500">{{ str_repeat('☆', 5 - $review->rating) }}</span>
-                                    </div>
-                                </div>
-
-                                <p class="text-gray-700">{{ $review->comment }}</p>
+                                @empty
+                                    <p>No reviews yet.</p>
+                                @endforelse
                             </div>
                         </div>
-                    @empty
-                        <p>No reviews yet.</p>
-                    @endforelse
+                        <div x-show="openTab === 4">
+                            <ul class="lg:grid grid-cols-2 space-y-4 lg:space-y-0 gap-5">
+                                @forelse($relatedProducts->take(4) as $relatedProduct)
+                                    <li>
+                                        <div
+                                            class="flex items-center gap-4 border-2 border-dashed border-slate-900 p-4 rounded-lg">
+                                            <div>
+                                                <img src="{{ $relatedProduct->event_image ? '/storage/event_images/' . $relatedProduct->event_image : 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop' }}"
+                                                    alt="{{ ucfirst($relatedProduct->event_title) }}"
+                                                    class="w-28 h-auto rounded-xl" id="event_image" />
+                                            </div>
+                                            <div class="space-y-1">
+                                                <div class="ease-in duration-100 font-semibold hover:text-sky-500">
+                                                    <a href="{{ route('event.show', $relatedProduct->slug) }}">
+                                                        {{ $relatedProduct->event_title }}
+                                                    </a>
+                                                </div>
+                                                <div class="text-sm">
+                                                    {{ $relatedProduct->event_location }}
+                                                </div>
+                                                <div class="text-sm">
+                                                    {{ date('d F Y', strtotime($relatedProduct->event_start_date)) }}
+                                                </div>
+                                                <div class="text-sm text-green-500 font-semibold">
+                                                    IDR {{ number_format($product->event_price, 0, ',', '.') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @empty
+                                    <div>There is no related product..</div>
+                                @endforelse
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 

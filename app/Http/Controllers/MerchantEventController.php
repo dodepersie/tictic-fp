@@ -36,7 +36,7 @@ class MerchantEventController extends Controller
     public function create()
     {
         $categories = Category::all();
-        
+
         return view('dashboard.event.create', [
             'title' => 'Create Events',
             'categories' => $categories,
@@ -66,19 +66,21 @@ class MerchantEventController extends Controller
 
         $product = Product::create($validatedData);
 
+        dd($product);
+
         $ticketTypes = [
-            ['type' => 'VVIP', 'price' => $request->input('vvip_price'), 'quantity' => $request->input('vvip_quantity')],
-            ['type' => 'VIP', 'price' => $request->input('vip_price'), 'quantity' => $request->input('vip_quantity')],
-            ['type' => 'Reguler', 'price' => $request->input('reguler_price'), 'quantity' => $request->input('reguler_quantity')],
+            ['ticket_types' => 'VVIP', 'ticket_price' => $request->input('vvip_price'), 'ticket_quantity' => $request->input('vvip_quantity')],
+            ['ticket_types' => 'VIP', 'ticket_price' => $request->input('vip_price'), 'ticket_quantity' => $request->input('vip_quantity')],
+            ['ticket_types' => 'Regular', 'ticket_price' => $request->input('reguler_price'), 'ticket_quantity' => $request->input('regular_quantity')],
         ];
 
         foreach ($ticketTypes as $ticketType) {
-            if ($ticketType['price'] && $ticketType['quantity']) {
+            if ($ticketType['ticket_price'] && $ticketType['ticket_quantity']) {
                 TicketType::create([
                     'product_id' => $product->id,
                     'type' => $ticketType['type'],
-                    'price' => $ticketType['price'],
-                    'quantity' => $ticketType['quantity']
+                    'price' => $ticketType['ticket_price'],
+                    'quantity' => $ticketType['ticket_quantity']
                 ]);
             }
         }

@@ -34,7 +34,7 @@ class ProductController extends Controller
 
         return view('event.index', [
             'title' => 'Events'.$title,
-            'products' => Product::latest()->filter(request(['search', 'merchant', 'location', 'category']))->paginate(6),
+            'products' => Product::latest()->filter(request(['search', 'merchant', 'location', 'category']))->paginate(8),
         ]);
     }
 
@@ -61,12 +61,18 @@ class ProductController extends Controller
         $averageRating = $product->reviews()->avg('rating');
         $reviewsCount = $reviews->count();
 
+        $relatedProducts = Product::where('category_id', $product->category_id)
+            ->where('id', '<>', $product->id)
+            ->inRandomOrder()
+            ->get();
+
         return view('event.show', [
             'title' => $product->event_title,
             'product' => $product,
             'reviews' => $reviews,
             'averageRating' => $averageRating,
             'reviewsCount' => $reviewsCount,
+            'relatedProducts' => $relatedProducts,
         ]);
     }
 

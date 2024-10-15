@@ -71,8 +71,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'd@tictic.id',
         ]);
 
-        Product::factory(5)->create();
-
         Category::factory()->create([
             'name' => 'Concert',
             'slug' => 'concert',
@@ -82,5 +80,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Sport',
             'slug' => 'sport',
         ]);
+        
+        Product::factory(15)->create();
+
     }
 }
