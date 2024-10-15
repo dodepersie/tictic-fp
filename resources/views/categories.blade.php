@@ -18,7 +18,7 @@
                                     <div class="p-4 sm:p-6">
                                         <div x-data class="mt-5">
                                             <span aria-hidden="true" role="img" class="text-3xl sm:text-4xl">
-                                                <img src="https://picsum.photos/id/{{ rand(1, 1000) }}/200/300"
+                                                <img src="https://picsum.photos/id/{{ rand(1, 100) }}/200/300"
                                                     alt="{{ $category->name }}"
                                                     class="h-64 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72" />
                                             </span>

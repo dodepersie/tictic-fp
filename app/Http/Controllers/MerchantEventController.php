@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateEventRequest;
-use App\Http\Requests\UpdateEventRequest;
 use App\Models\Product;
-use Cviebrock\EloquentSluggable\Services\SlugService;
+use App\Models\Category;
+use App\Models\TicketType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\CreateEventRequest;
+use App\Http\Requests\UpdateEventRequest;
 use Intervention\Image\Encoders\WebpEncoder;
 use Intervention\Image\Laravel\Facades\Image;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class MerchantEventController extends Controller
 {
@@ -33,8 +35,11 @@ class MerchantEventController extends Controller
      */
     public function create()
     {
+        $categories = Category::all();
+        
         return view('dashboard.event.create', [
             'title' => 'Create Events',
+            'categories' => $categories,
         ]);
     }
 
@@ -47,23 +52,36 @@ class MerchantEventController extends Controller
         $validatedData['merchant_id'] = auth()->user()->merchant->id;
 
         if ($request->hasFile('event_image')) {
-            // Load the image
             $file = $request->file('event_image');
             $image = Image::read($file);
 
-            // Make the image fit and convert to WEBP format
             $image->coverDown(1024, 768);
             $image->encode(new WebpEncoder(quality: 90));
             $file_name = now()->timestamp.'.webp';
 
-            // Save the resized image to storage
             Storage::put('public/event_images/'.$file_name, (string) $image->encode());
 
-            // Put the data in the database
             $validatedData['event_image'] = $file_name;
         }
 
-        Product::create($validatedData);
+        $product = Product::create($validatedData);
+
+        $ticketTypes = [
+            ['type' => 'VVIP', 'price' => $request->input('vvip_price'), 'quantity' => $request->input('vvip_quantity')],
+            ['type' => 'VIP', 'price' => $request->input('vip_price'), 'quantity' => $request->input('vip_quantity')],
+            ['type' => 'Reguler', 'price' => $request->input('reguler_price'), 'quantity' => $request->input('reguler_quantity')],
+        ];
+
+        foreach ($ticketTypes as $ticketType) {
+            if ($ticketType['price'] && $ticketType['quantity']) {
+                TicketType::create([
+                    'product_id' => $product->id,
+                    'type' => $ticketType['type'],
+                    'price' => $ticketType['price'],
+                    'quantity' => $ticketType['quantity']
+                ]);
+            }
+        }
 
         return redirect()->route('merchant_events.index')->withSuccess('Create event successfully');
     }
@@ -82,6 +100,7 @@ class MerchantEventController extends Controller
     public function edit(Product $product, $id)
     {
         $eventData = Product::findOrFail($id);
+        $categories = Category::all();
 
         if (auth()->user()->merchant->id !== $eventData->merchant_id) {
             abort(403);
@@ -90,6 +109,7 @@ class MerchantEventController extends Controller
         return view('dashboard.event.edit', [
             'event' => $eventData,
             'title' => 'Edit Event: '.$eventData->event_title,
+            'categories' => $categories,
         ]);
     }
 

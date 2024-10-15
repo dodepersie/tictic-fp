@@ -54,14 +54,20 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="event_price" class="form-control-label">Event Price</label>
-
-                                            <div class="input-group">
-                                                <span class="input-group-text" id="inputGroupPrepend">Rp</span>
-                                                <input class="form-control" type="text" name="event_price"
-                                                    id="event_price" value="{{ old('event_price', $event->event_price) }}"
-                                                    required />
-                                            </div>
+                                            <label for="event_category" class="form-control-label">Event Category</label>
+                                            <select id="event_category" class="form-select w-100" name="category_id"
+                                                style="padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #ccc; background-color: #fff;"
+                                                data-placeholder="Select event category..">
+                                                <option></option>
+                                                @foreach ($categories as $category)
+                                                    @if (old('category_id', $event->category->id) == $category->id)
+                                                        <option value="{{ $category->id }}" selected>{{ $category->name }}
+                                                        </option>
+                                                    @else
+                                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -183,6 +189,15 @@
                     ['insert', ['link']],
                     ['view', ['codeview']]
                 ]
+            });
+        });
+
+        $(document).ready(function() {
+            $('#event_category').select2({
+                placeholder: 'Select event category..',
+                theme: 'bootstrap-5',
+                allowClear: true,
+                placeholder: $(this).data('placeholder'),
             });
         });
     </script>

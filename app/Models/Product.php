@@ -36,6 +36,11 @@ class Product extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function ticketTypes(): HasMany
+    {
+        return $this->hasMany(TicketType::class);
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

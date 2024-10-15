@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('merchant_id');
-            $table->foreignId('category_id');
+            $table->unsignedBigInteger('category_id');
             $table->string('event_title');
             $table->string('slug')->unique();
             $table->text('event_detail');
-            $table->integer('event_price');
             $table->string('event_location');
+            $table->string('event_price');
             $table->decimal('event_location_longitude', 10, 7);
             $table->decimal('event_location_latitude', 10, 7);
             $table->date('event_start_date');
