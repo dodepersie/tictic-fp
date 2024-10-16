@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TicketType;
 use App\Http\Requests\StoreTicketTypeRequest;
 use App\Http\Requests\UpdateTicketTypeRequest;
+use App\Models\TicketType;
 
 class TicketTypeController extends Controller
 {

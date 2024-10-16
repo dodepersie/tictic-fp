@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use App\Models\Category;
-use App\Models\TicketType;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\CreateEventRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\TicketType;
+use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Encoders\WebpEncoder;
 use Intervention\Image\Laravel\Facades\Image;
-use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class MerchantEventController extends Controller
 {
@@ -66,8 +66,6 @@ class MerchantEventController extends Controller
 
         $product = Product::create($validatedData);
 
-        dd($product);
-
         $ticketTypes = [
             ['ticket_types' => 'VVIP', 'ticket_price' => $request->input('vvip_price'), 'ticket_quantity' => $request->input('vvip_quantity')],
             ['ticket_types' => 'VIP', 'ticket_price' => $request->input('vip_price'), 'ticket_quantity' => $request->input('vip_quantity')],
@@ -80,7 +78,7 @@ class MerchantEventController extends Controller
                     'product_id' => $product->id,
                     'type' => $ticketType['type'],
                     'price' => $ticketType['ticket_price'],
-                    'quantity' => $ticketType['ticket_quantity']
+                    'quantity' => $ticketType['ticket_quantity'],
                 ]);
             }
         }
@@ -137,7 +135,7 @@ class MerchantEventController extends Controller
             // Save the resized image to storage
             Storage::put('public/event_images/'.$file_name, (string) $image->encode());
 
-            // Delete old profile picture
+            // Delete old event picture
             if ($product->event_image) {
                 $path = public_path('storage/event_images/'.$product->event_image);
                 if (file_exists($path)) {
@@ -162,7 +160,7 @@ class MerchantEventController extends Controller
         $product = Product::find($id);
         $product->delete();
 
-        return redirect()->back()->with('success', 'Event deleted successfully');
+        return redirect()->back();
     }
 
     public function checkSlug(Request $request)

@@ -154,7 +154,7 @@
 @endsection
 
 @push('editor')
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script>
+    <!-- Summernote -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
 @endpush
@@ -193,34 +193,6 @@
         }
     </script>
 
-    {{-- <script>
-        $(document).ready(function() {
-            $('#add-ticket').click(function() {
-                $('#ticket-types').append(`
-                <div class="ticket-type">
-                    <div class="form-group">
-                        <label for="ticket_type">Jenis Tiket</label>
-                        <select name="ticket_types[]" class="form-control" required>
-                            <option value="" disabled selected>Pilih jenis tiket</option>
-                            <option value="VVIP">VVIP</option>
-                            <option value="VIP">VIP</option>
-                            <option value="Reguler">Reguler</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="ticket_price">Harga</label>
-                        <input type="number" name="ticket_prices[]" class="form-control" min="0" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="ticket_quantity">Kuantitas</label>
-                        <input type="number" name="ticket_quantities[]" class="form-control" min="1" required>
-                    </div>
-                </div>
-            `);
-            });
-        });
-    </script> --}}
-
     <script>
         $(document).ready(function() {
             $('#event_detail').summernote({
@@ -241,16 +213,6 @@
         $(document).ready(function() {
             $('#event_category').select2({
                 placeholder: 'Select event category..',
-                theme: 'bootstrap-5',
-                allowClear: true,
-                width: '100%',
-                placeholder: $(this).data('placeholder'),
-            });
-        });
-
-        $(document).ready(function() {
-            $('#ticket_types').select2({
-                placeholder: 'Select ticket types..',
                 theme: 'bootstrap-5',
                 allowClear: true,
                 width: '100%',

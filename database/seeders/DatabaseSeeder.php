@@ -80,8 +80,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Sport',
             'slug' => 'sport',
         ]);
-        
-        Product::factory(15)->create();
+
+        Product::factory(50)->create();
 
     }
 }

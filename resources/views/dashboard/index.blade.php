@@ -339,7 +339,7 @@
     </div>
 @endsection
 
-@push('js')
+@push('script')
     <script src="./assets/js/plugins/chartjs.min.js"></script>
     <script>
         var ctx1 = document.getElementById("chart-line").getContext("2d");

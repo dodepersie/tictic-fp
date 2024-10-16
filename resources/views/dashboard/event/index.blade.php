@@ -15,7 +15,7 @@
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
-                            <table class="table align-items-center mb-0">
+                            <table class="table table-hover" id="events_table" style="width: 100%;">
                                 <thead>
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -30,16 +30,21 @@
                                 <tbody>
                                     @forelse ($events as $event)
                                         <tr>
-                                            <td scope="row" class="px-4 text-sm">{{ $loop->iteration }}</td>
-                                            <td class="align-middle text-sm">
+                                            <td scope="row">{{ $loop->iteration }}</td>
+                                            <td class="text-sm">
                                                 <span
                                                     class="text-secondary text-sm font-weight-bold">{{ $event->event_title }}</span>
                                             </td>
-                                            <td class="align-middle" style="height: 100px;">
+                                            <td>
                                                 <div
-                                                    style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                                                    <a href="{{ route('merchant_events.edit', $event->id) }}" method="POST"
-                                                        class="btn btn-success btn-xs" style="margin-right: 5px;">
+                                                    style="display: flex; justify-content: center; align-items: center; gap: 7px">
+                                                    <a href="{{ route('event.show', $event->slug) }}"
+                                                        class="btn bg-primary text-white btn-xs">
+                                                        <i data-feather="eye" style="width: 20px; height: 20px;"
+                                                            aria-hidden="true"></i>
+                                                    </a>
+                                                    <a href="{{ route('merchant_events.edit', $event->id) }}"
+                                                        class="btn btn-success btn-xs">
                                                         <i data-feather="edit" style="width: 20px; height: 20px;"
                                                             aria-hidden="true"></i>
                                                     </a>
@@ -47,9 +52,11 @@
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-xs"><i
-                                                                data-feather="trash-2" style="width: 20px; height: 20px;"
-                                                                aria-hidden="true"></i></button>
+                                                        <button type="submit" class="btn btn-danger btn-xs delete-event"
+                                                            data-id="{{ $event->id }}">
+                                                            <i data-feather="trash-2" style="width: 20px; height: 20px;"
+                                                                aria-hidden="true"></i>
+                                                        </button>
                                                     </form>
                                                 </div>
                                             </td>
@@ -69,3 +76,64 @@
         @include('layouts.footers.auth.footer')
     </div>
 @endsection
+
+@push('script')
+    <script>
+        $(document).ready(function() {
+            $('#events_table').DataTable({
+                scrollX: true,
+                scrollCollapse: true,
+                responsive: true,
+                language: {
+                    search: "Search in table:"
+                },
+                ordering: false
+            });
+        });
+    </script>
+@endpush
+
+@push('swal_delete')
+    <script type="text/javascript">
+        $(function() {
+            $(document).on('click', '.delete_event', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var button = $(this);
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You will delete this event..",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'No',
+                    confirmButtonText: 'Yes, I\'m sure',
+                    showClass: {
+                        popup: 'animate__animated animate__bounceIn'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__bounceOut'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Selected event deleted successfully!',
+                            'success'
+                        ).then(() => {
+                            button.closest('form')
+                                .submit();
+                        });
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        Swal.fire(
+                            'Canceled',
+                            'Selected event not deleted :)',
+                            'error'
+                        )
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

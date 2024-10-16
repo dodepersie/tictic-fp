@@ -14,7 +14,7 @@ class TicketType extends Model
         'id',
     ];
 
-    public function product():  BelongsTo
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }
