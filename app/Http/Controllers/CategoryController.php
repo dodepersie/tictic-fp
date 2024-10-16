@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Models\Product;
 
 class CategoryController extends Controller
 {
@@ -15,7 +16,11 @@ class CategoryController extends Controller
     {
         $categories = Category::orderBy('name', 'asc')->get();
 
-        $title = 'Category Management';
+        $title = 'All Categories';
+
+        $titleSwal = 'Delete Categories!';
+        $text = 'Are you sure you want to delete this categories? (It will also delete all Products inside the category)';
+        confirmDelete($titleSwal, $text);
 
         return view('dashboard.categories.index', compact('title', 'categories'));
     }
@@ -71,8 +76,12 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        Product::where('category_id', $id)->delete();
+        $category = Category::find($id);
+        $category->delete();
+
+        return redirect()->back();
     }
 }

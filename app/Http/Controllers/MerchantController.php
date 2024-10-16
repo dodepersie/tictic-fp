@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreMerchantRequest;
 use App\Http\Requests\UpdateMerchantRequest;
 use App\Models\Merchant;
+use App\Models\Product;
 use App\Models\User;
 
 class MerchantController extends Controller
@@ -14,7 +15,18 @@ class MerchantController extends Controller
      */
     public function index()
     {
-        //
+        $merchants = Merchant::paginate(8);
+        $pending_merchants = Merchant::where('merchant_status', '=', 'Pending')->get();
+
+        $titleSwal = 'Delete Merchant!';
+        $text = 'Are you sure you want to delete this merchant? (It will also delete all Events associated with this Merchant)';
+        confirmDelete($titleSwal, $text);
+
+        return view('dashboard.merchant.index', [
+            'title' => 'Pending Merchants',
+            'merchants' => $merchants,
+            'pending_merchants' => $pending_merchants,
+        ]);
     }
 
     /**
@@ -46,8 +58,6 @@ class MerchantController extends Controller
      */
     public function edit(Merchant $merchant)
     {
-        $this->authorize('admin');
-
         $title = 'Now Editing: '.$merchant->user->name;
         $selected_merchant = $merchant->user;
 
@@ -63,13 +73,9 @@ class MerchantController extends Controller
      */
     public function update(UpdateMerchantRequest $request, Merchant $merchant)
     {
-        $this->authorize('admin');
-
-        // Update merchant attributes
         $merchant->user->update($request->validated());
 
-        // Redirect or return a response
-        return redirect()->route('dashboard.merchant_all')->with('success', 'Merchant updated successfully!');
+        return redirect()->route('dashboard_merchants.index')->withSuccess('Merchant updated successfully!');
     }
 
     /**
@@ -77,11 +83,10 @@ class MerchantController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('admin');
-
+        Product::where('merchant_id', $id)->delete();
         $user = User::find($id);
         $user->delete();
 
-        return back()->with('success', 'Merchant deleted successfully!');
+        return back()->withSuccess('Merchant deleted successfully!');
     }
 }

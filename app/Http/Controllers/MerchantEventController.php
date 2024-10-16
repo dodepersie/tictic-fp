@@ -24,6 +24,10 @@ class MerchantEventController extends Controller
         $userId = auth()->user()->merchant->id;
         $events = Product::where('merchant_id', $userId)->latest()->get();
 
+        $title = 'Delete Event!';
+        $text = 'Are you sure you want to delete this event?';
+        confirmDelete($title, $text);
+
         return view('dashboard.event.index', [
             'title' => 'Merchant Events',
             'events' => $events,

@@ -28,8 +28,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::currentRouteName() == 'dashboard.merchant_all' ? 'active' : '' }}"
-                        href="{{ route('dashboard.merchant_all') }}">
+                    <a class="nav-link {{ Route::currentRouteName() == 'dashboard_merchants.index' ? 'active' : '' }}"
+                        href="{{ route('dashboard_merchants.index') }}">
                         <div class="icon icon-shape border-radius-md text-center me-1 d-flex align-items-center justify-content-center"
                             style="width: 36px;height: 36px;">
                             <i data-feather="users"></i>

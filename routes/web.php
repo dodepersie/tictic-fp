@@ -40,7 +40,7 @@ use Illuminate\Support\Str;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/categories', function () {
     return view('categories', [
-        'title' => 'Category',
+        'title' => 'Categories',
         'categories' => Category::all(),
     ]);
 })->name('categories');
@@ -160,10 +160,9 @@ Route::prefix('dashboard')->middleware(['auth', 'verified', CheckMerchantStatus:
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
     // Merchant
-    Route::get('/merchants', [DashboardController::class, 'merchant_all'])->name('dashboard.merchant_all');
     Route::post('merchant/{merchant}/approve', [RegisterController::class, 'approve_merchant'])->name('merchant.approve');
     Route::post('merchant/{merchant}/reject', [RegisterController::class, 'reject_merchant'])->name('merchant.reject');
-    Route::resource('merchant', MerchantController::class);
+    Route::resource('merchants', MerchantController::class)->names('dashboard_merchants');
 
     // Merchant Event
     Route::resource('events', MerchantEventController::class)->names('merchant_events');

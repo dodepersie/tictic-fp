@@ -102,25 +102,32 @@
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
-                            <table class="table align-items-center mb-0">
+                            <table class="table table-hover" id="merchants_table" style="width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                            #</th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             Name</th>
                                         <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             Phone Number</th>
                                         <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             Status</th>
                                         <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($merchants as $merchant)
                                         <tr>
+                                            <td class="align-middle text-center text-sm">
+                                                {{ $loop->iteration }}
+                                            </td>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
                                                     <div>
@@ -135,23 +142,26 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="align-middle text-center text-sm">
+                                            <td class="align-middle text-center">
                                                 <span
-                                                    class="text-secondary text-xs font-weight-bold">{{ $merchant->user->phone_number ?? '-' }}</span>
+                                                    class="text-secondary text-sm font-weight-bold">{{ $merchant->user->phone_number ?? '-' }}</span>
                                             </td>
                                             <td class="align-middle text-center">
                                                 @if ($merchant->merchant_status == 'Pending')
-                                                    <span class="badge badge-sm bg-gradient-warning">PENDING</span>
+                                                    <span
+                                                        class="badge text-sm bg-gradient-warning font-weight-bold">PENDING</span>
                                                 @elseif($merchant->merchant_status == 'Approved')
-                                                    <span class="badge badge-sm bg-gradient-success">APPROVED</span>
+                                                    <span
+                                                        class="badge text-sm bg-gradient-success font-weight-bold">APPROVED</span>
                                                 @else
-                                                    <span class="badge badge-sm bg-gradient-danger">REJECTED</span>
+                                                    <span
+                                                        class="badge text-sm bg-gradient-danger font-weight-bold">REJECTED</span>
                                                 @endif
                                             </td>
                                             <td class="align-middle"
                                                 style="display:flex; justify-content: center; align-items:center; height: 100px;">
                                                 @if ($merchant->merchant_status == 'Approved')
-                                                    <a href="{{ route('merchant.edit', $merchant->id) }}"
+                                                    <a href="{{ route('dashboard_merchants.edit', $merchant->id) }}"
                                                         style="margin-right: 5px;">
                                                         @csrf
                                                         <button type="submit" class="btn btn-success btn-xs">
@@ -159,11 +169,12 @@
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </a>
-                                                    <form action="{{ route('merchant.destroy', $merchant->user_id) }}"
+                                                    <form
+                                                        action="{{ route('dashboard_merchants.destroy', $merchant->user_id) }}"
                                                         method="POST">
                                                         @method('delete')
                                                         @csrf
-                                                        <a href="{{ route('merchant.destroy', $merchant->user_id) }}"
+                                                        <a href="{{ route('dashboard_merchants.destroy', $merchant->user_id) }}"
                                                             class="btn btn-danger btn-xs" data-confirm-delete="true"><i
                                                                 data-feather="trash" style="width: 20px; height: 20px;"
                                                                 aria-hidden="true"></i></a>
@@ -187,3 +198,19 @@
         @include('layouts.footers.auth.footer')
     </div>
 @endsection
+
+@push('script')
+    <script>
+        $(document).ready(function() {
+            $('#merchants_table').DataTable({
+                scrollX: true,
+                scrollCollapse: true,
+                responsive: true,
+                language: {
+                    search: "Search in table:"
+                },
+                ordering: false
+            });
+        });
+    </script>
+@endpush

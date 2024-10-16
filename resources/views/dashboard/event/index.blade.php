@@ -18,24 +18,26 @@
                             <table class="table table-hover" id="events_table" style="width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             #</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             Event Title</th>
                                         <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($events as $event)
                                         <tr>
-                                            <td scope="row">{{ $loop->iteration }}</td>
-                                            <td class="text-sm">
+                                            <td class="align-middle text-center text-sm">{{ $loop->iteration }}</td>
+                                            <td class="align-middle text-center">
                                                 <span
                                                     class="text-secondary text-sm font-weight-bold">{{ $event->event_title }}</span>
                                             </td>
-                                            <td>
+                                            <td class="align-middle text-center text-sm">
                                                 <div
                                                     style="display: flex; justify-content: center; align-items: center; gap: 7px">
                                                     <a href="{{ route('event.show', $event->slug) }}"
@@ -52,11 +54,12 @@
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-xs delete-event"
-                                                            data-id="{{ $event->id }}">
+                                                        <a href="{{ route('merchant_events.destroy', $event->id) }}"
+                                                            class="btn btn-danger btn-xs delete-event"
+                                                            data-confirm-delete="true">
                                                             <i data-feather="trash-2" style="width: 20px; height: 20px;"
                                                                 aria-hidden="true"></i>
-                                                        </button>
+                                                        </a>
                                                     </form>
                                                 </div>
                                             </td>

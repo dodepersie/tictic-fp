@@ -15,17 +15,17 @@
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
-                            <table class="table align-items-center mb-0">
+                            <table class="table table-hover" id="categories_table" style="width: 100%;">
                                 <thead>
                                     <tr>
                                         <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             #</th>
                                         <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             Category Name</th>
                                         <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                             Action</th>
                                     </tr>
                                 </thead>
@@ -33,9 +33,20 @@
                                     @forelse ($categories as $category)
                                         <tr>
                                             <td scope="row" class="px-4 text-sm text-center">{{ $loop->iteration }}</td>
-                                            <td class="align-middle text-sm text-center">
+                                            <td class="align-middle text-center">
                                                 <span
                                                     class="text-secondary text-sm font-weight-bold">{{ $category->name }}</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <form action="{{ route('dashboard_categories.destroy', $category->id) }}"
+                                                    method="POST">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <a href="{{ route('dashboard_categories.destroy', $category->id) }}"
+                                                        class="btn btn-danger btn-xs" data-confirm-delete="true"><i
+                                                            data-feather="trash" style="width: 20px; height: 20px;"
+                                                            aria-hidden="true"></i></a>
+                                                </form>
                                             </td>
                                         </tr>
                                     @empty
@@ -53,3 +64,19 @@
         @include('layouts.footers.auth.footer')
     </div>
 @endsection
+
+@push('script')
+    <script>
+        $(document).ready(function() {
+            $('#categories_table').DataTable({
+                scrollX: true,
+                scrollCollapse: true,
+                responsive: true,
+                language: {
+                    search: "Search in table:"
+                },
+                ordering: false
+            });
+        });
+    </script>
+@endpush

@@ -12,13 +12,21 @@
                 </p>
             </header>
 
-            <ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                @foreach ($products as $product)
-                    <x-home-ticket href="{{ route('event.show', $product->slug) }}">
-                        @slot('product', $product)
-                    </x-home-ticket>
-                @endforeach
-            </ul>
+            <div class="my-4">
+                @if ($products->count())
+                    <ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                        @foreach ($products as $product)
+                            <x-home-ticket href="{{ route('event.show', $product->slug) }}">
+                                @slot('product', $product)
+                            </x-home-ticket>
+                        @endforeach
+                    </ul>
+                @else
+                    <div>
+                        No events available..
+                    </div>
+                @endif
+            </div>
 
             <div class="flex justify-center items-center mt-10">
                 <a class="group relative block text-md font-bold text-black before:absolute before:inset-0 before:rounded-md before:border-2 before:border-dashed before:border-slate-900 w-full text-center"

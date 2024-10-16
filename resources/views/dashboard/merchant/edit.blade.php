@@ -11,8 +11,8 @@
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="px-4 py-2">
-                            <form role="form" method="POST" action="{{ route('merchant.update', $merchant->id) }}"
-                                class="space-y-6">
+                            <form role="form" method="POST"
+                                action="{{ route('dashboard_merchants.update', $merchant->id) }}" class="space-y-6">
                                 @csrf
                                 @method('PUT')
 
