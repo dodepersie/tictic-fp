@@ -40,6 +40,14 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label for="event_end_date" class="form-control-label">Event End
+                                                Date</label>
+                                            <input class="form-control" type="date" name="event_end_date"
+                                                id="event_end_date" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label for="event_start_time" class="form-control-label">Event Time</label>
 
                                             <div class="input-group">
@@ -48,7 +56,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="event_category" class="form-control-label">Event Category</label>
                                             <select id="event_category" class="form-select" name="category_id"
@@ -102,7 +110,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="event_location_longitude" class="form-control-label">Event Location
+                                            <label for="event_location_longitude" class="form-control-label">Event
+                                                Location
                                                 Longitude</label>
                                             <input class="form-control" type="text" name="event_location_longitude"
                                                 id="event_location_longitude"

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -26,8 +27,13 @@ class CheckoutController extends Controller
 
     public function proccess(Request $request)
     {
-
         $data = $request->all();
+
+        $product = Product::find($data['product_id']);
+
+        if ($product->event_end_date < now()->format('Y-m-d')) {
+            return redirect()->back()->withError('Event already ended.');
+        }
 
         $transaction = Transaction::create([
             'user_id' => auth()->user()->id,

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->decimal('event_location_longitude', 10, 7);
             $table->decimal('event_location_latitude', 10, 7);
             $table->date('event_start_date');
+            $table->date('event_end_date');
             $table->time('event_start_time');
             $table->string('event_image')->nullable();
             $table->timestamps();

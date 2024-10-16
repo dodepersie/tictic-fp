@@ -42,6 +42,15 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label for="event_end_date" class="form-control-label">Event End
+                                                Date</label>
+                                            <input class="form-control" type="date" name="event_end_date"
+                                                id="event_end_date"
+                                                value="{{ old('event_end_date', $event->event_end_date) }}" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label for="event_start_time" class="form-control-label">Event Time</label>
 
                                             <div class="input-group">
@@ -52,10 +61,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="event_category" class="form-control-label">Event Category</label>
-                                            <select id="event_category" class="form-select w-100" name="category_id"
+                                            <select id="event_category" class="form-select" name="category_id"
                                                 style="padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #ccc; background-color: #fff;"
                                                 data-placeholder="Select event category..">
                                                 <option></option>
@@ -139,14 +148,6 @@
 @endpush
 
 @push('script')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const today = new Date();
-            const formattedDate = today.toISOString().split('T')[0];
-            document.getElementById('event_start_date').setAttribute('min', formattedDate);
-        });
-    </script>
-
     <script>
         const title = document.querySelector('#event_title');
         const slug = document.querySelector('#slug');

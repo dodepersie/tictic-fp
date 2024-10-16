@@ -5,9 +5,9 @@
     <section id="product-list">
         <div>
             <header>
-                <h2 class="text-xl font-bold text-gray-900 sm:text-2xl">Special Events Ticket Price! 😍</h2>
+                <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl leading-relaxed">Special Events Ticket Price! 😍</h2>
 
-                <p class="mt-4 max-w-md text-gray-500">
+                <p class="mt-2 text-gray-600 leading-relaxed">
                     Enjoy good event with special price only on TicTic!
                 </p>
             </header>
@@ -36,7 +36,7 @@
 
     <!-- Profit -->
     <section id="profit">
-        <div class="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-screen-xl py-12">
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
                 <div class="relative h-64 overflow-hidden rounded-lg sm:h-80 lg:order-last lg:h-full">
                     <img alt="TicTic Profit"
@@ -59,7 +59,7 @@
 
     <!-- Testimonials -->
     <section id="testimonials">
-        <div class="mx-auto max-w-screen-xl p-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-screen-xl">
             <h2 class="text-center text-4xl font-bold tracking-tight text-gray-900">
                 Read trusted reviews from our customers
             </h2>

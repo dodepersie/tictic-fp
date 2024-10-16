@@ -27,9 +27,7 @@
     <x-navbar></x-navbar>
 
     <div class="container max-w-7xl mx-auto p-5 pt-24 lg:px-8 lg:pb-10 md:pt-36 space-y-3">
-        <div>
-            @yield('container')
-        </div>
+        @yield('container')
     </div>
 
     <x-footer></x-footer>
