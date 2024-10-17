@@ -1,6 +1,5 @@
 <!-- Navbar -->
-<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl
-        {{ str_contains(Request::url(), 'virtual-reality') == true ? ' mt-3 mx-3 bg-primary' : '' }}"
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl {{ str_contains(Request::url(), 'profile') == true ? 'mt-n7' : '' }}"
     id="navbarBlur" data-scroll="false">
     <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
@@ -15,18 +14,7 @@
             <div class="ms-md-auto pe-md-3 d-flex align-items-center">
 
             </div>
-            <ul class="navbar-nav justify-content-end">
-                <li class="nav-item d-flex align-items-center">
-                    <form role="form" method="post" action="{{ route('logout') }}" id="logout-form">
-                        @csrf
-                        <a href="{{ route('logout') }}" class="nav-link text-white font-weight-bold px-0"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i data-feather="log-out" class="me-sm-1"
-                                style="width: 18px; height: 18px; font-weight: bold;"></i>
-                            <span class="d-sm-inline d-none">Log out</span>
-                        </a>
-                    </form>
-                </li>
+            <ul class="navbar-nav justify-content-end align-items-center">
                 <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
                         <div class="sidenav-toggler-inner">

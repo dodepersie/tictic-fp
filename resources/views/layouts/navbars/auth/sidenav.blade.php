@@ -99,7 +99,7 @@
             @endcan
 
             <li class="nav-item mt-3">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Profile Management</h6>
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account Management</h6>
             </li>
 
             <li class="nav-item">
@@ -111,6 +111,20 @@
                     </div>
                     <span class="nav-link-text ms-1">Edit profile</span>
                 </a>
+            </li>
+
+            <li class="nav-item">
+                <form role="form" method="post" action="{{ route('logout') }}" id="logout-form">
+                    @csrf
+                    <a href="{{ route('logout') }}" class="nav-link"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <div class="icon icon-shape border-radius-md text-center me-1 d-flex align-items-center justify-content-center"
+                            style="width: 36px;height: 36px;">
+                            <i data-feather="log-out"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Log out</span>
+                    </a>
+                </form>
             </li>
         </ul>
     </div>
