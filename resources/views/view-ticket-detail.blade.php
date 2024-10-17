@@ -42,12 +42,8 @@
 
                 @if (session('transaction'))
                     <div class="mt-5 p-4 border border-gray-200 rounded-lg">
-                        <h3 class="text-lg font-semibold">Ticket Details</h3>
                         <div class="leading-loose">
-                            <div><strong>Unique ID:</strong> {{ session('transaction')->unique_id }}</div>
-                            <!-- masih perlu ditambahkan agar bisa melihat ticket type -->
-                            <div><strong>Ticket Type:</strong> {{ session('transaction')->product }}</div>
-                            <div><strong>Event Title:</strong> {{ session('transaction')->product->event_title }}</div>
+                            <h3 class="text-lg font-semibold border-b border-gray-200 pb-3 mb-3">Ticket Details</h3>
                             <div><strong>Payment Status:</strong>
                                 @if (session('transaction')->status == 'Success')
                                     <span
@@ -84,6 +80,15 @@
                                     </span>
                                 @endif
                             </div>
+                            <div><strong>Unique ID:</strong> {{ session('transaction')->unique_id }}</div>
+                            <!-- masih perlu ditambahkan agar bisa melihat ticket type -->
+                            <div><strong>Ticket Type:</strong> {{ session('transaction')->ticketType->type }}</div>
+                            <div><strong>Quantity:</strong> {{ session('transaction')->quantity }}</div>
+                        </div>
+
+                        <div class="leading-loose">
+                            <h3 class="text-lg font-semibold border-b border-gray-200 py-3 mb-3">Event Details</h3>
+                            <div><strong>Event Title:</strong> {{ session('transaction')->product->event_title }}</div>
                             <div><strong>Ticket Price:</strong> IDR
                                 {{ number_format(session('transaction')->price, 0, ',', '.') }}
                             </div>
@@ -99,25 +104,26 @@
                             <div><strong>Order Date:</strong>
                                 {{ session('transaction')->created_at->format('d F Y - H:i:s') }}</div>
                         </div>
-
-                        @if (session('transaction')->status === 'Pending')
-                            <a class="mt-3 group relative block text-md font-bold text-white before:absolute before:inset-0 before:rounded-md before:border-2 before:border-dashed before:border-slate-900 text-center"
-                                href="{{ route('checkout', session('transaction')->id) }}">
-                                <div
-                                    class="h-full rounded-md border-2 border-slate-900 bg-slate-900 transition group-hover:-translate-y-2 group-hover:-translate-x-2">
-
-                                    <span class="relative block py-2"> Pay now </span>
-                                </div>
-                            </a>
-                        @endif
                     </div>
-                @elseif ($errors->any())
-                    <div class="mt-5 p-4 border border-red-200 bg-red-50 text-red-800 rounded-lg">
-                        <h3 class="text-lg font-semibold">Error</h3>
-                        <p>{{ $errors->first() }}</p>
-                    </div>
-                @endif
+
+                    @if (session('transaction')->status === 'Pending')
+                        <a class="mt-3 group relative block text-md font-bold text-white before:absolute before:inset-0 before:rounded-md before:border-2 before:border-dashed before:border-slate-900 text-center"
+                            href="{{ route('checkout', session('transaction')->id) }}">
+                            <div
+                                class="h-full rounded-md border-2 border-slate-900 bg-slate-900 transition group-hover:-translate-y-2 group-hover:-translate-x-2">
+
+                                <span class="relative block py-2"> Pay now </span>
+                            </div>
+                        </a>
+                    @endif
             </div>
+        @elseif ($errors->any())
+            <div class="mt-5 p-4 border border-red-200 bg-red-50 text-red-800 rounded-lg">
+                <h3 class="text-lg font-semibold">Error</h3>
+                <p>{{ $errors->first() }}</p>
+            </div>
+            @endif
+        </div>
         </div>
     </section>
 @endsection
