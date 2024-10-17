@@ -188,7 +188,7 @@
                                                 <div>
                                                     <img src="{{ $relatedProduct->event_image ? '/storage/event_images/' . $relatedProduct->event_image : 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop' }}"
                                                         alt="{{ ucfirst($relatedProduct->event_title) }}"
-                                                        class="w-28 h-auto rounded-xl" id="event_image" />
+                                                        class="w-28 h-auto rounded-xl" id="related_event_image" />
                                                 </div>
                                                 <div class="space-y-1">
                                                     <div class="ease-in duration-100 font-semibold hover:text-sky-500">
@@ -202,8 +202,17 @@
                                                     <div class="text-sm">
                                                         {{ date('d F Y', strtotime($relatedProduct->event_start_date)) }}
                                                     </div>
+
+                                                    @php
+                                                        $regularTicket = $relatedProduct->ticketTypes->firstWhere(
+                                                            'type',
+                                                            'Regular',
+                                                        );
+                                                    @endphp
+
                                                     <div class="text-sm text-green-500 font-semibold">
-                                                        IDR {{ number_format($product->event_price, 0, ',', '.') }}
+                                                        IDR
+                                                        {{ $regularTicket ? number_format($regularTicket->price, 0, ',', '.') : 'Unavailable' }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -211,6 +220,7 @@
                                     @empty
                                         <div>There is no related product..</div>
                                     @endforelse
+
                                 </ul>
                             </div>
                         </div>

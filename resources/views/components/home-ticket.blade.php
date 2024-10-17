@@ -37,7 +37,6 @@
                                 {{ $product->event_location }}
                             </p>
 
-                            <!-- Ambil harga ticket type reguler disini -->
                             @php
                                 $regularTicket = $product->ticketTypes->firstWhere('type', 'Regular');
                             @endphp
