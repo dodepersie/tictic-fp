@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ticket_types', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->enum('type', ['VVIP', 'VIP', 'Reguler']);
+            $table->enum('type', ['VVIP', 'VIP', 'Regular']);
             $table->integer('price');
             $table->integer('quantity');
             $table->timestamps();

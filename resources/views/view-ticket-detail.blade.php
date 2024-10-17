@@ -45,6 +45,8 @@
                         <h3 class="text-lg font-semibold">Ticket Details</h3>
                         <div class="leading-loose">
                             <div><strong>Unique ID:</strong> {{ session('transaction')->unique_id }}</div>
+                            <!-- masih perlu ditambahkan agar bisa melihat ticket type -->
+                            <div><strong>Ticket Type:</strong> {{ session('transaction')->product }}</div>
                             <div><strong>Event Title:</strong> {{ session('transaction')->product->event_title }}</div>
                             <div><strong>Payment Status:</strong>
                                 @if (session('transaction')->status == 'Success')

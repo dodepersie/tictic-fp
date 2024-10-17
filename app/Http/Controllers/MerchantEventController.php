@@ -71,13 +71,13 @@ class MerchantEventController extends Controller
         $product = Product::create($validatedData);
 
         $ticketTypes = [
-            ['ticket_types' => 'VVIP', 'ticket_price' => $request->input('vvip_price'), 'ticket_quantity' => $request->input('vvip_quantity')],
-            ['ticket_types' => 'VIP', 'ticket_price' => $request->input('vip_price'), 'ticket_quantity' => $request->input('vip_quantity')],
-            ['ticket_types' => 'Regular', 'ticket_price' => $request->input('reguler_price'), 'ticket_quantity' => $request->input('regular_quantity')],
+            ['type' => 'VVIP', 'ticket_price' => $request->input('vvip_price'), 'ticket_quantity' => $request->input('vvip_quantity')],
+            ['type' => 'VIP', 'ticket_price' => $request->input('vip_price'), 'ticket_quantity' => $request->input('vip_quantity')],
+            ['type' => 'Regular', 'ticket_price' => $request->input('regular_price'), 'ticket_quantity' => $request->input('regular_quantity')],
         ];
 
         foreach ($ticketTypes as $ticketType) {
-            if ($ticketType['ticket_price'] && $ticketType['ticket_quantity']) {
+            if (! is_null($ticketType['ticket_price']) && ! is_null($ticketType['ticket_quantity'])) {
                 TicketType::create([
                     'product_id' => $product->id,
                     'type' => $ticketType['type'],
@@ -101,9 +101,9 @@ class MerchantEventController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product, $id)
+    public function edit($id)
     {
-        $eventData = Product::findOrFail($id);
+        $eventData = Product::with('ticketTypes')->findOrFail($id);
         $categories = Category::all();
 
         if (auth()->user()->merchant->id !== $eventData->merchant_id) {

@@ -41,6 +41,16 @@ class Product extends Model
         return $this->hasMany(TicketType::class);
     }
 
+    public function totalTicketsSold()
+    {
+        return $this->ticketTypes->map(function ($ticketType) {
+            return [
+                'type' => $ticketType->type,
+                'sold' => $ticketType->transactions()->sum('quantity'),
+            ];
+        });
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

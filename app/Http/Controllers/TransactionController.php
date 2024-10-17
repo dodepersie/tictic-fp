@@ -22,7 +22,7 @@ class TransactionController extends Controller
     public function all_transactions(Transaction $transaction)
     {
         $title = 'All Transactions';
-        $transactions = Transaction::where('user_id', '=', auth()->user()->id)->latest()->get();
+        $transactions = Transaction::with('ticketType')->where('user_id', '=', auth()->user()->id)->latest()->get();
 
         return view('dashboard.transactions.index', compact('title', 'transactions'));
     }

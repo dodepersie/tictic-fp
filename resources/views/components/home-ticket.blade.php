@@ -36,8 +36,14 @@
                             <p class="text-sm text-gray-700">
                                 {{ $product->event_location }}
                             </p>
+
+                            <!-- Ambil harga ticket type reguler disini -->
+                            @php
+                                $regularTicket = $product->ticketTypes->firstWhere('type', 'Regular');
+                            @endphp
                             <p class="text-lg font-medium text-[#F15C59]">
-                                IDR {{ number_format($product->event_price, 0, ',', '.') }}
+                                IDR
+                                {{ $regularTicket ? number_format($regularTicket->price, 0, ',', '.') : 'Unavailable' }}
                             </p>
                         </div>
                     </div>

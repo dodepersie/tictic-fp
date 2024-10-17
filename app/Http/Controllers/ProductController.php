@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Merchant;
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\TicketType;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -56,10 +57,13 @@ class ProductController extends Controller
      */
     public function show($slug)
     {
-        $product = Product::where('slug', $slug)->firstOrFail();
+        $product = Product::with('ticketTypes')->where('slug', $slug)->firstOrFail();
         $reviews = Review::where('product_id', $product->id)->latest()->get();
         $averageRating = $product->reviews()->avg('rating');
         $reviewsCount = $reviews->count();
+
+        // Development FIX
+        $totalSales = TicketType::where('product_id', $product->id)->sum('quantity');
 
         $relatedProducts = Product::where('category_id', $product->category_id)
             ->where('id', '<>', $product->id)
@@ -73,6 +77,7 @@ class ProductController extends Controller
             'averageRating' => $averageRating,
             'reviewsCount' => $reviewsCount,
             'relatedProducts' => $relatedProducts,
+            'totalSales' => $totalSales,
         ]);
     }
 

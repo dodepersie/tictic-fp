@@ -80,6 +80,86 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
+                                        <div class="ticket-types">
+                                            <div class="ticket-type">
+                                                <div class="form-group">
+                                                    <!-- Checkbox untuk memilih jenis tiket -->
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" name="ticket_types[]" value="VVIP"
+                                                            class="form-check-input" id="selectVVIP">
+                                                        <label class="form-check-label font-weight-bold" for="selectVVIP">
+                                                            VVIP
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" name="ticket_types[]" value="VIP"
+                                                            class="form-check-input" id="selectVIP">
+                                                        <label class="form-check-label font-weight-bold" for="selectVIP">
+                                                            VIP
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" name="ticket_types[]" value="Regular"
+                                                            class="form-check-input" id="selectRegular"> <label
+                                                            class="form-check-label font-weight-bold" for="selectRegular">
+                                                            Regular
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <!-- Area input form dinamis -->
+                                                <div class="col-md-12">
+                                                    <!-- Form untuk VVIP -->
+                                                    <div class="form-group" id="VVIP-form" style="display:none;">
+                                                        <h4>VVIP Ticket Settings</h4>
+                                                        <label for="vvip_price" class="form-control-label">Price:</label>
+                                                        <input class="form-control mb-2" type="text" name="vvip_price"
+                                                            id="vvip_price" placeholder="Enter VVIP Price"
+                                                            value="{{ old('vvip_price', $event->ticketTypes) }}">
+
+                                                        <label for="vvip_quantity"
+                                                            class="form-control-label">Quantity:</label>
+                                                        <input class="form-control mb-2" type="number"
+                                                            name="vvip_quantity" id="vvip_quantity"
+                                                            placeholder="Enter VVIP Quantity"
+                                                            value="{{ old('vvip_quantity') }}">
+                                                    </div>
+
+                                                    <!-- Form untuk VIP -->
+                                                    <div class="form-group" id="VIP-form" style="display:none;">
+                                                        <h4>VIP Ticket Settings</h4>
+                                                        <label for="vip_price" class="form-control-label">Price:</label>
+                                                        <input class="form-control mb-2" type="text" name="vip_price"
+                                                            id="vip_price" placeholder="Enter VIP Price"
+                                                            value="{{ old('vip_price') }}">
+                                                        <label for="vip_quantity"
+                                                            class="form-control-label">Quantity:</label>
+                                                        <input class="form-control mb-2" type="number"
+                                                            name="vip_quantity" id="vip_quantity"
+                                                            placeholder="Enter VIP Quantity"
+                                                            value="{{ old('vip_quantity') }}">
+                                                    </div>
+
+                                                    <!-- Form untuk Regular -->
+                                                    <div class="form-group" id="Regular-form" style="display:none;">
+                                                        <h4>Regular Ticket Settings</h4>
+                                                        <label for="regular_price"
+                                                            class="form-control-label">Price:</label>
+                                                        <input class="form-control mb-2" type="text"
+                                                            name="regular_price" id="regular_price"
+                                                            placeholder="Enter Regular Price"
+                                                            value="{{ old('regular_price') }}">
+                                                        <label for="regular_quantity"
+                                                            class="form-control-label">Quantity:</label>
+                                                        <input class="form-control mb-2" type="number"
+                                                            name="regular_quantity" id="regular_quantity"
+                                                            placeholder="Enter Regular Quantity"
+                                                            value="{{ old('regular_price') }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="event_location" class="form-control-label">Event Location</label>
                                             <input class="form-control" type="text" name="event_location"
@@ -89,7 +169,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="event_location_longitude" class="form-control-label">Event Location
+                                            <label for="event_location_longitude" class="form-control-label">Event
+                                                Location
                                                 Longitude</label>
                                             <input class="form-control" type="text" name="event_location_longitude"
                                                 id="event_location_longitude"
@@ -148,6 +229,29 @@
 @endpush
 
 @push('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('.form-check-input');
+            const forms = {
+                VVIP: document.getElementById('VVIP-form'),
+                VIP: document.getElementById('VIP-form'),
+                Regular: document.getElementById('Regular-form')
+            };
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        forms[this.value].style.display =
+                            'block'; // Tampilkan form jika checkbox dipilih
+                    } else {
+                        forms[this.value].style.display =
+                            'none'; // Sembunyikan form jika checkbox tidak dipilih
+                    }
+                });
+            });
+        });
+    </script>
+
     <script>
         const title = document.querySelector('#event_title');
         const slug = document.querySelector('#slug');

@@ -41,12 +41,13 @@
                                             <td class="align-middle text-center">
                                                 <span
                                                     class="text-secondary text-sm font-weight-bold">{{ $transaction->product->event_title }}
+                                                    {{ $transaction->ticketType->type }}
                                                     ({{ $transaction->unique_id }})
                                                 </span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold">UNDER
-                                                    DEVELOPMENT</span>
+                                                <span
+                                                    class="text-secondary text-sm font-weight-bold">{{ $transaction->quantity }}</span>
                                             </td>
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-sm font-weight-bold">Rp

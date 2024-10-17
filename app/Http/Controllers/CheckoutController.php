@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\TicketType;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -38,7 +39,9 @@ class CheckoutController extends Controller
         $transaction = Transaction::create([
             'user_id' => auth()->user()->id,
             'product_id' => $data['product_id'],
-            'price' => $data['price'],
+            'ticket_type_id' => $data['ticket_type_id'],
+            'quantity' => $data['quantity'],
+            'price' => $data['total_price'],
             'status' => 'Pending',
         ]);
 
@@ -52,7 +55,7 @@ class CheckoutController extends Controller
         $params = [
             'transaction_details' => [
                 'order_id' => $uniqueId,
-                'gross_amount' => $data['price'],
+                'gross_amount' => $data['total_price'],
             ],
             'customer_details' => [
                 'first_name' => auth()->user()->name,
@@ -76,7 +79,7 @@ class CheckoutController extends Controller
         }
 
         if ($transaction->status === Transaction::STATUS_SUCCESS) {
-            return redirect()->route('checkout-success', ['transaction' => $transaction->id]);
+            return redirect()->route('home')->withSuccess('Event already checkout successfully.');
         }
 
         $products = config('product');
@@ -91,6 +94,21 @@ class CheckoutController extends Controller
         if (auth()->user()->id != $transaction->user_id) {
             abort(403, 'Unauthorized access.');
         }
+
+        if ($transaction->status === 'Success') {
+            return redirect()->route('home')->withErrors('This transaction already success and cannot be accessed again.');
+        }
+
+        // THIS STILL BUG, USER STILL ACCESS THE URL BUT THEY STILL NOT DO PAYMENT YET
+        // if ($transaction->status === 'Pending') {
+        //     return redirect()->route('home')->withErrors('This transaction is still in the payment process.');
+        // }
+
+        $ticketType = TicketType::where('product_id', $transaction->product_id)
+            ->where('id', $transaction->ticket_type_id)
+            ->firstOrFail();
+
+        $ticketType->decrement('quantity', $transaction->quantity);
 
         $title = 'Checkout Success: '.$transaction->product->event_title;
         $transaction->status = 'Success';

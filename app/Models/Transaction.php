@@ -82,4 +82,9 @@ class Transaction extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+    public function ticketType(): BelongsTo
+    {
+        return $this->belongsTo(TicketType::class, 'ticket_type_id');
+    }
 }

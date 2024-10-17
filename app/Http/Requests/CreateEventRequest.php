@@ -34,12 +34,12 @@ class CreateEventRequest extends FormRequest
             'event_image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
             'category_id' => 'required|exists:categories,id',
             'ticket_types' => 'required',
-            'vvip_price' => 'nullable|integer|min:0',
-            'vvip_quantity' => 'nullable|integer|min:1',
-            'vip_price' => 'nullable|integer|min:0',
-            'vip_quantity' => 'nullable|integer|min:1',
-            'regular_price' => 'nullable|integer|min:0',
-            'regular_quantity' => 'nullable|integer|min:1',
+            'vvip_price' => 'required_if:ticket_types,VVIP|nullable|integer|min:0',
+            'vvip_quantity' => 'required_if:ticket_types,VVIP|nullable|integer|min:1',
+            'vip_price' => 'required_if:ticket_types,VIP|nullable|integer|min:0',
+            'vip_quantity' => 'required_if:ticket_types,VIP|nullable|integer|min:1',
+            'regular_price' => 'required_if:ticket_types,Regular|nullable|integer|min:0',
+            'regular_quantity' => 'required_if:ticket_types,Regular|nullable|integer|min:1',
         ];
     }
 }
