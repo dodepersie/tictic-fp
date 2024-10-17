@@ -245,10 +245,6 @@
                         </a>
                     </div>
 
-                    {{-- @foreach ($product->totalTicketsSold() as $ticketSold)
-                        <p>{{ $ticketSold['type'] }}: {{ $ticketSold['sold'] }} tickets sold.</p>
-                    @endforeach --}}
-
                     <!-- Order information -->
                     <div>
                         <h2 class="font-bold text-xl">Order Information</h2>
@@ -260,20 +256,25 @@
                                     @foreach ($product->ticketTypes as $ticketType)
                                         <div>
                                             <label for="Ticket{{ $ticketType->type }}"
-                                                class="flex cursor-pointer items-center justify-between gap-4 rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-slate-900 has-[:checked]:ring-1 has-[:checked]:ring-slate-500">
+                                                class="flex cursor-pointer items-center justify-between gap-4 rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-slate-900 has-[:checked]:ring-1 has-[:checked]:ring-slate-500 {{ $ticketType->quantity == 0 ? 'cursor-not-allowed opacity-50' : '' }}">
+
                                                 <p class="text-gray-700">{{ $ticketType->type }} (Qty:
                                                     {{ $ticketType->quantity }})</p>
-                                                <p class="text-gray-900">Rp
+                                                <p class="text-gray-900">IDR
                                                     {{ number_format($ticketType->price, 0, ',', '.') }}</p>
 
-                                                <!-- Radio button untuk memilih jenis tiket -->
-                                                <input type="radio" name="TicketOption"
-                                                    value="{{ $ticketType->price }}" x-model="selectedPrice"
-                                                    x-on:click="selectedPrice = {{ $ticketType->price }}; selectedTicketTypeId = {{ $ticketType->id }}"
-                                                    id="Ticket{{ $ticketType->type }}" class="sr-only" />
+                                                @if ($ticketType->quantity > 0)
+                                                    <input type="radio" name="TicketOption"
+                                                        value="{{ $ticketType->price }}" x-model="selectedPrice"
+                                                        x-on:click="selectedPrice = {{ $ticketType->price }}; selectedTicketTypeId = {{ $ticketType->id }}"
+                                                        id="Ticket{{ $ticketType->type }}" class="sr-only" />
+                                                @else
+                                                    <span class="text-red-500">Sold Out</span>
+                                                @endif
                                             </label>
                                         </div>
                                     @endforeach
+
                                 </fieldset>
 
                                 <!-- Bagian quantity dan harga total -->

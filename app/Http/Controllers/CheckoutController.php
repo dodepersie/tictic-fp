@@ -36,6 +36,10 @@ class CheckoutController extends Controller
             return redirect()->back()->withError('Event already ended.');
         }
 
+        if(! $data['ticket_type_id']) {
+            return redirect()->back()->withError('Please select a ticket type.');
+        }
+
         $transaction = Transaction::create([
             'user_id' => auth()->user()->id,
             'product_id' => $data['product_id'],

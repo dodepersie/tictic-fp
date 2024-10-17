@@ -148,7 +148,7 @@
                                     <div class="numbers">
                                         <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Tickets Sold</p>
                                         <h5 class="font-weight-bolder">
-                                            <!-- Here -->
+                                            {{ $total_ticket_sold }}
                                         </h5>
                                     </div>
                                 </div>

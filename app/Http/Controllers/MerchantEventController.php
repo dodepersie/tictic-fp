@@ -153,6 +153,35 @@ class MerchantEventController extends Controller
 
         $product->update($validatedData);
 
+        $ticketTypes = [
+            ['type' => 'VVIP', 'ticket_price' => $request->input('vvip_price'), 'ticket_quantity' => $request->input('vvip_quantity')],
+            ['type' => 'VIP', 'ticket_price' => $request->input('vip_price'), 'ticket_quantity' => $request->input('vip_quantity')],
+            ['type' => 'Regular', 'ticket_price' => $request->input('regular_price'), 'ticket_quantity' => $request->input('regular_quantity')],
+        ];
+    
+        foreach ($ticketTypes as $ticketType) {
+            if (! is_null($ticketType['ticket_price']) && ! is_null($ticketType['ticket_quantity'])) {
+                // Periksa apakah tipe tiket ini sudah ada
+                $existingTicketType = $product->ticketTypes()->where('type', $ticketType['type'])->first();
+    
+                if ($existingTicketType) {
+                    // Jika sudah ada, update harga dan kuantitas
+                    $existingTicketType->update([
+                        'price' => $ticketType['ticket_price'],
+                        'quantity' => $ticketType['ticket_quantity'],
+                    ]);
+                } else {
+                    // Jika belum ada, buat tipe tiket baru
+                    TicketType::create([
+                        'product_id' => $product->id,
+                        'type' => $ticketType['type'],
+                        'price' => $ticketType['ticket_price'],
+                        'quantity' => $ticketType['ticket_quantity'],
+                    ]);
+                }
+            }
+        }
+
         return redirect()->back()->withSuccess('Event edited successfully!');
     }
 
