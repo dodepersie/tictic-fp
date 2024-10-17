@@ -54,8 +54,8 @@
                                             <label for="event_start_time" class="form-control-label">Event Time</label>
 
                                             <div class="input-group">
-                                                <input class="form-control" type="time" name="event_start_time"
-                                                    id="event_start_time"
+                                                <input class="form-control" type="time" step="2"
+                                                    name="event_start_time" id="event_start_time"
                                                     value="{{ old('event_start_time', $event->event_start_time) }}"
                                                     required />
                                             </div>
@@ -80,28 +80,41 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
+                                        @php
+                                            $vvipTicket = $event->ticketTypes->where('type', 'VVIP')->first();
+                                            $vipTicket = $event->ticketTypes->where('type', 'VIP')->first();
+                                            $regularTicket = $event->ticketTypes->where('type', 'Regular')->first();
+                                        @endphp
                                         <div class="ticket-types">
                                             <div class="ticket-type">
                                                 <div class="form-group">
-                                                    <!-- Checkbox untuk memilih jenis tiket -->
+                                                    <!-- Checkbox untuk memilih jenis tiket VVIP -->
                                                     <div class="form-check form-check-inline">
                                                         <input type="checkbox" name="ticket_types[]" value="VVIP"
-                                                            class="form-check-input" id="selectVVIP">
+                                                            class="form-check-input" id="selectVVIP"
+                                                            {{ $vvipTicket && $vvipTicket->price && $vvipTicket->quantity ? 'checked' : '' }}>
                                                         <label class="form-check-label font-weight-bold" for="selectVVIP">
                                                             VVIP
                                                         </label>
                                                     </div>
+
+                                                    <!-- Checkbox untuk memilih jenis tiket VIP -->
                                                     <div class="form-check form-check-inline">
                                                         <input type="checkbox" name="ticket_types[]" value="VIP"
-                                                            class="form-check-input" id="selectVIP">
+                                                            class="form-check-input" id="selectVIP"
+                                                            {{ $vipTicket && $vipTicket->price && $vipTicket->quantity ? 'checked' : '' }}>
                                                         <label class="form-check-label font-weight-bold" for="selectVIP">
                                                             VIP
                                                         </label>
                                                     </div>
+
+                                                    <!-- Checkbox untuk memilih jenis tiket Regular -->
                                                     <div class="form-check form-check-inline">
                                                         <input type="checkbox" name="ticket_types[]" value="Regular"
-                                                            class="form-check-input" id="selectRegular"> <label
-                                                            class="form-check-label font-weight-bold" for="selectRegular">
+                                                            class="form-check-input" id="selectRegular"
+                                                            {{ $regularTicket && $regularTicket->price && $regularTicket->quantity ? 'checked' : '' }}>
+                                                        <label class="form-check-label font-weight-bold"
+                                                            for="selectRegular">
                                                             Regular
                                                         </label>
                                                     </div>
@@ -111,17 +124,20 @@
                                                     <!-- Form untuk VVIP -->
                                                     <div class="form-group" id="VVIP-form" style="display:none;">
                                                         <h4>VVIP Ticket Settings</h4>
+
+                                                        <!-- Input untuk harga VVIP -->
                                                         <label for="vvip_price" class="form-control-label">Price:</label>
                                                         <input class="form-control mb-2" type="text" name="vvip_price"
                                                             id="vvip_price" placeholder="Enter VVIP Price"
-                                                            value="{{ old('vvip_price', $event->ticketTypes) }}">
+                                                            value="{{ old('vvip_price', $vvipTicket->price ?? '') }}">
 
+                                                        <!-- Input untuk kuantitas VVIP -->
                                                         <label for="vvip_quantity"
                                                             class="form-control-label">Quantity:</label>
                                                         <input class="form-control mb-2" type="number"
                                                             name="vvip_quantity" id="vvip_quantity"
                                                             placeholder="Enter VVIP Quantity"
-                                                            value="{{ old('vvip_quantity') }}">
+                                                            value="{{ old('vvip_quantity', $vvipTicket->quantity ?? '') }}">
                                                     </div>
 
                                                     <!-- Form untuk VIP -->
@@ -130,13 +146,13 @@
                                                         <label for="vip_price" class="form-control-label">Price:</label>
                                                         <input class="form-control mb-2" type="text" name="vip_price"
                                                             id="vip_price" placeholder="Enter VIP Price"
-                                                            value="{{ old('vip_price') }}">
+                                                            value="{{ old('vip_price', $vipTicket->price ?? '') }}">
                                                         <label for="vip_quantity"
                                                             class="form-control-label">Quantity:</label>
                                                         <input class="form-control mb-2" type="number"
                                                             name="vip_quantity" id="vip_quantity"
                                                             placeholder="Enter VIP Quantity"
-                                                            value="{{ old('vip_quantity') }}">
+                                                            value="{{ old('vip_quantity', $vipTicket->quantity ?? '') }}">
                                                     </div>
 
                                                     <!-- Form untuk Regular -->
@@ -147,13 +163,13 @@
                                                         <input class="form-control mb-2" type="text"
                                                             name="regular_price" id="regular_price"
                                                             placeholder="Enter Regular Price"
-                                                            value="{{ old('regular_price') }}">
+                                                            value="{{ old('regular_price', $regularTicket->price ?? '') }}">
                                                         <label for="regular_quantity"
                                                             class="form-control-label">Quantity:</label>
                                                         <input class="form-control mb-2" type="number"
                                                             name="regular_quantity" id="regular_quantity"
                                                             placeholder="Enter Regular Quantity"
-                                                            value="{{ old('regular_price') }}">
+                                                            value="{{ old('regular_price', $regularTicket->quantity ?? '') }}">
                                                     </div>
                                                 </div>
                                             </div>

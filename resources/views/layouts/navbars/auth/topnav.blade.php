@@ -21,7 +21,8 @@
                         @csrf
                         <a href="{{ route('logout') }}" class="nav-link text-white font-weight-bold px-0"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="fa fa-sign-out me-sm-1"></i>
+                            <i data-feather="log-out" class="me-sm-1"
+                                style="width: 18px; height: 18px; font-weight: bold;"></i>
                             <span class="d-sm-inline d-none">Log out</span>
                         </a>
                     </form>

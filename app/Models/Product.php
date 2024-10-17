@@ -46,7 +46,7 @@ class Product extends Model
         return $this->ticketTypes->map(function ($ticketType) {
             return [
                 'type' => $ticketType->type,
-                'sold' => $ticketType->transactions()->sum('quantity'),
+                'sold' => $ticketType->transactions()->sum('quantity') ?? 0,
             ];
         });
     }

@@ -48,7 +48,6 @@
                         <div class="px-4 pt-4">
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="mb-0">Edit Profile</p>
-                                <button type="submit" class="btn btn-primary btn-sm ms-auto">Save</button>
                             </div>
                         </div>
                         <div class="card-body">
@@ -66,14 +65,14 @@
                                     <div class="form-group">
                                         <label for="name" class="form-control-label">Name</label>
                                         <input class="form-control" type="text" name="name"
-                                            value="{{ old('name', $user->name) }}">
+                                            value="{{ old('name', $user->name) }}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="email" class="form-control-label">Email address</label>
                                         <input class="form-control" type="email" name="email"
-                                            value="{{ old('email', $user->email) }}">
+                                            value="{{ old('email', $user->email) }}" required>
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +83,7 @@
                                     <div class="form-group">
                                         <label for="phone_number" class="form-control-label">Phone Number</label>
                                         <input class="form-control" type="text" name="phone_number"
-                                            value="{{ old('phone_number', $user->phone_number) }}">
+                                            value="{{ old('phone_number', $user->phone_number) }}" required>
                                     </div>
                                 </div>
                             </div>
@@ -96,11 +95,12 @@
                                         <div class="form-group">
                                             <label for="company-description" class="form-control-label">Company
                                                 Description</label>
-                                            <textarea class="form-control" name="company_description" rows="4">{{ old('company_description', $user->company_description) }}</textarea>
+                                            <textarea class="form-control" name="company_description" rows="4" required>{{ old('company_description', $user->company_description) }}</textarea>
                                         </div>
                                     </div>
                                 </div>
                             @endcan
+                            <button type="submit" class="btn btn-primary btn-sm ms-auto">Save</button>
                         </div>
                     </form>
 
@@ -109,8 +109,7 @@
                         @method('POST')
                         <div class="card-header pb-0">
                             <div class="d-flex align-items-center">
-                                <p class="mb-0">CHANGE PASSWORD</p>
-                                <button type="submit" class="btn btn-primary btn-sm ms-auto">Change!</button>
+                                <p class="mb-0">Change Password</p>
                             </div>
                         </div>
                         <div class="card-body">
@@ -124,16 +123,18 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="password" class="form-control-label">New Password</label>
-                                        <input class="form-control" type="password" name="password">
+                                        <input class="form-control" type="password" name="password" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="password" class="form-control-label">New Password Confirmation</label>
-                                        <input class="form-control" type="password" name="password_confirmation">
+                                        <input class="form-control" type="password" name="password_confirmation"
+                                            required>
                                     </div>
                                 </div>
                             </div>
+                            <button type="submit" class="btn btn-primary btn-sm ms-auto">Change!</button>
                         </div>
                     </form>
                 </div>

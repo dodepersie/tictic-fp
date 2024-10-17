@@ -50,7 +50,7 @@
                                                     class="text-secondary text-sm font-weight-bold">{{ $transaction->quantity }}</span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold">Rp
+                                                <span class="text-secondary text-sm font-weight-bold">IDR
                                                     {{ number_format($transaction->price, 0, ',', '.') }}</span>
                                             </td>
                                             <td class="align-middle text-center">

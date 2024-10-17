@@ -25,6 +25,7 @@ class DashboardController extends Controller
         $total_pending_merchants = 0;
         $total_merchant_events = 0;
         $total_active_event = 0;
+        $products = collect();
 
         // For Admin
         if (auth()->user()->role === 'Admin') {
