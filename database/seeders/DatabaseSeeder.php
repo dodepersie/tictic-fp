@@ -4,13 +4,11 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\User;
-use App\Models\Product;
 use App\Models\Category;
 use App\Models\Merchant;
-use App\Models\TicketType;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Database\Seeders\TicketTypeSeeder;
 
 class DatabaseSeeder extends Seeder
 {

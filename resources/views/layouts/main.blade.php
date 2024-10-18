@@ -21,28 +21,55 @@
     <!-- TippyJS -->
     <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+    @if (Route::currentRouteName() == 'checkout-invoice')
+        @yield('print-style')
+    @endif
 </head>
 
 <body>
-    <x-navbar></x-navbar>
+    @if (Route::currentRouteName() == 'checkout-invoice')
+        <div class="no-print">
+            <x-navbar></x-navbar>
+        </div>
+    @else
+        <x-navbar></x-navbar>
+    @endif
 
     <div class="container max-w-7xl mx-auto p-5 pt-24 lg:px-8 lg:pb-10 md:pt-36 space-y-3">
         @yield('container')
     </div>
 
-    <x-footer></x-footer>
+    @if (Route::currentRouteName() == 'checkout-invoice')
+        <div class="no-print">
+            <x-footer></x-footer>
 
-    <button x-data="{ showButton: false }" @click="window.scrollTo({top: 0, behavior: 'smooth'})"
-        @scroll.window="showButton = (window.scrollY > 0)" x-show="showButton"
-        x-transition:enter="transition ease-out duration-300"
-        x-transition:enter-start="opacity-0 transform translate-y-1/2"
-        x-transition:enter-end="opacity-100 transform translate-y-0"
-        x-transition:leave="transition ease-in duration-200"
-        x-transition:leave-start="opacity-100 transform translate-y-0"
-        x-transition:leave-end="opacity-0 transform translate-y-1/2"
-        class="fixed bottom-4 right-4 shadow border p-3 rounded-full bg-white">
-        <i data-feather="chevron-up"></i>
-    </button>
+            <button x-data="{ showButton: false }" @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+                @scroll.window="showButton = (window.scrollY > 0)" x-show="showButton"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform translate-y-1/2"
+                x-transition:enter-end="opacity-100 transform translate-y-0"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100 transform translate-y-0"
+                x-transition:leave-end="opacity-0 transform translate-y-1/2"
+                class="fixed bottom-4 right-4 shadow border p-3 rounded-full bg-white">
+                <i data-feather="chevron-up"></i>
+            </button>
+        </div>
+    @else
+        <x-footer></x-footer>
+
+        <button x-data="{ showButton: false }" @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+            @scroll.window="showButton = (window.scrollY > 0)" x-show="showButton"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 transform translate-y-1/2"
+            x-transition:enter-end="opacity-100 transform translate-y-0"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 transform translate-y-0"
+            x-transition:leave-end="opacity-0 transform translate-y-1/2"
+            class="fixed bottom-4 right-4 shadow border p-3 rounded-full bg-white">
+            <i data-feather="chevron-up"></i>
+        </button>
+    @endif
 
     <script>
         feather.replace();

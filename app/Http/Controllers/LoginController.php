@@ -22,23 +22,23 @@ class LoginController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-    
+
         $user = User::where('email', $credentials['email'])->first();
-    
+
         if (! $user) {
             return back()->withErrors(['email' => 'User not found'])->onlyInput('email');
         }
-    
+
         $remember = $request->has('remember_me') ? true : false;
-    
+
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']], $remember)) {
             $request->session()->regenerate();
+
             return redirect()->intended('/dashboard');
         }
-    
+
         return back()->withErrors(['email' => 'Wrong username or password!'])->onlyInput('email');
     }
-    
 
     public function logout(Request $request)
     {

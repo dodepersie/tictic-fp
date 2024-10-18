@@ -1,6 +1,6 @@
 @php
-    $ticketOrder = ['VVIP' => 1, 'VIP' => 2, 'Regular' => 3];
     $isEventEnded = $product->event_end_date < now();
+    $ticketOrder = ['VVIP' => 1, 'VIP' => 2, 'Regular' => 3];
 
     $sortedTicketTypes = $product->ticketTypes->sortBy(function ($ticketType) use ($ticketOrder) {
         return $ticketOrder[$ticketType->type] ?? 4;

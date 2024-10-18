@@ -72,15 +72,11 @@
                                                         Now</a>
                                                 @elseif ($transaction->status == 'Success')
                                                     <div class="d-flex align-items-center justify-content-center gap-2">
-                                                        <form action="{{ route('view-ticket-detail') }}" method="POST">
-                                                            <!--Bug -->
-                                                            @csrf
-                                                            <input type="hidden" name="unique_id"
-                                                                value="{{ $transaction->unique_id }}" />
-                                                            <button type="submit"
-                                                                class="badge bg-primary text-bg-primary text-sm font-weight-bold border-0">View
-                                                                Ticket</button>
-                                                        </form>
+
+                                                        <a href="{{ route('checkout-invoice', $transaction->id) }}"
+                                                            class="badge bg-primary text-bg-primary text-sm font-weight-bold border-0">View
+                                                            Invoice</a>
+
                                                         <a href="{{ route('dashboard_transactions.index.review', $transaction->id) }}"
                                                             class="badge bg-secondary text-bg-secondary text-sm font-weight-bold">Review</a>
                                                     </div>

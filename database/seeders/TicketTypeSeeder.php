@@ -19,10 +19,10 @@ class TicketTypeSeeder extends Seeder
         foreach ($products as $product) {
             // Check if the product already has a Regular ticket
             $existingRegularTicket = TicketType::where('product_id', $product->id)
-                                                ->where('type', 'Regular')
-                                                ->first();
+                ->where('type', 'Regular')
+                ->first();
 
-            if (!$existingRegularTicket) {
+            if (! $existingRegularTicket) {
                 // Create a Regular ticket type for the product
                 TicketType::factory()->regular()->create([
                     'product_id' => $product->id,
@@ -31,7 +31,7 @@ class TicketTypeSeeder extends Seeder
 
             // Create additional ticket types (VIP, VVIP) only if not already created
             $ticketTypes = ['VIP', 'VVIP'];
-            
+
             foreach ($ticketTypes as $ticketType) {
                 TicketType::factory()->create([
                     'product_id' => $product->id,

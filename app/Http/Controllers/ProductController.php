@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Merchant;
 use App\Models\Product;
-use App\Models\Review;
-use App\Models\TicketType;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -36,7 +34,7 @@ class ProductController extends Controller
 
         return view('event.index', [
             'title' => $headingTitle,
-            'headingTitle' => $productsCount .' '. $headingTitle,
+            'headingTitle' => $productsCount.' '.$headingTitle,
             'products' => $products,
         ]);
     }
@@ -60,12 +58,12 @@ class ProductController extends Controller
     public function show($slug)
     {
         $product = Product::where('slug', $slug)->firstOrFail();
-    
+
         $averageRating = $product->reviews()->avg('rating');
         $reviewsCount = $product->reviews()->count();
-    
+
         $relatedProducts = Product::where('category_id', $product->category_id)->where('id', '<>', $product->id)->inRandomOrder()->get();
-    
+
         return view('event.show', [
             'title' => $product->event_title,
             'product' => $product,
