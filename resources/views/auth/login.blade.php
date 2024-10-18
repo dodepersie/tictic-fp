@@ -70,7 +70,8 @@
             <div class="relative">
                 <input id="email" name="email" value="{{ old('email') }}" type="email"
                     class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow" placeholder="Email"
-                    autocomplete="off" autofocus required />
+                    autocomplete="off" @if (isset($_COOKIE['email'])) value="{{ $_COOKIE['email'] }}" @endif autofocus
+                    required />
 
                 <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
                     <i data-feather="at-sign" class="size-4 text-gray-400"></i>
@@ -83,7 +84,8 @@
 
             <div class="relative">
                 <input id="password" name="password" :type="showPassword ? 'password' : 'text'"
-                    class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow" placeholder="Password" required />
+                    class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow" placeholder="Password"
+                    @if (isset($_COOKIE['password'])) value="{{ $_COOKIE['password'] }}" @endif required />
 
                 <span class="absolute inset-y-0 end-0 grid place-content-center px-4 cursor-pointer">
                     <div @click="showPassword = !showPassword" :class="{ 'hidden': !showPassword, 'block': showPassword }">
@@ -99,7 +101,8 @@
         <label for="remember_me" class="flex cursor-pointer items-start gap-2">
             <div class="flex items-center">
                 &#8203;
-                <input name="remember_me" type="checkbox" class="size-4 rounded border-gray-300" id="remember_me" />
+                <input name="remember_me" type="checkbox" class="size-4 rounded border-gray-300" id="remember_me"
+                    @if (isset($_COOKIE['password'])) checked="" @endif />
             </div>
 
             <div>

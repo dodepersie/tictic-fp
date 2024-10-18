@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->unique(['product_id', 'type']);
         });
     }
 

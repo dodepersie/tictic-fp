@@ -38,11 +38,7 @@ class DashboardController extends Controller
         // For Merchant
         if (auth()->user()->role === 'Merchant') {
             $merchant_id = auth()->user()->merchant->id;
-
-            $products = Product::where('merchant_id', $merchant_id)
-                ->with('ticketTypes.transactions')
-                ->get();
-
+            $products = Product::with('ticketTypes.transactions')->where('merchant_id', $merchant_id)->get();
             $total_merchant_events = $products->count();
 
             // Bug

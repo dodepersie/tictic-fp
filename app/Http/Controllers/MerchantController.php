@@ -15,8 +15,8 @@ class MerchantController extends Controller
      */
     public function index()
     {
-        $merchants = Merchant::paginate(8);
-        $pending_merchants = Merchant::where('merchant_status', '=', 'Pending')->get();
+        $merchants = Merchant::with('user')->get();
+        $pending_merchants = Merchant::with('user')->where('merchant_status', '=', 'Pending')->get();
 
         $titleSwal = 'Delete Merchant!';
         $text = 'Are you sure you want to delete this merchant? (It will also delete all Events associated with this Merchant)';

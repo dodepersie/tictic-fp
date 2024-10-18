@@ -17,25 +17,28 @@ class LoginController extends Controller
 
     public function authenticate(Request $request)
     {
+        // Validasi input termasuk 'remember'
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
+    
         $user = User::where('email', $credentials['email'])->first();
-
+    
         if (! $user) {
-            return back()->withErrors('User not found')->onlyInput('email');
+            return back()->withErrors(['email' => 'User not found'])->onlyInput('email');
         }
-
-        if (Auth::attempt($credentials)) {
+    
+        $remember = $request->has('remember_me') ? true : false;
+    
+        if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']], $remember)) {
             $request->session()->regenerate();
-
             return redirect()->intended('/dashboard');
         }
-
-        return back()->withErrors('Wrong username or password!')->onlyInput('email');
+    
+        return back()->withErrors(['email' => 'Wrong username or password!'])->onlyInput('email');
     }
+    
 
     public function logout(Request $request)
     {
@@ -43,6 +46,6 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
         Auth::logout();
 
-        return redirect()->route('home');
+        return redirect()->route('login');
     }
 }

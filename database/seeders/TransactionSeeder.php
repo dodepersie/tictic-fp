@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
+use App\Models\TicketType;
 use Illuminate\Database\Seeder;
 
 class TransactionSeeder extends Seeder
@@ -12,5 +14,5 @@ class TransactionSeeder extends Seeder
     public function run(): void
     {
         //
-    }
+    }    
 }
