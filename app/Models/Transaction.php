@@ -21,9 +21,7 @@ class Transaction extends Model
     ];
 
     const STATUS_PENDING = 'Pending';
-
     const STATUS_SUCCESS = 'Success';
-
     const STATUS_CANCELED = 'Canceled';
 
     // Method untuk menggenerate unique_id

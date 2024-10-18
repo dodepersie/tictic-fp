@@ -72,15 +72,14 @@
                             id="event_image" />
                     </div>
 
-                    <!-- Another Tab Try -->
                     <div x-data="{ openTab: 1 }">
                         <!-- Tabs Navigation -->
                         <div id="Tab"
-                            class="flex flex-col md:flex-row md:items-center md:gap-4 border-b lg:border-gray-200 font-medium">
+                            class="flex items-center gap-2 border-b lg:border-gray-200 font-medium overflow-x-auto whitespace-nowrap">
                             <!-- Event Description -->
                             <button @click="openTab = 1"
                                 :class="{
-                                    'text-sky-600 md:border-b lg:border-sky-500 px-1 pb-4 hover:text-gray-500 hover:border-gray-500': openTab ===
+                                    'text-sky-600 md:border-b-2 lg:border-sky-500 px-1 pb-4 hover:text-gray-500 hover:border-gray-500': openTab ===
                                         1,
                                     'text-gray-500 border-b border-transparent md:hover:border-gray-500 px-1 pb-4': openTab !==
                                         1
@@ -96,7 +95,7 @@
                             <!-- Event Map -->
                             <button @click="openTab = 2"
                                 :class="{
-                                    'text-sky-600 md:border-b border-sky-500 px-1 pb-4 hover:text-gray-500 md:hover:border-gray-500': openTab ===
+                                    'text-sky-600 md:border-b-2 border-sky-500 px-1 pb-4 hover:text-gray-500 md:hover:border-gray-500': openTab ===
                                         2,
                                     'text-gray-500 border-b border-transparent md:hover:border-gray-500 px-1 pb-4': openTab !==
                                         2
@@ -112,7 +111,7 @@
                             <!-- Reviews -->
                             <button @click="openTab = 3"
                                 :class="{
-                                    'text-sky-600 md:border-b border-sky-500 px-1 pb-4 hover:text-gray-500 md:hover:border-gray-500': openTab ===
+                                    'text-sky-600 md:border-b-2 border-sky-500 px-1 pb-4 hover:text-gray-500 md:hover:border-gray-500': openTab ===
                                         3,
                                     'text-gray-500 border-b border-transparent md:hover:border-gray-500 px-1 pb-4': openTab !==
                                         3
@@ -130,7 +129,7 @@
                             <!-- Related Events -->
                             <button @click="openTab = 4"
                                 :class="{
-                                    'text-sky-600 md:border-b border-sky-500 px-1 pb-4 hover:text-gray-500 md:hover:border-gray-500': openTab ===
+                                    'text-sky-600 md:border-b-2 border-sky-500 px-1 pb-4 hover:text-gray-500 md:hover:border-gray-500': openTab ===
                                         4,
                                     'text-gray-500 border-b border-transparent md:hover:border-gray-500 px-1 pb-4': openTab !==
                                         4

@@ -3,7 +3,7 @@
 @section('container')
     <section>
         <header>
-            <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl leading-relaxed"> {{ $title }} 😍🎉</h2>
+            <h2 class="text-3xl font-bold text-gray-900 leading-relaxed"> {{ $title }} 😍🎉</h2>
         </header>
 
         <div class="mt-4">

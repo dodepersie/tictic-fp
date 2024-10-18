@@ -16,6 +16,8 @@ class Product extends Model
         'id',
     ];
 
+    protected $with = ['reviews', 'ticketTypes'];
+
     public function merchant(): BelongsTo
     {
         return $this->belongsTo(Merchant::class, 'merchant_id');
@@ -26,7 +28,7 @@ class Product extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }

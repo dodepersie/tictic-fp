@@ -36,7 +36,7 @@ class CheckoutController extends Controller
             return redirect()->back()->withError('Event already ended.');
         }
 
-        if(! $data['ticket_type_id']) {
+        if (! $data['ticket_type_id']) {
             return redirect()->back()->withError('Please select a ticket type.');
         }
 

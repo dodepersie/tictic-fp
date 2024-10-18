@@ -15,27 +15,29 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $title = '';
+        $headingTitle = 'FUNtastic Events!';
 
-        // Check if the request is for a merchant
         if ($merchantId = request('merchant')) {
             $merchant = Merchant::where('id', $merchantId)->firstOrFail();
-            $title .= ' by '.ucfirst($merchant->user->name);
+            $headingTitle = 'Events by: '.ucfirst($merchant->user->name);
         }
 
-        // Check if the request is for a location
         if ($location = request('location')) {
-            $title .= ' at '.ucfirst($location);
+            $headingTitle = 'Events at: '.ucfirst($location);
         }
 
-        // Check if the request is for a category
         if ($category = request('category')) {
-            $title .= ' at '.ucfirst($category);
+            $headingTitle = 'Events in: '.ucfirst($category);
         }
+
+        $products = Product::latest()->filter(request(['search', 'merchant', 'location', 'category']))->paginate(8);
+
+        $productsCount = $products->total();
 
         return view('event.index', [
-            'title' => 'Events'.$title,
-            'products' => Product::latest()->filter(request(['search', 'merchant', 'location', 'category']))->paginate(8),
+            'title' => $headingTitle,
+            'headingTitle' => $productsCount .' '. $headingTitle,
+            'products' => $products,
         ]);
     }
 
@@ -57,27 +59,20 @@ class ProductController extends Controller
      */
     public function show($slug)
     {
-        $product = Product::with('ticketTypes')->where('slug', $slug)->firstOrFail();
-        $reviews = Review::where('product_id', $product->id)->latest()->get();
+        $product = Product::where('slug', $slug)->firstOrFail();
+    
         $averageRating = $product->reviews()->avg('rating');
-        $reviewsCount = $reviews->count();
-
-        // Development FIX
-        $totalSales = TicketType::where('product_id', $product->id)->sum('quantity');
-
-        $relatedProducts = Product::where('category_id', $product->category_id)
-            ->where('id', '<>', $product->id)
-            ->inRandomOrder()
-            ->get();
-
+        $reviewsCount = $product->reviews()->count();
+    
+        $relatedProducts = Product::where('category_id', $product->category_id)->where('id', '<>', $product->id)->inRandomOrder()->get();
+    
         return view('event.show', [
             'title' => $product->event_title,
             'product' => $product,
-            'reviews' => $reviews,
+            'reviews' => $product->reviews,
             'averageRating' => $averageRating,
             'reviewsCount' => $reviewsCount,
             'relatedProducts' => $relatedProducts,
-            'totalSales' => $totalSales,
         ]);
     }
 

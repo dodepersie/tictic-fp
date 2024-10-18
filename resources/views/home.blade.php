@@ -5,7 +5,7 @@
     <section id="product-list">
         <div>
             <header>
-                <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl leading-relaxed">Special Events Ticket Price! 😍</h2>
+                <h2 class="text-3xl font-bold text-gray-900 leading-relaxed">Special Events Ticket Price! 😍</h2>
 
                 <p class="mt-2 text-gray-600 leading-relaxed">
                     Enjoy good event with special price only on TicTic!

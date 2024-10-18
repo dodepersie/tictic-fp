@@ -38,24 +38,24 @@ class DashboardController extends Controller
         // For Merchant
         if (auth()->user()->role === 'Merchant') {
             $merchant_id = auth()->user()->merchant->id;
-        
+
             $products = Product::where('merchant_id', $merchant_id)
                 ->with('ticketTypes.transactions')
                 ->get();
-        
+
             $total_merchant_events = $products->count();
-        
+
             // Bug
             $total_active_event = $products->where('event_start_date', '<=', now())
                 ->where('event_end_date', '>=', now())
                 ->count();
-        
+
             $total_ticket_sold = $products->sum(function ($product) {
                 return $product->ticketTypes->sum(function ($ticketType) {
                     return $ticketType->transactions->sum('quantity');
                 });
             });
-        }        
+        }
 
         return view('dashboard.index', compact('title', 'total_event_tickets', 'total_merchants', 'total_users', 'total_pending_merchants', 'total_merchant_events', 'total_active_event', 'total_ticket_sold'));
     }

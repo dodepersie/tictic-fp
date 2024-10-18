@@ -158,12 +158,12 @@ class MerchantEventController extends Controller
             ['type' => 'VIP', 'ticket_price' => $request->input('vip_price'), 'ticket_quantity' => $request->input('vip_quantity')],
             ['type' => 'Regular', 'ticket_price' => $request->input('regular_price'), 'ticket_quantity' => $request->input('regular_quantity')],
         ];
-    
+
         foreach ($ticketTypes as $ticketType) {
             if (! is_null($ticketType['ticket_price']) && ! is_null($ticketType['ticket_quantity'])) {
                 // Periksa apakah tipe tiket ini sudah ada
                 $existingTicketType = $product->ticketTypes()->where('type', $ticketType['type'])->first();
-    
+
                 if ($existingTicketType) {
                     // Jika sudah ada, update harga dan kuantitas
                     $existingTicketType->update([
