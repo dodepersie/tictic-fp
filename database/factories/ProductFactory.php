@@ -16,7 +16,7 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $startDate = fake()->dateTimeThisYear();
+        $startDate = fake()->dateTimeBetween('-2 week', '-1 week');
 
         return [
             'merchant_id' => fake()->numberBetween(1, 2),
@@ -26,9 +26,9 @@ class ProductFactory extends Factory
             'event_detail' => fake()->paragraphs(20, true),
             'event_price' => fake()->randomNumber(5, true),
             'event_start_date' => $startDate->format('Y-m-d'),
-            'event_end_date' => fake()->dateTimeBetween($startDate, 'now +1 year')->format('Y-m-d'),
+            'event_end_date' => fake()->dateTimeBetween($startDate, 'now +1 week')->format('Y-m-d'),
             'event_start_time' => fake()->dateTimeThisYear()->format('H:i:s'),
-            'event_location' => 'Denpasar',
+            'event_location' => fake()->randomElement(['Denpasar', 'Jakarta', 'London']),
             'event_location_longitude' => '1',
             'event_location_latitude' => '1',
         ];

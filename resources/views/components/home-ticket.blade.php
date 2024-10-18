@@ -31,7 +31,11 @@
                                 {{ $product->event_title }}
                             </h2>
                             <p class="text-sm text-gray-700">
-                                {{ date('d F Y', strtotime($product->event_start_date)) }}
+                                @if ($product->event_end_date < now())
+                                    <span class="text-red-500 font-bold">Event already ended!</span>
+                                @else
+                                    {{ date('d F Y', strtotime($product->event_start_date)) }}
+                                @endif
                             </p>
                             <p class="text-sm text-gray-700">
                                 {{ $product->event_location }}

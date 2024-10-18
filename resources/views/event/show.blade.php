@@ -1,3 +1,12 @@
+@php
+    $ticketOrder = ['VVIP' => 1, 'VIP' => 2, 'Regular' => 3];
+    $isEventEnded = $product->event_end_date < now();
+
+    $sortedTicketTypes = $product->ticketTypes->sortBy(function ($ticketType) use ($ticketOrder) {
+        return $ticketOrder[$ticketType->type] ?? 4;
+    });
+@endphp
+
 @extends('layouts.main')
 
 @section('container')
@@ -18,11 +27,15 @@
                             <div class="flex flex-col gap-2">
                                 <div class="flex items-center gap-2">
                                     <i data-feather="calendar"></i> <span class="font-semibold">
-                                        @if ($product->event_start_date == $product->event_end_date)
-                                            {{ date('d F Y', strtotime($product->event_start_date)) }}
+                                        @if ($product->event_end_date < now())
+                                            <span class="text-red-500 font-bold">Event already ended!</span>
                                         @else
-                                            {{ date('d F Y', strtotime($product->event_start_date)) }} -
-                                            {{ date('d F Y', strtotime($product->event_end_date)) }}
+                                            @if ($product->event_start_date == $product->event_end_date)
+                                                {{ date('d F Y', strtotime($product->event_start_date)) }}
+                                            @else
+                                                {{ date('d F Y', strtotime($product->event_start_date)) }} -
+                                                {{ date('d F Y', strtotime($product->event_end_date)) }}
+                                            @endif
                                         @endif
                                     </span>
                                 </div>
@@ -262,27 +275,17 @@
                             <div x-data="{ productQuantity: 1, selectedPrice: 0, selectedTicketTypeId: null, maxQuantity: 0 }">
                                 <fieldset class="space-y-4">
                                     <legend class="sr-only">Ticket Type</legend>
-                                    @php
-                                        $ticketOrder = ['VVIP' => 1, 'VIP' => 2, 'Regular' => 3];
-
-                                        $sortedTicketTypes = $product->ticketTypes->sortBy(function ($ticketType) use (
-                                            $ticketOrder,
-                                        ) {
-                                            return $ticketOrder[$ticketType->type] ?? 4;
-                                        });
-                                    @endphp
-
                                     @foreach ($sortedTicketTypes as $ticketType)
                                         <div>
                                             <label for="Ticket{{ $ticketType->type }}"
-                                                class="flex cursor-pointer items-center justify-between gap-4 rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-slate-900 has-[:checked]:ring-1 has-[:checked]:ring-slate-500 {{ $ticketType->quantity == 0 ? 'cursor-not-allowed opacity-50' : '' }}">
+                                                class="flex cursor-pointer items-center justify-between gap-4 rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-slate-900 has-[:checked]:ring-1 has-[:checked]:ring-slate-500 {{ $ticketType->quantity == 0 || $isEventEnded ? 'cursor-not-allowed opacity-50' : '' }}">
 
                                                 <p class="text-gray-700">{{ $ticketType->type }} (Qty:
                                                     {{ $ticketType->quantity }})</p>
                                                 <p class="text-gray-900">IDR
                                                     {{ number_format($ticketType->price, 0, ',', '.') }}</p>
 
-                                                @if ($ticketType->quantity > 0)
+                                                @if ($ticketType->quantity > 0 && !$isEventEnded)
                                                     <input type="radio" name="TicketOption"
                                                         value="{{ $ticketType->price }}" x-model="selectedPrice"
                                                         x-on:click="selectedTicketTypeId = {{ $ticketType->id }}; maxQuantity = {{ $ticketType->quantity }}; productQuantity = 1;"
@@ -293,33 +296,41 @@
                                             </label>
                                         </div>
                                     @endforeach
+
+                                    @if ($isEventEnded)
+                                        <p class="text-red-500 mt-2 font-medium">Event has ended. Ticket selection is not
+                                            available.
+                                        </p>
+                                    @endif
                                 </fieldset>
 
-                                <div class="flex justify-between items-center mt-4">
-                                    <h2 class="text-2xl">
-                                        IDR <span
-                                            x-text="(selectedPrice * productQuantity).toLocaleString('id-ID')"></span>
-                                    </h2>
+                                @if (!$isEventEnded)
+                                    <div class="flex justify-between items-center mt-4">
+                                        <h2 class="text-2xl">
+                                            IDR <span
+                                                x-text="(selectedPrice * productQuantity).toLocaleString('id-ID')"></span>
+                                        </h2>
 
-                                    <label for="Quantity" class="sr-only">Quantity</label>
-                                    <div class="flex items-center rounded border border-gray-200">
-                                        <button type="button" x-on:click="productQuantity--"
-                                            :disabled="productQuantity === 1"
-                                            class="size-10 leading-10 text-gray-600 transition hover:opacity-75">
-                                            &minus;
-                                        </button>
+                                        <label for="Quantity" class="sr-only">Quantity</label>
+                                        <div class="flex items-center rounded border border-gray-200">
+                                            <button type="button" x-on:click="productQuantity--"
+                                                :disabled="productQuantity === 1"
+                                                class="size-10 leading-10 text-gray-600 transition hover:opacity-75">
+                                                &minus;
+                                            </button>
 
-                                        <input type="number" id="Quantity" x-model="productQuantity" min="1"
-                                            :max="maxQuantity"
-                                            class="h-10 w-16 border-transparent text-center sm:text-sm" />
+                                            <input type="number" id="Quantity" x-model="productQuantity"
+                                                min="1" :max="maxQuantity"
+                                                class="h-10 w-16 border-transparent text-center sm:text-sm" />
 
-                                        <button type="button" x-on:click="productQuantity++"
-                                            :disabled="productQuantity === maxQuantity"
-                                            class="size-10 leading-10 text-gray-600 transition hover:opacity-75">
-                                            &plus;
-                                        </button>
+                                            <button type="button" x-on:click="productQuantity++"
+                                                :disabled="productQuantity === maxQuantity"
+                                                class="size-10 leading-10 text-gray-600 transition hover:opacity-75">
+                                                &plus;
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
 
                                 <div class="flex justify-end items-center pt-3 mt-3 border-t border-gray-200">
                                     <form action="{{ route('checkout-proccess') }}" method="POST">
@@ -332,7 +343,10 @@
                                             :value="(selectedPrice * productQuantity)">
 
                                         <button
-                                            class="group relative block text-md font-bold text-white before:absolute before:inset-0 before:rounded-md before:border-2 before:border-dashed before:border-slate-900 text-center">
+                                            class="group relative block text-md font-bold text-white 
+                                            {{ $isEventEnded ? 'cursor-not-allowed opacity-50' : '' }} 
+                                            before:absolute before:inset-0 before:rounded-md before:border-2 before:border-dashed before:border-slate-900 text-center"
+                                            {{ $isEventEnded ? 'disabled' : '' }}>
                                             <div
                                                 class="h-full rounded-md border-2 border-slate-900 bg-slate-900 transition group-hover:-translate-y-2 group-hover:-translate-x-2">
                                                 <span class="relative block px-4 py-1"> Process to Checkout Page </span>
