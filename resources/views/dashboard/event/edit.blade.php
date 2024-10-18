@@ -183,25 +183,13 @@
                                                 value="{{ old('event_location', $event->event_location) }}" required />
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="event_location_longitude" class="form-control-label">Event
-                                                Location
-                                                Longitude</label>
-                                            <input class="form-control" type="text" name="event_location_longitude"
-                                                id="event_location_longitude"
-                                                value="{{ old('event_location_longitude', $event->event_location_longitude) }}"
-                                                required />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="event_location_latitude" class="form-control-label">Event Location
-                                                Latitude</label>
-                                            <input class="form-control" type="text" name="event_location_latitude"
-                                                id="event_location_latitude"
-                                                value="{{ old('event_location_latitude', $event->event_location_latitude) }}"
-                                                required />
+                                    <div class="col-md-12">
+                                        <div>
+                                            <div id="map"></div>
+                                            <input type="hidden" name="event_location_latitude"
+                                                id="event_location_latitude">
+                                            <input type="hidden" name="event_location_longitude"
+                                                id="event_location_longitude">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -244,6 +232,20 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
 @endpush
 
+@push('map')
+    <!-- LeafletJS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+@endpush
+
 @push('script')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -258,12 +260,41 @@
                 checkbox.addEventListener('change', function() {
                     if (this.checked) {
                         forms[this.value].style.display =
-                            'block'; // Tampilkan form jika checkbox dipilih
+                            'block';
                     } else {
                         forms[this.value].style.display =
-                            'none'; // Sembunyikan form jika checkbox tidak dipilih
+                            'none';
                     }
                 });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var lat = parseFloat('{{ old('event_location_latitude', $event->event_location_latitude ?? 0) }}');
+            var lng = parseFloat('{{ old('event_location_longitude', $event->event_location_longitude ?? 0) }}');
+
+            var map = L.map('map').setView([lat, lng], 16);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+            }).addTo(map);
+
+            var marker = L.marker([lat, lng], {
+                draggable: true
+            }).addTo(map);
+
+            marker.on('dragend', function(e) {
+                var latlng = marker.getLatLng();
+                document.getElementById('event_location_latitude').value = latlng.lat;
+                document.getElementById('event_location_longitude').value = latlng.lng;
+            });
+
+            map.on('click', function(e) {
+                marker.setLatLng(e.latlng);
+                document.getElementById('event_location_latitude').value = e.latlng.lat;
+                document.getElementById('event_location_longitude').value = e.latlng.lng;
             });
         });
     </script>

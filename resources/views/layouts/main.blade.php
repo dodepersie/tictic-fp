@@ -24,6 +24,7 @@
     @if (Route::currentRouteName() == 'checkout-invoice')
         @yield('print-style')
     @endif
+    @stack('map')
 </head>
 
 <body>

@@ -12,7 +12,8 @@
 @section('container')
     <section>
         <div class="relative max-w-[74.5rem] mx-auto px-2 lg:px-0 pb-10">
-            <div class="lg:grid grid-cols-12 justify-start items-start space-y-4 lg:gap-8 w-full mx-auto sm:px-6 lg:px-8">
+            <div
+                class="lg:grid grid-cols-12 justify-start items-start space-y-4 lg:space-y-0 lg:gap-8 w-full mx-auto sm:px-6 lg:px-8">
                 <!-- Content -->
                 <div class="space-y-4 lg:col-span-8">
                     <!-- Header -->
@@ -163,7 +164,7 @@
                                 <div class="mt-2 text-justify leading-loose">{!! $product->event_detail !!}</div>
                             </div>
                             <div x-show="openTab === 2">
-                                <div>Google Maps apakah bisa?</div>
+                                <div id="map"></div>
                             </div>
                             <div x-show="openTab === 3">
                                 <div class="space-y-2">
@@ -240,9 +241,9 @@
                 </div>
 
                 <!-- Aside -->
-                <aside class="lg:sticky top-36 space-y-4 lg:col-span-4">
+                <aside class="lg:sticky top-36 lg:col-span-4">
                     <!-- About Merchant -->
-                    <div class="space-y-3">
+                    <div class="pb-4 space-y-4">
                         <h2 class="font-bold text-xl">About {{ $product->merchant->user->name }}</h2>
 
                         <div class="flex items-center gap-4">
@@ -364,12 +365,48 @@
     </section>
 @endsection
 
+@push('map')
+    <!-- LeafletJS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+            z-index: -999;
+        }
+    </style>
+@endpush
+
 @push('script')
     <script>
         tippy('#event_image', {
             content: "{{ $product->event_title }}",
             followCursor: true,
             arrow: false,
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                window.dispatchEvent(new Event('resize'));
+            }, 100);
+
+            var latitude = {{ $product->event_location_latitude ?? -6.2 }};
+            var longitude = {{ $product->event_location_longitude ?? 106.816666 }};
+
+            var map = L.map('map').setView([latitude, longitude], 16);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 20,
+            }).addTo(map);
+
+            var marker = L.marker([latitude, longitude], {
+                draggable: true
+            }).addTo(map);
         });
     </script>
 @endpush
