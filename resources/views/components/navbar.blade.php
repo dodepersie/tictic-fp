@@ -165,12 +165,9 @@
                         @auth
                             <div class="flex items-center gap-2">
                                 <div x-data="{ isActive: false }" class="relative">
-                                    <div
-                                        class="inline-flex items-center overflow-hidden rounded-md bg-transparent gap-1.5">
-                                        <div x-on:click="isActive = !isActive"
-                                            class="hidden lg:block text-sm cursor-pointer">{{ auth()->user()->name }}
-                                        </div>
-                                        <button x-on:click="isActive = !isActive" class="h-full" x-transition>
+                                    <div class="inline-flex items-center overflow-hidden rounded-md gap-2">
+                                        <button x-on:click="isActive = !isActive" class="flex items-center gap-1.5"
+                                            x-transition>
                                             <span class="sr-only">User Logo</span>
                                             <img src="{{ auth()->user()->profile_picture ? asset('/storage/user_profile/' . auth()->user()->profile_picture) : asset('/assets/img/noprofile.webp') }}"
                                                 alt="{{ auth()->user()->name }}" class="w-10 h-10 border rounded-full" />
@@ -180,6 +177,12 @@
                                     <div class="absolute end-0 z-10 mt-2 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg"
                                         role="menu" x-cloak x-transition x-show="isActive"
                                         x-on:click.away="isActive = false" x-on:keydown.escape.window="isActive = false">
+                                        <div class="p-2">
+                                            <span
+                                                class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700 select-none">Logged
+                                                in as: <span
+                                                    class="font-semibold">{{ auth()->user()->name }}</span></span>
+                                        </div>
                                         <div class="p-2">
                                             <a href="{{ route('dashboard.index') }}"
                                                 class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
@@ -277,6 +280,11 @@
 
                         @auth
                             <div class="divide-y divide-gray-200">
+                                <div class="p-2">
+                                    <span
+                                        class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700 cursor-default select-none">Logged
+                                        in as: <span class="font-semibold">{{ auth()->user()->name }}</span></span>
+                                </div>
                                 <div class="p-2">
                                     <a href="{{ route('dashboard.index') }}"
                                         class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"

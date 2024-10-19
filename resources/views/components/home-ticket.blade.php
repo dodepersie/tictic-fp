@@ -32,7 +32,7 @@
                             </h2>
                             <p class="text-sm text-gray-700">
                                 @if ($product->event_end_date < now())
-                                    <span class="text-red-500 font-bold">Event already ended!</span>
+                                    <span class="text-red-500 font-bold">Event has ended</span>
                                 @else
                                     {{ date('d F Y', strtotime($product->event_start_date)) }}
                                 @endif

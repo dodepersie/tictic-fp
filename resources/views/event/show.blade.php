@@ -29,7 +29,7 @@
                                 <div class="flex items-center gap-2">
                                     <i data-feather="calendar"></i> <span class="font-semibold">
                                         @if ($product->event_end_date < now())
-                                            <span class="text-red-500 font-bold">Event already ended!</span>
+                                            <span class="text-red-500 font-bold">Event has ended</span>
                                         @else
                                             @if ($product->event_start_date == $product->event_end_date)
                                                 {{ date('d F Y', strtotime($product->event_start_date)) }}
@@ -81,9 +81,21 @@
                     </div>
 
                     <div class="space-y-2">
-                        <img src="{{ $product->event_image ? '/storage/event_images/' . $product->event_image : 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop' }}"
-                            alt="{{ ucfirst($product->event_title) }}" class="h-auto object-contain rounded-xl shadow"
-                            id="event_image" />
+                        <div class="relative">
+                            <img src="{{ $product->event_image ? '/storage/event_images/' . $product->event_image : 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop' }}"
+                                alt="{{ ucfirst($product->event_title) }}"
+                                class="h-auto object-contain rounded-xl shadow @if ($product->event_end_date < now()) opacity-50 @endif"
+                                id="event_image" />
+
+                            @if ($product->event_end_date < now())
+                                <div
+                                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 rounded-xl">
+                                    <span class="text-white font-bold text-2xl lg:text-4xl select-none">Event has
+                                        ended</span>
+                                </div>
+                            @endif
+                        </div>
+
                     </div>
 
                     <div x-data="{ openTab: 1 }">
@@ -276,39 +288,33 @@
                         <h2 class="font-bold text-xl">Order Information</h2>
                         <div class="space-y-4">
                             <!-- Ticket Type & Quantity -->
-                            <div x-data="{ productQuantity: 1, selectedPrice: 0, selectedTicketTypeId: null, maxQuantity: 0 }">
-                                <fieldset class="space-y-4">
-                                    <legend class="sr-only">Ticket Type</legend>
-                                    @foreach ($sortedTicketTypes as $ticketType)
-                                        <div>
-                                            <label for="Ticket{{ $ticketType->type }}"
-                                                class="flex cursor-pointer items-center justify-between gap-4 rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-slate-900 has-[:checked]:ring-1 has-[:checked]:ring-slate-500 {{ $ticketType->quantity == 0 || $isEventEnded ? 'cursor-not-allowed opacity-50' : '' }}">
+                            @if (!$isEventEnded)
+                                <div x-data="{ productQuantity: 1, selectedPrice: 0, selectedTicketTypeId: null, maxQuantity: 0 }">
+                                    <fieldset class="space-y-4">
+                                        <legend class="sr-only">Ticket Type</legend>
+                                        @foreach ($sortedTicketTypes as $ticketType)
+                                            <div>
+                                                <label for="Ticket{{ $ticketType->type }}"
+                                                    class="flex cursor-pointer items-center justify-between gap-4 rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-slate-900 has-[:checked]:ring-1 has-[:checked]:ring-slate-500 {{ $ticketType->quantity == 0 || $isEventEnded ? 'cursor-not-allowed opacity-50' : '' }}">
 
-                                                <p class="text-gray-700">{{ $ticketType->type }} (Qty:
-                                                    {{ $ticketType->quantity }})</p>
-                                                <p class="text-gray-900">IDR
-                                                    {{ number_format($ticketType->price, 0, ',', '.') }}</p>
+                                                    <p class="text-gray-700">{{ $ticketType->type }} (Qty:
+                                                        {{ $ticketType->quantity }})</p>
+                                                    <p class="text-gray-900">IDR
+                                                        {{ number_format($ticketType->price, 0, ',', '.') }}</p>
 
-                                                @if ($ticketType->quantity > 0 && !$isEventEnded)
-                                                    <input type="radio" name="TicketOption"
-                                                        value="{{ $ticketType->price }}" x-model="selectedPrice"
-                                                        x-on:click="selectedTicketTypeId = {{ $ticketType->id }}; maxQuantity = {{ $ticketType->quantity }}; productQuantity = 1;"
-                                                        id="Ticket{{ $ticketType->type }}" class="sr-only" />
-                                                @else
-                                                    <span class="text-red-500">Sold Out</span>
-                                                @endif
-                                            </label>
-                                        </div>
-                                    @endforeach
+                                                    @if ($ticketType->quantity > 0 && !$isEventEnded)
+                                                        <input type="radio" name="TicketOption"
+                                                            value="{{ $ticketType->price }}" x-model="selectedPrice"
+                                                            x-on:click="selectedTicketTypeId = {{ $ticketType->id }}; maxQuantity = {{ $ticketType->quantity }}; productQuantity = 1;"
+                                                            id="Ticket{{ $ticketType->type }}" class="sr-only" />
+                                                    @else
+                                                        <span class="text-red-500">Sold Out</span>
+                                                    @endif
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </fieldset>
 
-                                    @if ($isEventEnded)
-                                        <p class="text-red-500 mt-2 font-medium">Event has ended. Ticket selection is not
-                                            available.
-                                        </p>
-                                    @endif
-                                </fieldset>
-
-                                @if (!$isEventEnded)
                                     <div class="flex justify-between items-center mt-4">
                                         <h2 class="text-2xl">
                                             IDR <span
@@ -334,36 +340,42 @@
                                             </button>
                                         </div>
                                     </div>
-                                @endif
 
-                                <div class="flex justify-end items-center pt-3 mt-3 border-t border-gray-200">
-                                    <form action="{{ route('checkout-proccess') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{ $product->id }}">
-                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        <input type="hidden" name="ticket_type_id" :value="selectedTicketTypeId">
-                                        <input type="hidden" name="quantity" :value="productQuantity">
-                                        <input type="hidden" name="total_price"
-                                            :value="(selectedPrice * productQuantity)">
+                                    <div class="flex justify-end items-center pt-3 mt-3 border-t border-gray-200">
+                                        <form action="{{ route('checkout-proccess') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $product->id }}">
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <input type="hidden" name="ticket_type_id" :value="selectedTicketTypeId">
+                                            <input type="hidden" name="quantity" :value="productQuantity">
+                                            <input type="hidden" name="total_price"
+                                                :value="(selectedPrice * productQuantity)">
 
-                                        <button
-                                            class="group relative block text-md font-bold text-white 
+                                            <button
+                                                class="group relative block text-md font-bold text-white 
                                             {{ $isEventEnded ? 'cursor-not-allowed opacity-50' : '' }} 
                                             before:absolute before:inset-0 before:rounded-md before:border-2 before:border-dashed before:border-slate-900 text-center"
-                                            {{ $isEventEnded ? 'disabled' : '' }}>
-                                            <div
-                                                class="h-full rounded-md border-2 border-slate-900 bg-slate-900 transition group-hover:-translate-y-2 group-hover:-translate-x-2">
-                                                <span class="relative block px-4 py-1"> Process to Checkout Page </span>
-                                            </div>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
+                                                {{ $isEventEnded ? 'disabled' : '' }}>
+                                                <div
+                                                    class="h-full rounded-md border-2 border-slate-900 bg-slate-900 transition group-hover:-translate-y-2 group-hover:-translate-x-2">
+                                                    <span class="relative block px-4 py-1"> Process to Checkout Page
+                                                    </span>
+                                                </div>
+                                            </button>
+                                        </form>
+                                    </div>
+                            @endif
 
+                            @if ($isEventEnded)
+                                <div class="text-red-600 mt-2 font-medium">Event has ended. Ticket selection is not
+                                    available.
+                                </div>
+                            @endif
                         </div>
                     </div>
-                </aside>
             </div>
+            </aside>
+        </div>
         </div>
     </section>
 @endsection

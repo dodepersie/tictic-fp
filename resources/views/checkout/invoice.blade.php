@@ -47,7 +47,7 @@
             </div>
 
             <!-- Order Table -->
-            <div class="overflow-x-auto pt-3">
+            <div class="overflow-x-auto pt-7">
                 <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                     <thead class="ltr:text-left rtl:text-right">
                         <tr>

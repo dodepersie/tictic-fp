@@ -80,7 +80,7 @@
                                     </span>
                                 @endif
                             </div>
-                            <div><strong>Unique ID:</strong> {{ session('transaction')->unique_id }}</div>
+                            <div><strong>Unique ID:</strong> #{{ session('transaction')->unique_id }}</div>
                             <!-- masih perlu ditambahkan agar bisa melihat ticket type -->
                             <div><strong>Ticket Type:</strong> {{ session('transaction')->ticketType->type }}</div>
                             <div><strong>Quantity:</strong> {{ session('transaction')->quantity }}</div>
@@ -88,7 +88,8 @@
 
                         <div class="leading-loose">
                             <h3 class="text-lg font-semibold border-b border-gray-200 py-3 mb-3">Event Details</h3>
-                            <div><strong>Event Title:</strong> {{ session('transaction')->product->event_title }}</div>
+                            <div><strong>Event Title:</strong> {{ ucfirst(session('transaction')->product->event_title) }}
+                            </div>
                             <div><strong>Ticket Price:</strong> IDR
                                 {{ number_format(session('transaction')->price, 0, ',', '.') }}
                             </div>
