@@ -198,7 +198,9 @@
                                         </div>
                                     </div>
                                     <div class="col-auto">
-                                        <img class="img-preview mb-2" style="display: none; max-width: 100%;" />
+                                        <img class="img-preview mb-2"
+                                            src="{{ $event->event_image ? asset('storage/event_images/' . $event->event_image) : '' }}"
+                                            style="{{ $event->event_image ? 'display: block;' : 'display: none;' }}; max-width: 100%; height: 10rem;" />
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">

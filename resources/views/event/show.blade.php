@@ -1,5 +1,5 @@
 @php
-    $isEventEnded = $product->event_end_date < now();
+    $isEventEnded = $product->event_end_date < now()->format('Y-m-d');
     $ticketOrder = ['VVIP' => 1, 'VIP' => 2, 'Regular' => 3];
 
     $sortedTicketTypes = $product->ticketTypes->sortBy(function ($ticketType) use ($ticketOrder) {
@@ -28,7 +28,7 @@
                             <div class="flex flex-col gap-2">
                                 <div class="flex items-center gap-2">
                                     <i data-feather="calendar"></i> <span class="font-semibold">
-                                        @if ($product->event_end_date < now())
+                                        @if ($product->event_end_date < now()->format('Y-m-d'))
                                             <span class="text-red-500 font-bold">Event has ended</span>
                                         @else
                                             @if ($product->event_start_date == $product->event_end_date)
@@ -84,12 +84,12 @@
                         <div class="relative">
                             <img src="{{ $product->event_image ? '/storage/event_images/' . $product->event_image : 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop' }}"
                                 alt="{{ ucfirst($product->event_title) }}"
-                                class="h-auto object-contain rounded-xl shadow @if ($product->event_end_date < now()) opacity-50 @endif"
+                                class="h-auto object-contain rounded-xl shadow @if ($product->event_end_date < now()->format('Y-m-d')) opacity-50 @endif"
                                 id="event_image" />
 
-                            @if ($product->event_end_date < now())
+                            @if ($product->event_end_date < now()->format('Y-m-d'))
                                 <div
-                                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 rounded-xl">
+                                    class="ease-in duration-150 absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 hover:bg-opacity-20 rounded-xl">
                                     <span class="text-white font-bold text-2xl lg:text-4xl select-none">Event has
                                         ended</span>
                                 </div>

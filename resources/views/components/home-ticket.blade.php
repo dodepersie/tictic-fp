@@ -31,7 +31,7 @@
                                 {{ ucfirst($product->event_title) }}
                             </h2>
                             <p class="text-sm text-gray-700">
-                                @if ($product->event_end_date < now())
+                                @if ($product->event_end_date < now()->format('Y-m-d'))
                                     <span class="text-red-500 font-bold">Event has ended</span>
                                 @else
                                     {{ date('d F Y', strtotime($product->event_start_date)) }}
