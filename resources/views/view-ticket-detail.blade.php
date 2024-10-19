@@ -98,6 +98,8 @@
                             <div><strong>Event Start Time:</strong>
                                 {{ \Carbon\Carbon::parse(session('transaction')->product->event_start_time)->format('H:i') }}
                             </div>
+                            <div><strong>Event Address:</strong> {{ session('transaction')->product->event_address }}
+                            </div>
                             <div><strong>Event Location:</strong> {{ session('transaction')->product->event_location }}
                             </div>
                             <div><strong>Purchased By:</strong> {{ session('transaction')->user->name }}</div>

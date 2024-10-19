@@ -40,7 +40,7 @@
                                             <td class="align-middle text-center text-sm">{{ $loop->iteration }}</td>
                                             <td class="align-middle text-center">
                                                 <span
-                                                    class="text-secondary text-sm font-weight-bold">{{ $transaction->product->event_title }}
+                                                    class="text-secondary text-sm font-weight-bold">{{ ucfirst($transaction->product->event_title) }}
                                                     {{ $transaction->ticketType->type }}
                                                     ({{ $transaction->unique_id }})
                                                 </span>

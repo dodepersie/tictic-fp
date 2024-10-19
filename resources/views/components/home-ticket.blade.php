@@ -8,7 +8,7 @@
                     <div class="mt-5">
                         <span aria-hidden="true" role="img" class="text-3xl sm:text-4xl">
                             <img src="{{ $product->event_image ? asset('storage/event_images/' . $product->event_image) : 'https://picsum.photos/id/' . rand(1, 100) . '/200/300' }}"
-                                alt="{{ $product->event_title }}"
+                                alt="{{ ucfirst($product->event_title) }}"
                                 class="h-64 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72" />
                         </span>
                         <div class="space-y-1">
@@ -28,7 +28,7 @@
                                 @endif
                             </div>
                             <h2 class="text-pretty text-lg font-medium text-gray-900 sm:text-xl">
-                                {{ $product->event_title }}
+                                {{ ucfirst($product->event_title) }}
                             </h2>
                             <p class="text-sm text-gray-700">
                                 @if ($product->event_end_date < now())

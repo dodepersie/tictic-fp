@@ -11,7 +11,7 @@
 
 @section('container')
     <section>
-        <div class="relative max-w-[74.5rem] mx-auto px-2 lg:px-0 pb-10">
+        <div class="relative max-w-[74.5rem] mx-auto px-2 lg:px-0">
             <div
                 class="lg:grid grid-cols-12 justify-start items-start space-y-4 lg:space-y-0 lg:gap-8 w-full mx-auto sm:px-6 lg:px-8">
                 <!-- Content -->
@@ -45,7 +45,7 @@
                                         class="font-semibold">{{ date('H:i', strtotime($product->event_start_time)) }}</span>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <i data-feather="map-pin"></i> <a href="/events?location={{ $product->event_location }}"
+                                    <i data-feather="map-pin"></i><a href="/events?location={{ $product->event_location }}"
                                         class="underline" title="More event at {{ $product->event_location }}"><span
                                             class="font-semibold">{{ $product->event_location }}</span></a>
                                 </div>
@@ -164,7 +164,10 @@
                                 <div class="mt-2 text-justify leading-loose">{!! $product->event_detail !!}</div>
                             </div>
                             <div x-show="openTab === 2">
-                                <div id="map"></div>
+                                <h2 class="text-xl font-semibold">Event Address</h2>
+                                <div class="my-2 text-justify leading-loose text-sm">{{ $product->event_address }}</div>
+                                <h2 class="text-xl font-semibold">Event Map</h2>
+                                <div id="map" class="mt-2 z-0 rounded-xl shadow border-2 border-gray-200"></div>
                             </div>
                             <div x-show="openTab === 3">
                                 <div class="space-y-2">
@@ -373,9 +376,8 @@
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <style>
         #map {
-            height: 500px;
+            height: 400px;
             width: 100%;
-            z-index: -999;
         }
     </style>
 @endpush
@@ -393,19 +395,19 @@
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(function() {
                 window.dispatchEvent(new Event('resize'));
-            }, 100);
+            }, 1000);
 
-            var latitude = {{ $product->event_location_latitude ?? -6.2 }};
-            var longitude = {{ $product->event_location_longitude ?? 106.816666 }};
+            var lat = {{ $product->event_location_latitude ?? -6.2 }};
+            var lng = {{ $product->event_location_longitude ?? 106.816666 }};
 
-            var map = L.map('map').setView([latitude, longitude], 16);
+            var map = L.map('map').setView([lat, lng], 18);
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 20,
+                maxZoom: 18,
             }).addTo(map);
 
-            var marker = L.marker([latitude, longitude], {
-                draggable: true
+            var marker = L.marker([lat, lng], {
+                draggable: false
             }).addTo(map);
         });
     </script>

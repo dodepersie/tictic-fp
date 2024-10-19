@@ -77,7 +77,7 @@
                                     <div class="col-md-12">
                                         <div class="ticket-types">
                                             <div class="ticket-type">
-                                                <div class="form-group">
+                                                <div class="form-group mb-0">
                                                     <!-- Checkbox untuk memilih jenis tiket -->
                                                     <div class="form-check form-check-inline">
                                                         <input type="checkbox" name="ticket_types[]" value="VVIP"
@@ -104,7 +104,7 @@
                                                 <!-- Area input form dinamis -->
                                                 <div class="col-md-12">
                                                     <!-- Form untuk VVIP -->
-                                                    <div class="form-group" id="VVIP-form" style="display:none;">
+                                                    <div class="form-group mt-2" id="VVIP-form" style="display:none;">
                                                         <h4>VVIP Ticket Settings</h4>
                                                         <label for="vvip_price" class="form-control-label">Price:</label>
                                                         <input class="form-control mb-2" type="text" name="vvip_price"
@@ -118,7 +118,7 @@
                                                     </div>
 
                                                     <!-- Form untuk VIP -->
-                                                    <div class="form-group" id="VIP-form" style="display:none;">
+                                                    <div class="form-group mt-2" id="VIP-form" style="display:none;">
                                                         <h4>VIP Ticket Settings</h4>
                                                         <label for="vip_price" class="form-control-label">Price:</label>
                                                         <input class="form-control mb-2" type="text" name="vip_price"
@@ -131,7 +131,7 @@
                                                     </div>
 
                                                     <!-- Form untuk Regular -->
-                                                    <div class="form-group" id="Regular-form" style="display:none;">
+                                                    <div class="form-group mt-2" id="Regular-form" style="display:none;">
                                                         <h4>Regular Ticket Settings</h4>
                                                         <label for="regular_price"
                                                             class="form-control-label">Price:</label>
@@ -149,19 +149,22 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="event_location" class="form-control-label">Event Location</label>
-                                            <input class="form-control" type="text" name="event_location"
-                                                id="event_location" value="{{ old('event_location') }}" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
                                         <div>
-                                            <div id="map"></div>
-                                            <input type="hidden" name="event_location_latitude"
-                                                id="event_location_latitude">
-                                            <input type="hidden" name="event_location_longitude"
-                                                id="event_location_longitude">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Event
+                                                    Location</label>
+                                                <div id="map"></div>
+                                                <input type="hidden" name="event_address" id="event_address"
+                                                    value="{{ old('event_address') }}" required>
+                                                <input type="hidden" name="event_location" id="event_location"
+                                                    value="{{ old('event_location') }}" required>
+                                                <input type="hidden" name="event_location_latitude"
+                                                    id="event_location_latitude"
+                                                    value="{{ old('event_location_latitude') }}" required>
+                                                <input type="hidden" name="event_location_longitude"
+                                                    id="event_location_longitude"
+                                                    value="{{ old('event_location_longitude') }}" required>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -265,14 +268,72 @@
 
             marker.on('dragend', function(e) {
                 var latlng = marker.getLatLng();
-                document.getElementById('event_location_latitude').value = latlng.lat;
-                document.getElementById('event_location_longitude').value = latlng.lng;
+                var lat = latlng.lat;
+                var lng = latlng.lng;
+
+                document.getElementById('event_location_latitude').value = lat;
+                document.getElementById('event_location_longitude').value = lng;
+
+                var apiUrl =
+                    `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;
+
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.address) {
+                            var address = data.display_name;
+                            var county = data.address.municipality || data.address.county || data
+                                .address.city || data.address.suburb || data.address.district || '';
+                            var state = data.address.state || data.address.territory || data
+                                .address.city || '';
+
+                            var locationString = county && state ? county + ', ' + state : county ||
+                                state;
+
+                            document.getElementById('event_address').value = address;
+                            document.getElementById('event_location').value = locationString;
+                        } else {
+                            console.error('Address data not found');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching location data:', error);
+                    });
             });
 
             map.on('click', function(e) {
                 marker.setLatLng(e.latlng);
-                document.getElementById('event_location_latitude').value = e.latlng.lat;
-                document.getElementById('event_location_longitude').value = e.latlng.lng;
+                var lat = e.latlng.lat;
+                var lng = e.latlng.lng;
+
+                document.getElementById('event_location_latitude').value = lat;
+                document.getElementById('event_location_longitude').value = lng;
+
+                var apiUrl =
+                    `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;
+
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.address) {
+                            var address = data.display_name;
+                            var county = data.address.municipality || data.address.county || data
+                                .address.city || data.address.suburb || data.address.district || '';
+                            var state = data.address.state || data.address.territory || data
+                                .address.city || '';
+
+                            var locationString = county && state ? county + ', ' + state : county ||
+                                state;
+
+                            document.getElementById('event_address').value = address;
+                            document.getElementById('event_location').value = locationString;
+                        } else {
+                            console.error('Address data not found');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching location data:', error);
+                    });
             });
         });
     </script>

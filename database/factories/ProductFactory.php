@@ -28,6 +28,7 @@ class ProductFactory extends Factory
             'event_start_date' => $startDate->format('Y-m-d'),
             'event_end_date' => fake()->dateTimeBetween($startDate, 'now +1 week')->format('Y-m-d'),
             'event_start_time' => fake()->dateTimeThisYear()->format('H:i:s'),
+            'event_address' => fake()->randomElement(['Stadium', 'Parking Lot', 'IDK']),
             'event_location' => fake()->randomElement(['Denpasar', 'Jakarta', 'London']),
             'event_location_longitude' => '1',
             'event_location_latitude' => '1',

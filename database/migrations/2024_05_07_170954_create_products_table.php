@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('event_title');
             $table->string('slug')->unique();
             $table->text('event_detail');
+            $table->string('event_address');
             $table->string('event_location');
             $table->integer('event_price');
             $table->decimal('event_location_longitude', 10, 7);
