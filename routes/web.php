@@ -16,6 +16,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Middleware\CheckMerchantStatus;
 use App\Http\Middleware\OnlyAdminRole;
 use App\Http\Middleware\OnlyCustomerRole;
+use App\Http\Middleware\OnlyCustomerMerchantRole;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
@@ -45,7 +46,7 @@ Route::get('/categories', function () {
     ]);
 })->name('categories');
 
-Route::middleware(['auth', OnlyCustomerRole::class])->group(function () {
+Route::middleware(['auth', OnlyCustomerMerchantRole::class])->group(function () {
     Route::get('/view-ticket-detail', [TransactionController::class, 'index'])->name('view-ticket-detail');
     Route::post('/view-ticket-detail', [TransactionController::class, 'viewTicketDetail'])->name('view-ticket-detail');
 });
