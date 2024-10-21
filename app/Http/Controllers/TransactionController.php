@@ -35,15 +35,27 @@ class TransactionController extends Controller
 
         $uniqueId = $request->unique_id;
 
-        $transaction = Transaction::where('unique_id', $uniqueId)->first();
-
-        if (! $transaction) {
-            return redirect()->back()->withErrors(['unique_id' => 'Ticket not found.']);
+        if (auth()->user()->role === 'Merchant') {
+            // Jika user adalah Merchant, mereka dapat melihat semua transaksi berdasarkan unique ID
+            $transaction = Transaction::where('unique_id', $uniqueId)->first();
+            
+            if (! $transaction) {
+                return redirect()->back()->withErrors(['unique_id' => 'Ticket not found.']);
+            }
+        } elseif (auth()->user()->role === 'Customer') {
+            // Jika user adalah Customer, mereka hanya dapat melihat transaksi mereka sendiri berdasarkan unique ID
+            $transaction = Transaction::where('unique_id', $uniqueId)
+                ->where('user_id', auth()->user()->id)
+                ->first();
+            
+            if (! $transaction) {
+                return redirect()->back()->withErrors(['unique_id' => 'Ticket not found or you do not have access to this ticket.']);
+            }
+        } else {
+            // Jika user tidak berperan sebagai Merchant atau Customer, tampilkan pesan error
+            return redirect()->back()->withErrors(['role' => 'You do not have the necessary permissions.']);
         }
-
-        if (auth()->user()->id !== $transaction->user_id) {
-            return redirect()->back()->withErrors('Only the user associated with this Unique ID can view the ticket.');
-        }
+        
 
         return redirect()->back()->with('transaction', $transaction);
     }
