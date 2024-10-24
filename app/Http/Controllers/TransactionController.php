@@ -34,28 +34,30 @@ class TransactionController extends Controller
         ]);
 
         $uniqueId = $request->unique_id;
+        $user = auth()->user();
+        $transaction = null;
 
-        if (auth()->user()->role === 'Merchant') {
-            // Jika user adalah Merchant, mereka dapat melihat semua transaksi berdasarkan unique ID
-            $transaction = Transaction::where('unique_id', $uniqueId)->first();
-            
+        if ($user->role === 'Merchant' && $user->merchant) {
+            $merchantId = $user->merchant->id;
+
+            $transaction = Transaction::whereHas('product', function ($query) use ($merchantId) {
+                $query->where('merchant_id', $merchantId);
+            })->where('unique_id', $uniqueId)->first();
+
             if (! $transaction) {
                 return redirect()->back()->withErrors(['unique_id' => 'Ticket not found.']);
             }
-        } elseif (auth()->user()->role === 'Customer') {
-            // Jika user adalah Customer, mereka hanya dapat melihat transaksi mereka sendiri berdasarkan unique ID
+        } elseif ($user->role === 'Customer') {
             $transaction = Transaction::where('unique_id', $uniqueId)
-                ->where('user_id', auth()->user()->id)
+                ->where('user_id', $user->id)
                 ->first();
-            
+
             if (! $transaction) {
                 return redirect()->back()->withErrors(['unique_id' => 'Ticket not found or you do not have access to this ticket.']);
             }
         } else {
-            // Jika user tidak berperan sebagai Merchant atau Customer, tampilkan pesan error
             return redirect()->back()->withErrors(['role' => 'You do not have the necessary permissions.']);
         }
-        
 
         return redirect()->back()->with('transaction', $transaction);
     }
