@@ -2,17 +2,19 @@
 
 @section('auth_form')
 
-    <div class="mx-auto max-w-lg text-center space-y-3">
-        <a href="{{ route('home') }}">
-            <h1 class="text-2xl font-bold sm:text-3xl">TicTic</h1>
-        </a>
+    <div class="mx-auto max-w-lg space-y-1">
+        <div class="flex justify-center items-center">
+            <a href="{{ route('home') }}">
+                <img src="{{ asset('/assets/img/TicTic Logo.png') }}" class="h-14 w-14 -mt-2" alt="TicTic Logo" />
+            </a>
+        </div>
 
-        <h1 class="text-lg leading-loose">
+        <h1 class="text-lg leading-loose text-center">
             Become our partner and start promoting your <span class="font-bold">SPECTACULAR</span> event! 😍🎉
         </h1>
     </div>
 
-    <div class="mx-auto mb-0 mt-4 max-w-md space-y-4">
+    <div class="mx-auto mb-0 mt-4 max-w-md">
         @if ($errors->any())
             <div class="mt-3 bg-red-50 border border-red-200 text-sm text-red-800 rounded-lg p-4" role="alert">
                 <div class="flex">
@@ -41,7 +43,7 @@
             </div>
         @endif
 
-        <form action="{{ route('register_merchant') }}" method="POST" class="mx-auto mb-0 mt-8 max-w-md space-y-4"
+        <form action="{{ route('register_merchant') }}" method="POST" class="mx-auto mb-0 mt-4 max-w-md space-y-4"
             enctype="multipart/form-data">
             @csrf
             <div class="relative">
@@ -49,7 +51,7 @@
 
                 <input type="text" id="name" name="name"
                     class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow" placeholder="PT. Tiket Indonesia"
-                    value="{{ old('name') }}" autofocus />
+                    value="{{ old('name') }}" autofocus autocomplete="off" />
 
                 <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
                     <i data-feather="user" class="size-4 text-gray-400"></i>
@@ -61,7 +63,7 @@
 
                 <input type="email" id="Email" name="email"
                     class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow" placeholder="tiket@tictic.id"
-                    value="{{ old('email') }}" />
+                    value="{{ old('email') }}" autocomplete="off" />
 
                 <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
                     <i data-feather="at-sign" class="size-4 text-gray-400"></i>
@@ -73,7 +75,7 @@
 
                 <input type="tel" id="phone_number" name="phone_number"
                     class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow" pattern="\+62\d{10,12}"
-                    placeholder="+62" value="{{ old('phone_number') }}" />
+                    placeholder="+62" value="{{ old('phone_number') }}" autocomplete="off" />
 
                 <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
                     <i data-feather="phone" class="size-4 text-gray-400"></i>

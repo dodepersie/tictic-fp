@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('merchant_status')->default('Pending');
             $table->string('merchant_document');
+            $table->text('company_description');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

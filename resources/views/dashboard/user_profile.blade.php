@@ -21,7 +21,7 @@
                         </p>
                     </div>
                 </div>
-                @if (auth()->user()->picture)
+                @if (auth()->user()->profile_picture)
                     <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                         <div class="d-flex justify-content-end align-items-center">
                             <form method="POST" action="{{ route('profile.remove_picture', $user->id) }}">
@@ -95,7 +95,7 @@
                                         <div class="form-group">
                                             <label for="company-description" class="form-control-label">Company
                                                 Description</label>
-                                            <textarea class="form-control" name="company_description" rows="4" required>{{ old('company_description', $user->company_description) }}</textarea>
+                                            <textarea class="form-control" name="company_description" rows="4" required>{{ old('company_description', $user->merchant->company_description) }}</textarea>
                                         </div>
                                     </div>
                                 </div>

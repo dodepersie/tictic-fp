@@ -49,28 +49,26 @@ class RegisterController extends Controller
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => bcrypt($randomPassword),
+            'phone_number' => $validatedData['phone_number'],
             'role' => 'Merchant',
         ];
 
-        // Create user first
         $user = User::create($userData);
 
-        // Upload document
         if ($request->hasFile('document')) {
             $file = $request->file('document');
             $fileName = time().'_'.$file->getClientOriginalName();
-            $file->storeAs('public/document', $fileName);
+            $file->storeAs('public/merchant_documents', $fileName);
         }
 
-        // Create merchant and associate with the user
         $merchantData = [
             'user_id' => $user->id,
-            'merchant_document' => $fileName ?? null,
+            'company_description' => $validatedData['company_description'],
+            'merchant_document' => $fileName,
         ];
 
         Merchant::create($merchantData);
 
-        // Trigger the Registered event
         event(new Registered($user));
 
         return redirect()->route('login')->with('success', 'Merchant Account Created! You will get your password if Administrator accepts your registration!');

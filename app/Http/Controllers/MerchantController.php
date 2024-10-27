@@ -15,8 +15,8 @@ class MerchantController extends Controller
      */
     public function index()
     {
-        $merchants = Merchant::with('user')->get();
-        $pending_merchants = Merchant::with('user')->where('merchant_status', '=', 'Pending')->get();
+        $merchants = Merchant::with('user')->where('merchant_status', 'Approved')->get();
+        $pending_merchants = Merchant::with('user')->where('merchant_status', 'Pending')->get();
 
         $titleSwal = 'Delete Merchant!';
         $text = 'Are you sure you want to delete this merchant? (It will also delete all Events associated with this Merchant)';
@@ -73,7 +73,17 @@ class MerchantController extends Controller
      */
     public function update(UpdateMerchantRequest $request, Merchant $merchant)
     {
-        $merchant->user->update($request->validated());
+        $validatedData = $request->validated();
+
+        $merchant->user->update([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'phone_number' => $validatedData['phone_number'],
+        ]);
+        
+        $merchant->update([
+            'company_description' => $validatedData['company_description'],
+        ]);
 
         return redirect()->route('dashboard_merchants.index')->withSuccess('Merchant updated successfully!');
     }

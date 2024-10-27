@@ -52,7 +52,7 @@
                                                 <span class="text-secondary text-xs font-weight-bold">
                                                     @if ($pending_merchant->merchant_document)
                                                         <a
-                                                            href="/storage/document/{{ $pending_merchant->merchant_document }}">
+                                                            href="/storage/merchant_documents/{{ $pending_merchant->merchant_document }}">
                                                             <i data-feather="file-text"
                                                                 style="width: 14px; height: 14px;"></i>
                                                             {{ $pending_merchant->merchant_document }}
@@ -102,7 +102,7 @@
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
-                            <table class="table table-hover" id="merchants_table" style="width: 100%;">
+                            <table class="table" id="merchants_table" style="width: 100%;">
                                 <thead>
                                     <tr>
                                         <th
@@ -128,7 +128,7 @@
                                             <td class="align-middle text-center text-sm">
                                                 {{ $loop->iteration }}
                                             </td>
-                                            <td>
+                                            <td class="d-flex align-items-center">
                                                 <div class="d-flex px-2 py-1">
                                                     <div>
                                                         <img src="{{ $merchant->user->profile_picture ? asset('/storage/user_profile/' . $merchant->user->profile_picture) : asset('assets/img/noprofile.webp') }}"

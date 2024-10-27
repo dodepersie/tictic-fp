@@ -2,11 +2,13 @@
 
 @section('auth_form')
     <div class="text-center space-y-3">
-        <a href="{{ route('home') }}">
-            <h1 class="text-2xl font-bold sm:text-3xl">TicTic</h1>
-        </a>
+        <div class="flex justify-center items-center">
+            <a href="{{ route('home') }}">
+                <img src="{{ asset('/assets/img/TicTic Logo.png') }}" class="h-14 w-14 -mt-2" alt="TicTic Logo" />
+            </a>
+        </div>
 
-        <h1 class="text-lg">Log in to Dashboard</h1>
+        <h1 class="text-xl font-semibold">Log in to Dashboard</h1>
 
         @if ($errors->any())
             <div class="mx-auto flex bg-red-500 text-sm text-white rounded-lg p-4 max-w-md" role="alert">

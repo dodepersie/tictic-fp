@@ -42,7 +42,7 @@ class RandomPasswordEmail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'mail.random-password',
+            view: 'mail.approved-merchant',
         );
     }
 

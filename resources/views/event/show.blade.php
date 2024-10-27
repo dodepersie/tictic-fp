@@ -267,7 +267,7 @@
 
                             <div>
                                 <p class="mt-0.5 text-gray-700">
-                                    {{ $product->merchant->user->company_description ? $product->merchant->user->company_description : 'This merchant not set company description.. 😅' }}
+                                    {{ $product->merchant->company_description ? $product->merchant->company_description : 'This merchant not set company description.. 😅' }}
                                 </p>
                             </div>
                         </div>

@@ -19,7 +19,6 @@ return new class extends Migration
             $table->date('dob');
             $table->enum('gender', ['Male', 'Female']);
             $table->string('phone_number');
-            $table->text('company_description');
             $table->enum('role', ['Admin', 'Merchant', 'Customer'])->default('Customer');
             $table->string('profile_picture')->nullable();
             $table->timestamp('email_verified_at')->nullable();

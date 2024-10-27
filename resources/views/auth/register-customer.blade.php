@@ -2,11 +2,13 @@
 
 @section('auth_form')
     <div class="mx-auto max-w-lg text-center space-y-3">
-        <a href="{{ route('home') }}">
-            <h1 class="text-2xl font-bold sm:text-3xl">TicTic</h1>
-        </a>
+        <div class="flex justify-center items-center">
+            <a href="{{ route('home') }}">
+                <img src="{{ asset('/assets/img/TicTic Logo.png') }}" class="h-14 w-14 -mt-2" alt="TicTic Logo" />
+            </a>
+        </div>
 
-        <h1 class="text-lg">Register to TicTic</h1>
+        <h1 class="text-xl font-semibold">Register to TicTic</h1>
     </div>
 
     <div class="mx-auto mb-0 mt-4 max-w-md space-y-4">

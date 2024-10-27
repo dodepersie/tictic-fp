@@ -66,42 +66,37 @@ class UserProfileController extends Controller
      */
     public function update(UpdateProfileRequest $request)
     {
-        // ID Check
-        $userId = auth()->user()->id;
-        $user = User::findOrFail($userId);
-
-        // Check data validation
+        $user = auth()->user();
         $validatedData = $request->validated();
-
+        
         if ($request->hasFile('profile_picture')) {
-            // Load the image
             $file = $request->file('profile_picture');
-            $image = Image::read($file);
-
-            // Make the image fit and convert to WEBP format
-            $image->coverDown(900, 900);
-            $image->encode(new WebpEncoder(quality: 90));
-            $file_name = now()->timestamp.'.webp';
-
-            // Save the resized image to storage
-            Storage::put('public/user_profile/'.$file_name, (string) $image->encode());
-
-            // Delete old profile picture
+            $file_name = now()->timestamp . '.webp';
+    
+            $image = Image::read($file)
+                ->coverDown(900, 900)
+                ->encode(new WebpEncoder(quality: 90));
+            
+            Storage::put('public/user_profile/' . $file_name, (string) $image);
+            
             if ($user->profile_picture) {
-                $path = public_path('storage/user_profile/'.$user->profile_picture);
-                if (file_exists($path)) {
-                    unlink($path);
-                }
+                Storage::delete('public/user_profile/' . $user->profile_picture);
             }
-
-            // Put the data in the database
+    
             $validatedData['profile_picture'] = $file_name;
         }
-
-        // Update database
-        $request->user()->update($validatedData);
-
-        // Redirect or return response
+    
+        $user->update(array_filter([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'phone_number' => $validatedData['phone_number'],
+            'profile_picture' => $validatedData['profile_picture'] ?? null,
+        ]));
+    
+        $user->merchant->update([
+            'company_description' => $validatedData['company_description'],
+        ]);
+    
         return redirect()->route('profile.index')->with('success', 'Profile updated successfully!');
     }
 
@@ -110,7 +105,6 @@ class UserProfileController extends Controller
     {
         $user = User::findOrFail($userId);
 
-        // Delete avatar file
         if ($user->profile_picture) {
             $path = public_path('storage/user_profile/'.$user->profile_picture);
             if (file_exists($path)) {
@@ -118,14 +112,12 @@ class UserProfileController extends Controller
             }
         }
 
-        // Clear avatar field in the database
         $user->profile_picture = null;
         $user->save();
 
         return back()->with('success', 'Profile picture deleted successfully!');
     }
 
-    // Change user's password
     public function changePassword(ChangePasswordRequest $request)
     {
         $validatedData = $request->validated();

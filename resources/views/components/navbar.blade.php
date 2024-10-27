@@ -181,7 +181,7 @@
                                             <span
                                                 class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700 select-none">Logged
                                                 in as: <span
-                                                    class="font-semibold leading-relaxed whitespace-nowrap">{{ auth()->user()->name }}</span></span>
+                                                    class="font-semibold leading-loose whitespace-nowrap">{{ auth()->user()->name }}</span></span>
                                         </div>
                                         <div class="p-2">
                                             <a href="{{ route('dashboard.index') }}"

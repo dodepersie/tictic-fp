@@ -42,7 +42,7 @@
                                         <div class="form-group">
                                             <label for="company_description" class="form-control-label">Company
                                                 Description</label>
-                                            <textarea class="form-control" name="company_description" rows="4">{{ $selected_merchant->company_description }}</textarea>
+                                            <textarea class="form-control" name="company_description" rows="4">{{ $merchant->company_description }}</textarea>
                                         </div>
                                     </div>
                                 </div>
