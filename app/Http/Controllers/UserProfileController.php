@@ -92,10 +92,12 @@ class UserProfileController extends Controller
             'phone_number' => $validatedData['phone_number'],
             'profile_picture' => $validatedData['profile_picture'] ?? null,
         ]));
-    
-        $user->merchant->update([
-            'company_description' => $validatedData['company_description'],
-        ]);
+        
+        if($user->merchant) {
+            $user->merchant->update([
+                'company_description' => $validatedData['company_description'],
+            ]);
+        }
     
         return redirect()->route('profile.index')->with('success', 'Profile updated successfully!');
     }
