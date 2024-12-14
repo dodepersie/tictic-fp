@@ -1,3 +1,7 @@
+@php
+    $images = explode(',', $product->event_image);
+@endphp
+
 <li>
     <a {{ $attributes }}>
         <div
@@ -7,7 +11,7 @@
                 <div class="p-4 sm:p-6">
                     <div class="mt-5">
                         <span aria-hidden="true" role="img" class="text-3xl sm:text-4xl">
-                            <img src="{{ $product->event_image ? asset('storage/event_images/' . $product->event_image) : 'https://picsum.photos/id/' . rand(1, 100) . '/200/300' }}"
+                            <img src="{{ $product->event_image ? asset('storage/event_images/' . $images[0]) : 'https://picsum.photos/id/' . rand(1, 100) . '/200/300' }}"
                                 alt="{{ ucfirst($product->event_title) }}"
                                 class="h-64 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72" />
                         </span>

@@ -1,4 +1,6 @@
 @php
+    $images = explode(',', $product->event_image);
+
     $isEventEnded = $product->event_end_date < now()->format('Y-m-d');
     $ticketOrder = ['VVIP' => 1, 'VIP' => 2, 'Regular' => 3];
 
@@ -82,10 +84,23 @@
 
                     <div class="space-y-2">
                         <div class="relative">
-                            <img src="{{ $product->event_image ? '/storage/event_images/' . $product->event_image : 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop' }}"
-                                alt="{{ ucfirst($product->event_title) }}"
-                                class="h-auto object-contain rounded-xl shadow @if ($product->event_end_date < now()->format('Y-m-d')) opacity-50 @endif"
-                                id="event_image" />
+                            <div class="swiper">
+                                <div class="swiper-wrapper">
+                                    @foreach ($images as $image)
+                                        <div class="swiper-slide">
+                                            <img src="{{ $product->event_image ? '/storage/event_images/' . $image : 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop' }}"
+                                                alt="{{ ucfirst($product->event_title) }}"
+                                                class="h-auto object-contain rounded-xl shadow @if ($product->event_end_date < now()->format('Y-m-d')) opacity-50 @endif"
+                                                id="event_image" />
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+
+                                <div class="swiper-pagination"></div>
+                            </div>
 
                             @if ($product->event_end_date < now()->format('Y-m-d'))
                                 <div
@@ -172,8 +187,24 @@
                         <!-- Tab Content -->
                         <div class="mt-4">
                             <div x-show="openTab === 1">
-                                <h2 class="text-xl font-semibold">Event Description</h2>
-                                <div class="mt-2 text-justify leading-loose">{!! $product->event_detail !!}</div>
+                                <div x-data="{ expanded: false }">
+                                    <h2 class="text-xl font-semibold">Event Description</h2>
+                                    <div class="mt-2 text-justify leading-loose">
+                                        <span x-show="!expanded">
+                                            {!! Str::limit($product->event_detail, 300, '...') !!}
+                                        </span>
+                                        <span x-show="expanded">
+                                            {!! $product->event_detail !!}
+                                        </span>
+                                    </div>
+                                    @if (strlen($product->event_detail) > 300)
+                                        <button class="mt-2 text-blue-500 hover:underline focus:outline-none"
+                                            @click="expanded = !expanded">
+                                            <span x-show="!expanded">Show more</span>
+                                            <span x-show="expanded">Show less</span>
+                                        </button>
+                                    @endif
+                                </div>
                             </div>
                             <div x-show="openTab === 2">
                                 <h2 class="text-xl font-semibold">Event Address</h2>
@@ -395,6 +426,26 @@
 @endpush
 
 @push('script')
+    <script>
+        const swiper = new Swiper('.swiper', {
+            direction: 'horizontal',
+            loop: true,
+
+            pagination: {
+                el: '.swiper-pagination',
+            },
+
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+
+            scrollbar: {
+                el: '.swiper-scrollbar',
+            },
+        });
+    </script>
+
     <script>
         tippy('#event_image', {
             content: "{{ $product->event_title }}",

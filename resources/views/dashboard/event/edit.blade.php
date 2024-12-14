@@ -1,3 +1,7 @@
+@php
+    $images = explode(',', $event->event_image);
+@endphp
+
 @extends('layouts.dashboard.main', ['class' => 'g-sidenav-show bg-gray-100'])
 
 @section('content')
@@ -197,18 +201,23 @@
                                             <textarea class="form-control" name="event_detail" id="event_detail" rows="4">{{ old('event_detail', $event->event_detail) }}</textarea>
                                         </div>
                                     </div>
-                                    <div class="col-auto">
-                                        <img class="img-preview mb-2"
-                                            src="{{ $event->event_image ? asset('storage/event_images/' . $event->event_image) : '' }}"
-                                            style="{{ $event->event_image ? 'display: block;' : 'display: none;' }}; max-width: 100%; height: 10rem;" />
+                                    <div class="img-preview-container col-auto d-flex gap-3 mb-2">
+                                        @foreach ($images as $image)
+                                            <div class="d-flex">
+                                                <img src="{{ asset('storage/event_images/' . $image) }}"
+                                                    alt={{ $event->event_title }}"
+                                                    style="max-width: 100%; height: 10rem; object-fit: cover;">
+                                            </div>
+                                        @endforeach
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="event_image" class="form-control-label">Event Image</label>
-                                            <input class="form-control" type="file" name="event_image"
-                                                id="event_image" onChange="previewImage()">
-                                            <div class="small font-italic text-muted mt-2">JPG, PNG and WEBP format, size
-                                                can't more than 2 MB
+                                            <label for="event_images" class="form-control-label">Event Images</label>
+                                            <input class="form-control" type="file" name="event_images[]"
+                                                id="event_images" onChange="previewImage()" multiple
+                                                accept=".jpg,.jpeg,.png,.webp">
+                                            <div class="small font-italic text-muted mt-2">
+                                                JPG, PNG, and WEBP formats are allowed. Maximum size: 2 MB per image.
                                             </div>
                                         </div>
                                     </div>
@@ -367,18 +376,31 @@
                 .then(response => response.json())
                 .then(data => slug.value = data.slug)
         });
+    </script>
 
+    <script>
         function previewImage() {
-            const image = document.querySelector('#event_image');
-            const imgPreview = document.querySelector('.img-preview');
+            const imageInput = document.querySelector('#event_images');
+            const previewContainer = document.querySelector('.img-preview-container');
 
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
+            previewContainer.innerHTML = '';
 
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
-                imgPreview.style.display = 'block';
-                imgPreview.style.height = '10rem';
+            if (imageInput.files && imageInput.files.length > 0) {
+                Array.from(imageInput.files).forEach(file => {
+                    const oFReader = new FileReader();
+                    const imgElement = document.createElement('img');
+
+                    imgElement.style.display = 'block';
+                    imgElement.style.height = '10rem';
+                    imgElement.style.objectFit = 'cover';
+
+                    oFReader.onload = function(oFREvent) {
+                        imgElement.src = oFREvent.target.result;
+                    };
+
+                    oFReader.readAsDataURL(file);
+                    previewContainer.appendChild(imgElement);
+                });
             }
         }
     </script>

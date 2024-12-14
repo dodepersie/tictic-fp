@@ -32,7 +32,7 @@ class CreateEventRequest extends FormRequest
             'event_location' => 'required|string|max:255',
             'event_location_latitude' => 'required|numeric|between:-90,90',
             'event_location_longitude' => 'required|numeric|between:-180,180',
-            'event_image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'event_image.*' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
             'category_id' => 'required|exists:categories,id',
             'ticket_types' => 'required',
             'vvip_price' => 'required_if:ticket_types,VVIP|nullable|integer|min:0',
