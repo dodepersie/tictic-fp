@@ -38,16 +38,14 @@ class TransactionController extends Controller
         $transaction = null;
 
         if ($user->role === 'Merchant' && $user->merchant) {
-            $merchantId = $user->merchant->id;
-
-            $transaction = Transaction::whereHas('product', function ($query) use ($merchantId) {
-                $query->where('merchant_id', $merchantId);
-            })->where('unique_id', $uniqueId)->first();
+            // Merchant can access any transaction with the given unique_id
+            $transaction = Transaction::where('unique_id', $uniqueId)->first();
 
             if (! $transaction) {
                 return redirect()->back()->withErrors(['unique_id' => 'Ticket not found.']);
             }
         } elseif ($user->role === 'Customer') {
+            // Customer can only access their own transactions
             $transaction = Transaction::where('unique_id', $uniqueId)
                 ->where('user_id', $user->id)
                 ->first();
@@ -61,6 +59,7 @@ class TransactionController extends Controller
 
         return redirect()->back()->with('transaction', $transaction);
     }
+
 
     /**
      * Show the form for creating a new resource.
