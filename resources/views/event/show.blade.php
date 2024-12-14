@@ -1,5 +1,6 @@
 @php
     $images = explode(',', $product->event_image);
+    // $relatedImage = explode(',', $relatedProduct->event_image);
 
     $isEventEnded = $product->event_end_date < now()->format('Y-m-d');
     $ticketOrder = ['VVIP' => 1, 'VIP' => 2, 'Regular' => 3];
@@ -245,14 +246,15 @@
                                             <div
                                                 class="flex items-center gap-4 border-b border-dashed border-slate-900 py-4">
                                                 <div>
-                                                    <img src="{{ $relatedProduct->event_image ? '/storage/event_images/' . $relatedProduct->event_image : 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop' }}"
+                                                    <img src="{{ $relatedProduct->event_image ? '/storage/event_images/' . explode(',', $relatedProduct->event_image)[0] : 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop' }}"
                                                         alt="{{ ucfirst($relatedProduct->event_title) }}"
                                                         class="w-28 h-auto rounded-xl" id="related_event_image" />
                                                 </div>
                                                 <div class="space-y-1">
-                                                    <div class="ease-in duration-100 font-semibold hover:text-sky-500">
+                                                    <div
+                                                        class="ease-in duration-100 font-semibold hover:text-sky-500 underline decoration-dotted">
                                                         <a href="{{ route('event.show', $relatedProduct->slug) }}">
-                                                            {{ $relatedProduct->event_title }}
+                                                            {{ ucfirst($relatedProduct->event_title) }}
                                                         </a>
                                                     </div>
                                                     <div class="text-sm">
@@ -269,9 +271,11 @@
                                                         );
                                                     @endphp
 
-                                                    <div class="text-sm text-green-500 font-semibold">
-                                                        IDR
-                                                        {{ $regularTicket ? number_format($regularTicket->price, 0, ',', '.') : 'Unavailable' }}
+                                                    <div class="text-sm text-green-500">
+                                                        <span class="font-medium">Start from </span>
+                                                        <span class="font-bold">IDR
+                                                            {{ $regularTicket ? number_format($regularTicket->price, 0, ',', '.') : 'Unavailable' }}
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -279,7 +283,6 @@
                                     @empty
                                         <div>There is no related product..</div>
                                     @endforelse
-
                                 </ul>
                             </div>
                         </div>
