@@ -54,7 +54,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/">
+                    <a class="nav-link {{ Str::startsWith(Route::currentRouteName(), 'dashboard_analytics') ? 'active' : '' }}"
+                        href="{{ route('dashboard_analytics') }}">
                         <div class="icon icon-shape border-radius-md text-center me-1 d-flex align-items-center justify-content-center"
                             style="width: 36px;height: 36px;">
                             <i data-feather="bar-chart-2"></i>
@@ -76,16 +77,32 @@
                             style="width: 36px;height: 36px;">
                             <i data-feather="list"></i>
                         </div>
-                        <span class="nav-link-text ms-1">View your events</span>
+                        <span class="nav-link-text ms-1">View Your Events</span>
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('view-ticket-detail') }}">
                         <div class="icon icon-shape border-radius-md text-center me-1 d-flex align-items-center justify-content-center"
                             style="width: 36px;height: 36px;">
                             <i data-feather="shopping-bag"></i>
                         </div>
-                        <span class="nav-link-text ms-1">View ticket detail</span>
+                        <span class="nav-link-text ms-1">View Ticket Detail</span>
+                    </a>
+                </li>
+
+                <li class="nav-item mt-3">
+                    <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Data Management</h6>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ Str::startsWith(Route::currentRouteName(), 'dashboard_analytics') ? 'active' : '' }}"
+                        href="{{ route('dashboard_analytics') }}">
+                        <div class="icon icon-shape border-radius-md text-center me-1 d-flex align-items-center justify-content-center"
+                            style="width: 36px;height: 36px;">
+                            <i data-feather="bar-chart-2"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">View Analytics Report</span>
                     </a>
                 </li>
             @endcan
@@ -102,7 +119,7 @@
                             style="width: 36px;height: 36px;">
                             <i data-feather="list"></i>
                         </div>
-                        <span class="nav-link-text ms-1">All transactions</span>
+                        <span class="nav-link-text ms-1">All Transactions</span>
                     </a>
                 </li>
             @endcan
@@ -118,7 +135,7 @@
                         style="width: 36px;height: 36px;">
                         <i data-feather="user"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Edit profile</span>
+                    <span class="nav-link-text ms-1">Edit Profile</span>
                 </a>
             </li>
 
@@ -131,7 +148,7 @@
                             style="width: 36px;height: 36px;">
                             <i data-feather="log-out"></i>
                         </div>
-                        <span class="nav-link-text ms-1">Log out</span>
+                        <span class="nav-link-text ms-1">Log Out</span>
                     </a>
                 </form>
             </li>

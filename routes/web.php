@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Middleware\CheckMerchantStatus;
+use App\Http\Middleware\OnlyAdminMerchantRole;
 use App\Http\Middleware\OnlyAdminRole;
 use App\Http\Middleware\OnlyCustomerMerchantRole;
 use App\Http\Middleware\OnlyCustomerRole;
@@ -78,6 +80,9 @@ Route::middleware(['auth', OnlyCustomerRole::class])->group(function () {
 
 Route::prefix('dashboard')->middleware(['auth', OnlyAdminRole::class])->group(function () {
     Route::resource('/categories', CategoryController::class)->names('dashboard_categories');
+});
+Route::prefix('dashboard')->middleware(['auth', OnlyAdminMerchantRole::class])->group(function () {
+    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('dashboard_analytics');
 });
 
 // About
@@ -154,7 +159,7 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
 
-    return back()->with('message', 'Link verifikasi terkirim!');
+    return back()->with('message', 'Verification link already sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::prefix('dashboard')->middleware(['auth', 'verified', CheckMerchantStatus::class])->group(function () {
