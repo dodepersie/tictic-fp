@@ -77,6 +77,9 @@
                                                             class="badge bg-primary text-bg-primary text-sm font-weight-bold border-0">View
                                                             Invoice</a>
 
+                                                        <a href="{{ route('view-ticket-detail', ['id' => $transaction->unique_id]) }}"
+                                                            class="badge bg-primary text-bg-primary text-sm font-weight-bold border-0">Check</a>
+
                                                         <a href="{{ route('dashboard_transactions.index.review', $transaction->id) }}"
                                                             class="badge bg-secondary text-bg-secondary text-sm font-weight-bold">Review</a>
                                                     </div>
@@ -108,10 +111,7 @@
                 scrollX: true,
                 scrollCollapse: true,
                 responsive: true,
-                language: {
-                    search: "Search in table:"
-                },
-                ordering: false
+                ordering: false,
             });
         });
     </script>

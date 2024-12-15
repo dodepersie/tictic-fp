@@ -185,6 +185,77 @@
                     </div>
                 </div>
             @endcan
+
+            @can('customer')
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card">
+                        <div class="card-body p-3">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="numbers">
+                                        <p class="text-sm mb-0 text-uppercase font-weight-bold">Balance</p>
+                                        <h5 class="font-weight-bolder">
+                                            IDR {{ $total_merchant_events }}
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <div
+                                        class="icon icon-shape bg-gradient-secondary shadow-secondary text-center rounded-circle text-white">
+                                        <i data-feather="dollar-sign" style="margin-top: 12px;margin-left: 1px;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card">
+                        <div class="card-body p-3">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="numbers">
+                                        <p class="text-sm mb-0 text-uppercase font-weight-bold">Your Ordered Tickets</p>
+                                        <h5 class="font-weight-bolder">
+                                            {{ $ordered_tickets }}
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <div
+                                        class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle text-white">
+                                        <i data-feather="tag" style="margin-top: 14px;margin-left: 2px;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card">
+                        <div class="card-body p-3">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="numbers">
+                                        <p class="text-sm mb-0 text-uppercase font-weight-bold">Your Active Ticket</p>
+                                        <h5 class="font-weight-bolder">
+                                            {{ $active_tickets->count() }}
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <div
+                                        class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle text-white">
+                                        <i data-feather="activity" style="margin-top: 14px;margin-left: 2px;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endcan
         </div>
         @can('admin')
             <div class="row mt-4">
@@ -307,12 +378,131 @@
                 </div>
             </div>
         @endcan
+        @can('customer')
+            <div class="row mt-0 mt-lg-4">
+                {{-- Upcoming Tickets --}}
+                <div class="col-lg-6 mb-lg-0 mb-4">
+                    <div class="card overflow-hidden h-100 p-0">
+                        <div class="card-header pb-0 p-3 d-flex align-items-center gap-2">
+                            <i data-feather="bell" style="margin-left: 2px; margin-top: -7px;"></i>
+                            <h6 class="text-capitalize fs-6">Upcoming Event in 7 Days</h6>
+                        </div>
+                        <div class="card-body p-3">
+                            <div class="table-responsive p-0">
+                                <table class="table table-hover" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                                #</th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                                Event Title</th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                                Event Start Date</th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                                Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($upcoming_tickets->take(5) as $upcoming_ticket)
+                                            <tr>
+                                                <td class="align-middle text-center text-sm">{{ $loop->iteration }}</td>
+                                                <td class="align-middle text-center">
+                                                    <span
+                                                        class="text-secondary text-sm font-weight-bold">{{ ucfirst($upcoming_ticket->product->event_title) }}
+                                                        {{ $upcoming_ticket->ticketType->type }}
+                                                        ({{ $upcoming_ticket->unique_id }})
+                                                    </span>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    {{ \Carbon\Carbon::parse($upcoming_ticket->product->event_start_date)->format('d F Y') }}
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <a href="{{ route('view-ticket-detail', ['id' => $upcoming_ticket->unique_id]) }}"
+                                                        class="badge bg-primary text-bg-primary text-xs font-weight-bold border-0">Check</a>
+
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="10" class="text-center text-sm">No data available..</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Active Tickets --}}
+                <div class="col-lg-6 mb-lg-0 mb-4">
+                    <div class="card overflow-hidden h-100 p-0">
+                        <div class="card-header pb-0 p-3 d-flex align-items-center gap-2">
+                            <i data-feather="zap" style="margin-left: 2px; margin-top: -7px;"></i>
+                            <h6 class="text-capitalize fs-6">Active Tickets</h6>
+                        </div>
+                        <div class="card-body p-3 pt-0">
+                            <div class="table-responsive p-0">
+                                <table class="table table-hover" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                                #</th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                                Event Title</th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                                Event Start Date</th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                                Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($active_tickets->take(5) as $active_ticket)
+                                            <tr>
+                                                <td class="align-middle text-center text-sm">{{ $loop->iteration }}</td>
+                                                <td class="align-middle text-center">
+                                                    <span
+                                                        class="text-secondary text-sm font-weight-bold">{{ ucfirst($active_ticket->product->event_title) }}
+                                                        {{ $active_ticket->ticketType->type }}
+                                                        ({{ $active_ticket->unique_id }})
+                                                    </span>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    {{ \Carbon\Carbon::parse($active_ticket->product->event_start_date)->format('d F Y') }}
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <a href="{{ route('view-ticket-detail', ['id' => $active_ticket->unique_id]) }}"
+                                                        class="badge bg-primary text-bg-primary text-xs font-weight-bold border-0">Check</a>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="10" class="text-center text-sm">No data available..</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endcan
         @include('layouts.footers.auth.footer')
     </div>
 @endsection
 
 @push('script')
     <script src="./assets/js/plugins/chartjs.min.js"></script>
+
     <script>
         var ctx1 = document.getElementById("chart-line").getContext("2d");
 

@@ -20,7 +20,18 @@
             <!-- Headaer -->
             <div class="flex justify-between items-center border-b-2 border-gray-200 py-2">
                 <div class="text-2xl font-bold">INVOICE</div>
-                <div>
+                <div class="flex justify-center items-center">
+                    <div class="font-bold text-2xl">
+                        @if ($transaction->status == 'Success')
+                            <span class="text-green-600">PAID</span>
+                        @endif
+                        @if ($transaction->status == 'Pending')
+                            <span class="text-yellow-600">UNPAID</span>
+                        @endif
+                        @if ($transaction->status == 'Canceled')
+                            <span class="text-red-600">CANCELED</span>
+                        @endif
+                    </div>
                     <img src="{{ asset('/assets/img/TicTic Logo.png') }}" class="h-12 w-12" alt="TicTic Logo">
                 </div>
             </div>
@@ -94,13 +105,26 @@
             </div>
         </div>
 
-        <button onclick="window.print()"
-            class="mt-3 group relative block text-md font-bold text-white before:absolute before:inset-0 before:rounded-md before:border-2 before:border-dashed before:border-slate-900 text-center w-full no-print">
-            <div
-                class="h-full rounded-md border-2 border-slate-900 bg-slate-900 transition group-hover:-translate-y-2 group-hover:-translate-x-2">
+        @if ($transaction->status == 'Success')
+            <button onclick="window.print()"
+                class="mt-3 group relative block text-md font-bold text-white before:absolute before:inset-0 before:rounded-md before:border-2 before:border-dashed before:border-slate-900 text-center w-full no-print">
+                <div
+                    class="h-full rounded-md border-2 border-slate-900 bg-slate-900 transition group-hover:-translate-y-2 group-hover:-translate-x-2">
 
-                <span class="relative block py-2"> Print Invoice </span>
-            </div>
-        </button>
+                    <span class="relative block py-2"> Print Invoice </span>
+                </div>
+            </button>
+        @endif
+
+        @if ($transaction->status == 'Pending')
+            <a href="{{ route('checkout', $transaction->id) }}"
+                class="mt-3 group relative block text-md font-bold text-white before:absolute before:inset-0 before:rounded-md before:border-2 before:border-dashed before:border-slate-900 text-center w-full no-print">
+                <div
+                    class="h-full rounded-md border-2 border-slate-900 bg-slate-900 transition group-hover:-translate-y-2 group-hover:-translate-x-2">
+
+                    <span class="relative block py-2"> Pay Now with Midtrans </span>
+                </div>
+            </a>
+        @endif
     </div>
 @endsection

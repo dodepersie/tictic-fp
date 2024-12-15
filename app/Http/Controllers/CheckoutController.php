@@ -126,12 +126,14 @@ class CheckoutController extends Controller
     {
         $title = 'Invoice';
 
-        if (auth()->user()->id != $transaction->user_id) {
-            abort(403, 'Unauthorized access.');
+        $user = auth()->user();
+
+        if ($user->role !== 'Customer') {
+            abort(403, 'Unauthorized access. Only customers can access this page.');
         }
 
-        if ($transaction->status === 'Pending') {
-            return redirect()->route('home')->withErrors('This transaction status still Pending.');
+        if ($user->id != $transaction->user_id) {
+            abort(404);
         }
 
         $transaction = Transaction::where('id', $transaction->id)->firstOrFail();

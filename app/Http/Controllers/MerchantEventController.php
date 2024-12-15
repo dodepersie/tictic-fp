@@ -54,39 +54,39 @@ class MerchantEventController extends Controller
     {
         $validatedData = $request->validated();
         $validatedData['merchant_id'] = auth()->user()->merchant->id;
-    
+
         // String untuk menyimpan nama gambar
         $imageNames = [];
-    
+
         if ($request->hasFile('event_images')) {
             foreach ($request->file('event_images') as $file) {
                 $image = Image::read($file);
                 $image->coverDown(1024, 768);
                 $image->encode(new WebpEncoder(quality: 90));
-                $file_name = now()->timestamp . '-' . uniqid() . '.webp';  // Generate unique file name
-    
-                Storage::put('public/event_images/' . $file_name, (string) $image->encode());
-    
+                $file_name = now()->timestamp.'-'.uniqid().'.webp';  // Generate unique file name
+
+                Storage::put('public/event_images/'.$file_name, (string) $image->encode());
+
                 // Menambahkan nama file ke dalam string dengan pemisah koma
                 $imageNames[] = $file_name;
             }
         }
-    
+
         // Menyimpan nama file gambar sebagai string yang dipisahkan koma
         $validatedData['event_image'] = implode(',', $imageNames);
-    
+
         // Create product and associate the images
         $product = Product::create($validatedData);
-    
+
         // Save ticket types
         $ticketTypes = [
             ['type' => 'VVIP', 'ticket_price' => $request->input('vvip_price'), 'ticket_quantity' => $request->input('vvip_quantity')],
             ['type' => 'VIP', 'ticket_price' => $request->input('vip_price'), 'ticket_quantity' => $request->input('vip_quantity')],
             ['type' => 'Regular', 'ticket_price' => $request->input('regular_price'), 'ticket_quantity' => $request->input('regular_quantity')],
         ];
-    
+
         foreach ($ticketTypes as $ticketType) {
-            if (!is_null($ticketType['ticket_price']) && !is_null($ticketType['ticket_quantity'])) {
+            if (! is_null($ticketType['ticket_price']) && ! is_null($ticketType['ticket_quantity'])) {
                 TicketType::create([
                     'product_id' => $product->id,
                     'type' => $ticketType['type'],
@@ -95,7 +95,7 @@ class MerchantEventController extends Controller
                 ]);
             }
         }
-    
+
         return redirect()->route('merchant_events.index')->withSuccess('Create event successfully');
     }
 
@@ -133,40 +133,40 @@ class MerchantEventController extends Controller
     {
         $validatedData = $request->validated();
         $validatedData['merchant_id'] = auth()->user()->merchant->id;
-    
+
         $product = Product::findOrFail($id);
-    
+
         if ($request->hasFile('event_images')) {
             $imagePaths = [];
-    
+
             foreach ($request->file('event_images') as $file) {
                 $image = Image::read($file);
                 $image->coverDown(1024, 768);
                 $image->encode(new WebpEncoder(quality: 90));
-                $fileName = now()->timestamp . '-' . uniqid() . '.webp';
-    
-                Storage::put('public/event_images/' . $fileName, (string) $image->encode());
+                $fileName = now()->timestamp.'-'.uniqid().'.webp';
+
+                Storage::put('public/event_images/'.$fileName, (string) $image->encode());
                 $imagePaths[] = $fileName;
             }
-    
+
             if ($product->event_image) {
                 $oldImages = explode(',', $product->event_image);
                 foreach ($oldImages as $oldImage) {
-                    $oldPath = public_path('storage/event_images/' . $oldImage);
+                    $oldPath = public_path('storage/event_images/'.$oldImage);
                     if (file_exists($oldPath)) {
                         unlink($oldPath);
                     }
                 }
             }
-    
+
             $validatedData['event_image'] = implode(',', $imagePaths);
         }
-    
+
         $product->update($validatedData);
-    
+
         return redirect()->back()->withSuccess('Event updated successfully!');
     }
-    
+
     /**
      * Remove the specified resource from storage.
      */

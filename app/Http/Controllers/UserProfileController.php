@@ -68,35 +68,35 @@ class UserProfileController extends Controller
     {
         $user = auth()->user();
         $validatedData = $request->validated();
-        
+
         if ($request->hasFile('profile_picture')) {
             $file = $request->file('profile_picture');
-            $file_name = now()->timestamp . '.webp';
-    
+            $file_name = now()->timestamp.'.webp';
+
             $image = Image::read($file)
                 ->coverDown(900, 900)
                 ->encode(new WebpEncoder(quality: 90));
-            
-            Storage::put('public/user_profile/' . $file_name, (string) $image);
-            
+
+            Storage::put('public/user_profile/'.$file_name, (string) $image);
+
             if ($user->profile_picture) {
-                Storage::delete('public/user_profile/' . $user->profile_picture);
+                Storage::delete('public/user_profile/'.$user->profile_picture);
             }
-    
+
             $validatedData['profile_picture'] = $file_name;
         }
-    
+
         $user->update(array_filter([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'phone_number' => $validatedData['phone_number'],
             'profile_picture' => $validatedData['profile_picture'] ?? null,
         ]));
-    
+
         $user->merchant->update([
             'company_description' => $validatedData['company_description'],
         ]);
-    
+
         return redirect()->route('profile.index')->with('success', 'Profile updated successfully!');
     }
 

@@ -80,7 +80,7 @@ class MerchantController extends Controller
             'email' => $validatedData['email'],
             'phone_number' => $validatedData['phone_number'],
         ]);
-        
+
         $merchant->update([
             'company_description' => $validatedData['company_description'],
         ]);

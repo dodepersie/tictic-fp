@@ -12,54 +12,50 @@ class TransactionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $title = 'View Ticket Detail';
 
-        return view('view-ticket-detail', compact('title'));
-    }
+        if (! $request->has('id')) {
+            return view('view-ticket-detail', compact('title'));
+        }
 
-    public function all_transactions(Transaction $transaction)
-    {
-        $title = 'All Transactions';
-        $transactions = Transaction::where('user_id', '=', auth()->user()->id)->latest()->get();
-
-        return view('dashboard.transactions.index', compact('title', 'transactions'));
-    }
-
-    public function viewTicketDetail(Request $request)
-    {
         $request->validate([
-            'unique_id' => 'required|string|max:8',
+            'id' => 'required|string|max:8',
         ]);
 
-        $uniqueId = $request->unique_id;
+        $uniqueId = $request->id;
         $user = auth()->user();
         $transaction = null;
 
         if ($user->role === 'Merchant' && $user->merchant) {
-            // Merchant can access any transaction with the given unique_id
             $transaction = Transaction::where('unique_id', $uniqueId)->first();
 
             if (! $transaction) {
-                return redirect()->back()->withErrors(['unique_id' => 'Ticket not found.']);
+                abort(404, 'Ticket not found.');
             }
         } elseif ($user->role === 'Customer') {
-            // Customer can only access their own transactions
             $transaction = Transaction::where('unique_id', $uniqueId)
                 ->where('user_id', $user->id)
                 ->first();
 
             if (! $transaction) {
-                return redirect()->back()->withErrors(['unique_id' => 'Ticket not found or you do not have access to this ticket.']);
+                abort(404);
             }
         } else {
-            return redirect()->back()->withErrors(['role' => 'You do not have the necessary permissions.']);
+            abort(403, 'You do not have the necessary permissions.');
         }
 
-        return redirect()->back()->with('transaction', $transaction);
+        return view('view-ticket-detail', compact('title', 'transaction'));
     }
 
+    public function all_transactions(Transaction $transaction)
+    {
+        $title = 'All Transactions';
+        $transactions = Transaction::where('user_id', auth()->user()->id)->latest()->get();
+
+        return view('dashboard.transactions.index', compact('title', 'transactions'));
+    }
 
     /**
      * Show the form for creating a new resource.
