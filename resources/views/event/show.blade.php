@@ -1,6 +1,5 @@
 @php
     $images = explode(',', $product->event_image);
-    // $relatedImage = explode(',', $relatedProduct->event_image);
 
     $isEventEnded = $product->event_end_date < now()->format('Y-m-d');
     $ticketOrder = ['VVIP' => 1, 'VIP' => 2, 'Regular' => 3];
@@ -8,6 +7,19 @@
     $sortedTicketTypes = $product->ticketTypes->sortBy(function ($ticketType) use ($ticketOrder) {
         return $ticketOrder[$ticketType->type] ?? 4;
     });
+
+    function maskName($name)
+    {
+        $parts = explode(' ', $name);
+        $maskedParts = array_map(function ($part) {
+            $length = strlen($part);
+            if ($length <= 2) {
+                return str_repeat('*', $length);
+            }
+            return $part[0] . str_repeat('*', $length - 2) . $part[$length - 1];
+        }, $parts);
+        return implode(' ', $maskedParts);
+    }
 @endphp
 
 @extends('layouts.main')
@@ -118,6 +130,7 @@
                         <!-- Tabs Navigation -->
                         <div id="Tab"
                             class="flex items-center gap-2 border-b lg:border-gray-200 font-medium overflow-x-auto whitespace-nowrap">
+
                             <!-- Event Description -->
                             <button @click="openTab = 1"
                                 :class="{
@@ -134,6 +147,7 @@
                                         clip-rule="evenodd" />
                                 </svg>Event
                                 Description</button>
+
                             <!-- Event Map -->
                             <button @click="openTab = 2"
                                 :class="{
@@ -150,6 +164,7 @@
                                         clip-rule="evenodd" />
                                 </svg>Event
                                 Map</button>
+
                             <!-- Reviews -->
                             <button @click="openTab = 3"
                                 :class="{
@@ -168,6 +183,7 @@
                                         d="M8.023 17.215c.033-.03.066-.062.098-.094L10.243 15H15a3 3 0 0 0 3-3V8h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-1v2a1 1 0 0 1-1.707.707L14.586 18H9a1 1 0 0 1-.977-.785Z"
                                         clip-rule="evenodd" />
                                 </svg>{{ $reviewsCount }} {{ Str::plural('Review', $reviewsCount) }}</button>
+
                             <!-- Related Events -->
                             <button @click="openTab = 4"
                                 :class="{
@@ -187,6 +203,7 @@
 
                         <!-- Tab Content -->
                         <div class="mt-4">
+                            <!-- Event Description -->
                             <div x-show="openTab === 1">
                                 <div x-data="{ expanded: false }">
                                     <h2 class="text-xl font-semibold">Event Description</h2>
@@ -207,28 +224,46 @@
                                     @endif
                                 </div>
                             </div>
+
+                            <!-- Event Map -->
                             <div x-show="openTab === 2">
                                 <h2 class="text-xl font-semibold">Event Address</h2>
                                 <div class="my-2 text-justify leading-loose text-sm">{{ $product->event_address }}</div>
                                 <h2 class="text-xl font-semibold">Event Map</h2>
                                 <div id="map" class="mt-2 z-0 rounded-xl shadow border-2 border-gray-200"></div>
                             </div>
+
+                            <!-- Review -->
                             <div x-show="openTab === 3">
                                 <div class="space-y-2">
-                                    @forelse($reviews as $review)
+                                    @forelse($reviews->take(5) as $review)
                                         <div class="space-y-3">
-                                            <div class="p-4 rounded-lg border-2 border-dashed border-slate-900 mb-4">
-                                                <div class="flex justify-between items-center mb-2">
-                                                    <div>
-                                                        <strong class="text-lg">{{ $review->user->name }}</strong>
-                                                        <span class="text-gray-500 text-sm">on
-                                                            {{ $review->created_at->format('d F Y - H:i:s') }}</span>
-                                                    </div>
-                                                    <div>
+                                            <div class="pb-4 px-0 border-b border-gray-200 mb-4">
+                                                <div class="flex justify-between mb-2 gap-y-2">
+                                                    <div class="text-md font-medium space-y-2">
                                                         <span
                                                             class="text-yellow-500">{{ str_repeat('★', $review->rating) }}</span><span
                                                             class="text-gray-500">{{ str_repeat('☆', 5 - $review->rating) }}</span>
+
+                                                        <span
+                                                            class="text-gray-500">{{ $review->created_at->diffForHumans() }}</span>
+
+                                                        <div class="flex items-center gap-2">
+                                                            <img src="{{ $review->user->profile_picture ? asset('/storage/user_profile/' . $review->user->profile_picture) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu9zuWJ0xU19Mgk0dNFnl2KIc8E9Ch0zhfCg&s' }}"
+                                                                alt="{{ $review->hide_name ? maskName($review->user->name) : $review->user->name }}"
+                                                                class="size-8 rounded-full object-cover" />
+                                                            <span
+                                                                class="font-semibold text-md">{{ $review->hide_name ? maskName($review->user->name) : $review->user->name }}</span>
+                                                        </div>
                                                     </div>
+
+                                                    <svg class="w-5 h-5 cursor-pointer" aria-hidden="true"
+                                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        fill="currentColor" viewBox="0 0 24 24">
+                                                        <path
+                                                            d="M13.09 3.294c1.924.95 3.422 1.69 5.472.692a1 1 0 0 1 1.438.9v9.54a1 1 0 0 1-.562.9c-2.981 1.45-5.382.24-7.25-.701a38.739 38.739 0 0 0-.622-.31c-1.033-.497-1.887-.812-2.756-.77-.76.036-1.672.357-2.81 1.396V21a1 1 0 1 1-2 0V4.971a1 1 0 0 1 .297-.71c1.522-1.506 2.967-2.185 4.417-2.255 1.407-.068 2.653.453 3.72.967.225.108.443.216.655.32Z" />
+                                                    </svg>
+
                                                 </div>
 
                                                 <p class="text-gray-700">{{ $review->comment }}</p>
@@ -239,6 +274,8 @@
                                     @endforelse
                                 </div>
                             </div>
+
+                            <!-- Related Events -->
                             <div x-show="openTab === 4">
                                 <ul>
                                     @forelse($relatedProducts->take(4) as $relatedProduct)
@@ -407,9 +444,8 @@
                             @endif
                         </div>
                     </div>
+                </aside>
             </div>
-            </aside>
-        </div>
         </div>
     </section>
 @endsection

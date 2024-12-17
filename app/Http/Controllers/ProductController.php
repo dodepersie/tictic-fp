@@ -64,10 +64,12 @@ class ProductController extends Controller
 
         $relatedProducts = Product::where('category_id', $product->category_id)->where('id', '<>', $product->id)->inRandomOrder()->get();
 
+        $reviews = $product->reviews()->latest()->get();
+
         return view('event.show', [
             'title' => $product->event_title,
             'product' => $product,
-            'reviews' => $product->reviews,
+            'reviews' => $reviews,
             'averageRating' => $averageRating,
             'reviewsCount' => $reviewsCount,
             'relatedProducts' => $relatedProducts,

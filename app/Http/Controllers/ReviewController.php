@@ -39,24 +39,27 @@ class ReviewController extends Controller
 
     public function store_review(Request $request, Transaction $transaction)
     {
-        // Ensure the transaction is complete
         if ($transaction->status !== 'Success') {
             abort(403, 'You can only review completed transactions.');
         }
-
+    
         $validatedData = $request->validate([
             'rating' => 'required|integer|min:1|max:5',
             'comment' => 'required|string|max:1000',
+            'hide_name' => 'nullable|boolean',
         ]);
-
+    
         $existingReview = Review::where('transaction_id', $transaction->id)
             ->where('user_id', auth()->id())
             ->first();
-
+    
+        $hideName = $validatedData['hide_name'] = $request->has('hide_name') ? true : false;
+    
         if ($existingReview) {
             $existingReview->update([
                 'rating' => $validatedData['rating'],
                 'comment' => $validatedData['comment'],
+                'hide_name' => $hideName,
                 'product_id' => $transaction->product->id,
             ]);
         } else {
@@ -65,13 +68,14 @@ class ReviewController extends Controller
                 'user_id' => auth()->id(),
                 'rating' => $validatedData['rating'],
                 'comment' => $validatedData['comment'],
+                'hide_name' => $hideName,
                 'product_id' => $transaction->product->id,
             ]);
         }
-
+    
         return redirect()->route('dashboard_transactions.index')
             ->with('success', 'Your review has been submitted successfully.');
-    }
+    }    
 
     /**
      * Show the form for creating a new resource.
