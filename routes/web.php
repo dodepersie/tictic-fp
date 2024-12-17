@@ -83,6 +83,7 @@ Route::prefix('dashboard')->middleware(['auth', OnlyAdminRole::class])->group(fu
 });
 Route::prefix('dashboard')->middleware(['auth', OnlyAdminMerchantRole::class])->group(function () {
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('dashboard_analytics');
+    Route::get('/analytics/{productId}', [AnalyticsController::class, 'analyticsReport'])->name('dashboard_analytics.report');
 });
 
 // About
