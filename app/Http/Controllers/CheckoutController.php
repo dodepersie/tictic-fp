@@ -112,7 +112,7 @@ class CheckoutController extends Controller
             ->where('id', $transaction->ticket_type_id)
             ->firstOrFail();
 
-        $ticketType->decrement('quantity', $transaction->quantity);
+        $ticketType->increment('sold_quantity', $transaction->quantity);
 
         $title = 'Checkout Success: '.$transaction->product->event_title;
         $transaction->status = 'Success';

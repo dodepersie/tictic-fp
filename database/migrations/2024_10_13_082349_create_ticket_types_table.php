@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('type', ['VVIP', 'VIP', 'Regular']);
             $table->integer('price');
             $table->integer('quantity');
+            $table->integer('sold_quantity')->default(0);
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
