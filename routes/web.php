@@ -80,10 +80,12 @@ Route::middleware(['auth', OnlyCustomerRole::class])->group(function () {
 
 Route::prefix('dashboard')->middleware(['auth', OnlyAdminRole::class])->group(function () {
     Route::resource('/categories', CategoryController::class)->names('dashboard_categories');
+    Route::get('/merchant-analytics/{merchantId}', [AnalyticsController::class, 'adminAnalyticsReport'])->name('dashboard_analytics.admin_report');
+    Route::get('/merchant-analytics/{productId}/{merchantId}', [AnalyticsController::class, 'analyticsReport'])->name('dashboard_analytics.admin_report_data');
 });
 Route::prefix('dashboard')->middleware(['auth', OnlyAdminMerchantRole::class])->group(function () {
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('dashboard_analytics');
-    Route::get('/analytics/{productId}', [AnalyticsController::class, 'analyticsReport'])->name('dashboard_analytics.report');
+    Route::get('/analytics/{productId?}', [AnalyticsController::class, 'analyticsReport'])->name('dashboard_analytics.report');
 });
 
 // About

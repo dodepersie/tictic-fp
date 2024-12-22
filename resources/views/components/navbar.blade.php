@@ -111,8 +111,8 @@
                         <div class="relative">
                             <input type="text" name="search"
                                 class="w-full h-10 rounded-lg border-gray-200 px-4 pr-12 text-sm"
-                                placeholder="Search fun activity.." value="{{ request('search') }}"
-                                autocomplete="off" />
+                                placeholder="Search fun activity.." value="{{ request('search') }}" autocomplete="off"
+                                required />
 
                             <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
                                 <svg class="size-4 text-gray-400" fill="none" aria-hidden="true"

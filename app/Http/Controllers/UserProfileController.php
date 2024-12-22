@@ -93,7 +93,7 @@ class UserProfileController extends Controller
             'profile_picture' => $validatedData['profile_picture'] ?? null,
         ]));
 
-        if($user->role == 'Merchant') {
+        if ($user->role == 'Merchant') {
             $user->merchant->update([
                 'company_description' => $validatedData['company_description'],
             ]);

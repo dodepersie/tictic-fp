@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Merchant;
 use App\Models\Product;
 
 class AnalyticsController extends Controller
@@ -10,20 +11,29 @@ class AnalyticsController extends Controller
     {
         $user = auth()->user();
         $title = 'View Analytics Report';
+        $merchants = [];
 
-        $products = Product::where('merchant_id', $user->merchant->id)->latest()->get();
+        if ($user->role === 'Admin') {
+            $merchants = Merchant::where('merchant_status', 'Approved')->latest()->get();
+            $products = Product::latest()->get();
+        } else {
+            $products = Product::where('merchant_id', $user->merchant->id)->latest()->get();
+        }
 
-        return view('dashboard.analytics.index', compact('title', 'products'));
+        return view('dashboard.analytics.index', compact('title', 'merchants', 'products'));
     }
 
-    public function analyticsReport($productId)
+    public function analyticsReport($productId, $merchantId = null)
     {
+        $user = auth()->user();
         $product = Product::with('ticketTypes')->findOrFail($productId);
-
-        $title = 'Analytic Report: ' . ucfirst($product->event_title);
     
-        if ($product->merchant_id !== auth()->user()->merchant->id) {
-            abort(404);
+        $title = 'Analytic Report of ' . ucfirst($product->event_title);
+    
+        if ($user->role === "Merchant") {
+            if ($product->merchant_id !== $user->merchant->id) {
+                abort(403, 'You do not have access to this report.');
+            }
         }
     
         $totalTickets = $product->ticketTypes->sum('quantity');
@@ -40,9 +50,8 @@ class AnalyticsController extends Controller
                 'remaining' => $ticketType->quantity - ($ticketType->sold_quantity ?? 0),
                 'price' => $ticketType->price,
             ];
-        });        
+        });
     
-        // Kirim data ke view
         return view('dashboard.analytics.report', [
             'title' => $title,
             'product' => $product,
@@ -52,4 +61,17 @@ class AnalyticsController extends Controller
         ]);
     }
     
+
+    public function adminAnalyticsReport($merchantId){
+        $merchant = Merchant::findOrFail($merchantId);
+        $products = Product::where('merchant_id', $merchantId)->get();
+
+        $title = 'Analytic Report of ' .$merchant->user->name;
+
+        return view('dashboard.analytics.admin-report', [
+            'title' => $title,
+            'merchant' => $merchant,
+            'products' => $products,
+        ]);
+    }
 }

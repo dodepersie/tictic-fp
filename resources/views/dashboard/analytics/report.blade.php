@@ -7,14 +7,14 @@
 
 @section('content')
     @include('layouts.navbars.auth.topnav', [
-        'title' => 'Analytic Report of: ' . ucfirst($product->event_title),
+        'title' => $title,
     ])
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0">
-                        <h6>Analytic Report of: {{ ucfirst($product->event_title) }}</h6>
+                        <h6>{{ $title }}</h6>
                     </div>
                     <div class="card-body">
                         <div class="mb-4">
